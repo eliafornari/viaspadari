@@ -4,7 +4,7 @@
 
       <div class="product-content" ng-class="{'openDetail': isDetailOpen}" >
         <ul class="product-ul">
-          <li class="product-li" ng-repeat="p in Product " ng-click="openDetailFN(p.slug)" ng-init="productHovered=false">
+          <li class="product-li" ng-repeat="p in Product | productFilter" ng-click="openDetailFN(p.slug)" ng-init="productHovered=false">
             <table>
               <tr>
                 <td>

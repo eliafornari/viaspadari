@@ -70,12 +70,10 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     templateUrl: 'views/contact.html'
   }).when('/:category/:detail', {
     templateUrl: 'views/detail.html',
-    controller: 'detailCtrl',
-    reloadOnSearch: false
+    controller: 'detailCtrl'
   }).when('/:category', {
     templateUrl: 'views/product.html',
-    controller: 'productCtrl',
-    reloadOnSearch: false
+    controller: 'productCtrl'
   }).when('/privacy', {
     templateUrl: 'privacy/privacy.html',
     controller: 'privacyCtrl'
@@ -280,60 +278,28 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   $scope.landscapeFunction();
 
-  $rootScope.Event = [];
-  $rootScope.Radio = [];
-  var eventRan = false;
+  $rootScope.Home = [];
   var homeRan = false;
-  var radioRan = false;
 
   $rootScope.getContentType = function (type, orderField) {
-
     _prismic2.default.Api('https://viaspadari.cdn.prismic.io/api', function (err, Api) {
       Api.form('everything').ref(Api.master()).query(_prismic2.default.Predicates.at("document.type", type)).orderings('[' + orderField + ']').pageSize(100).submit(function (err, response) {
-
         var Data = response;
 
-        // setTimeout(function(){
-        //   $rootScope.firstLoading = false;
-        //   $scope.$apply();
-        // }, 3000);
-
-        if (type == 'event') {
-          $rootScope.Event = response.results;
-          console.log("event");
-          console.log(response.results);
-          if (eventRan == false) {
-            console.log("eventReady");
-            eventRan = true;
-            setTimeout(function () {
-              $rootScope.$broadcast('eventReady');
-            }, 900);
-          } else {
-            return false;
-          }
-        } else if (type == 'home') {
+        if (type == 'home') {
           $rootScope.Home = response.results;
           console.log("home");
           console.log(response.results);
           if (homeRan == false) {
-            console.log("homeReady");
+            console.log("homeRanReady");
             homeRan = true;
-            $rootScope.$broadcast('homeReady');
-          } else {
-            return false;
-          }
-        } else if (type == 'radio') {
-          $rootScope.Radio = response.results;
-          console.log(response.results);
-          if (radioRan == false) {
-            console.log("radioReady");
-            radioRan = true;
-            $rootScope.$broadcast('radioReady');
+            setTimeout(function () {
+              $rootScope.$broadcast('homeRanReady');
+            }, 900);
           } else {
             return false;
           }
         }
-
         // The documents object contains a Response object with all documents of type "product".
         var page = response.page; // The current page number, the first one being 1
         var results = response.results; // An array containing the results of the current page;
@@ -383,56 +349,15 @@ Home.controller('homeCtrl', function ($scope, $location, $rootScope, $routeParam
   $scope.homeImages = [];
   $scope.currentImage;
 
-  $rootScope.getContentType('home', 'my.home.index');
-
-  $rootScope.$on('homeReady', function () {
-    $scope.homeImages = $rootScope.Home[0].data['home.image'].value;
-    // $scope.assignimage(0);
-    $scope.$apply();
-  });
-
-  //   $scope.assignimage = (i)=>{
-  //     $scope.currentImage = $scope.homeImages[i];
-  //   }
   //
-  //   // Returns a random integer between min (included) and max (included)
-  //   // Using Math.round() will give you a non-uniform distribution!
-  //   function getRandomIntInclusive(min, max) {
-  //     min = Math.ceil(min);
-  //     max = Math.floor(max);
-  //     return Math.floor(Math.random() * (max - min + 1)) + min;
-  //   }
+  // $rootScope.getContentType('home', 'my.home.index');
   //
-  //   var prev ={
-  //     x:1,
-  //     y:1
-  //   }
-  //
-  //   $(document).mousemove(function(event){
-  //     // console.log('y',event.pageX);
-  //     // console.log('x',event.pageY);
-  //     var mloc = {
-  //         x: event.pageX,
-  //         y: event.pageY
-  //     };
-  //
-  //
-  //     var diffX = Math.abs(prev.x - mloc.x);
-  //     var diffY = Math.abs(prev.y - mloc.y);
-  //
-  //     prev=mloc;
-  //
-  //     if((diffX > 1) || (diffY > 1)){
-  //       var number = getRandomIntInclusive(0, 42);
-  //       $scope.assignimage(number);
-  //       $scope.$apply();
-  //     }
+  // $rootScope.$on('homeReady', function(){
+  //     $scope.homeImages = $rootScope.Home[0].data['home.image'].value;
+  //     // $scope.assignimage(0);
+  //     $scope.$apply();
   //
   // });
-
-  // $(document).addEventListener("keydown", function(event) {
-  //   console.log(event.which);
-  // }
 }); //controller
 
 },{}],3:[function(require,module,exports){
@@ -1001,13 +926,20 @@ Checkout.controller('checkoutCtrl', function ($scope, $location, $rootScope, $ti
 'use strict';
 
 var Product = angular.module('myApp');
-Product.filter('youtubeEmbed', function ($sce) {
-  return function (url) {
-    if (url) {
-      var riskyVideo = "https://www.youtube.com/embed/" + url + "?rel=0&amp;&autoplay=1&controls=1&loop=1&showinfo=0&modestbranding=1&theme=dark&color=white&wmode=opaque";
-      return $sce.trustAsResourceUrl(riskyVideo);
-      $scope.$apply();
+Product.filter('productFilter', function ($sce, $routeParams, $rootScope) {
+  return function (data) {
+    var category = $routeParams.category;
+    var filtered = [];
+    console.log('category: ' + category);
+    for (var i in $rootScope.Product) {
+      for (var c in $rootScope.Product[i].category.data) {
+        if ($rootScope.Product[i].category.data[c].slug == category) {
+          filtered = filtered.concat($rootScope.Product[i]);
+          console.log(filtered);
+        }
+      }
     }
+    return filtered;
   };
 });
 Product.controller('productCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $http, $sce, $document, anchorSmoothScroll, $window, transformRequestAsFormPost) {

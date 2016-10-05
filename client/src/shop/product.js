@@ -1,11 +1,19 @@
 var Product = angular.module('myApp');
-Product.filter('youtubeEmbed', function ($sce) {
-    return function(url) {
-      if (url){
-        var riskyVideo = "https://www.youtube.com/embed/"+url+"?rel=0&amp;&autoplay=1&controls=1&loop=1&showinfo=0&modestbranding=1&theme=dark&color=white&wmode=opaque";
-        return $sce.trustAsResourceUrl(riskyVideo);
-        $scope.$apply();
+Product.filter('productFilter', function ($sce, $routeParams, $rootScope) {
+    return function(data) {
+      var category = $routeParams.category;
+      var filtered = [];
+      console.log('category: '+category);
+      for (var i in $rootScope.Product){
+        for (var c in $rootScope.Product[i].category.data){
+          if($rootScope.Product[i].category.data[c].slug == category){
+            filtered = filtered.concat($rootScope.Product[i]);
+            console.log(filtered);
+          }
+        }
+
       }
+      return filtered;
     };
   })
 Product.controller('productCtrl', function($scope, $location, $rootScope, $routeParams, $timeout,	$http, $sce, $document, anchorSmoothScroll, $window, transformRequestAsFormPost){

@@ -83,14 +83,12 @@ $sceProvider.enabled(false);
 
     .when('/:category/:detail', {
       templateUrl: 'views/detail.html',
-      controller: 'detailCtrl',
-      reloadOnSearch: false
+      controller: 'detailCtrl'
     })
 
     .when('/:category', {
       templateUrl: 'views/product.html',
-      controller: 'productCtrl',
-      reloadOnSearch: false
+      controller: 'productCtrl'
     })
 
 
@@ -387,67 +385,34 @@ $rootScope.Home;
 
 
 
-$rootScope.Event = [];
-$rootScope.Radio = [];
-var eventRan = false;
+$rootScope.Home = [];
 var homeRan = false;
-var radioRan = false;
+
 
     $rootScope.getContentType = function(type, orderField){
-
           Prismic.Api('https://viaspadari.cdn.prismic.io/api', function (err, Api) {
               Api.form('everything')
                   .ref(Api.master())
-
                   .query(Prismic.Predicates.at("document.type", type))
                   .orderings('['+orderField+']')
                   .pageSize(100)
                   .submit(function (err, response) {
-
                       var Data = response;
 
-                      // setTimeout(function(){
-                      //   $rootScope.firstLoading = false;
-                      //   $scope.$apply();
-                      // }, 3000);
-
-
-                      if (type =='event'){
-                        $rootScope.Event = response.results;
-                        console.log("event");
-                        console.log(response.results);
-                        if(eventRan == false){
-                          console.log("eventReady");
-                          eventRan = true;
-                          setTimeout(function(){
-                            $rootScope.$broadcast('eventReady');
-
-                          }, 900);
-
-                        }else{ return false; }
-
-                      }else if(type =='home'){
+                      if (type =='home'){
                         $rootScope.Home = response.results;
                         console.log("home");
                         console.log(response.results);
                         if(homeRan == false){
-                          console.log("homeReady");
+                          console.log("homeRanReady");
                           homeRan = true;
-                          $rootScope.$broadcast('homeReady');
+                          setTimeout(function(){
+                            $rootScope.$broadcast('homeRanReady');
+                          }, 900);
 
                         }else{ return false; }
 
-                      }else if(type =='radio'){
-                        $rootScope.Radio = response.results;
-                        console.log(response.results);
-                        if(radioRan == false){
-                          console.log("radioReady");
-                          radioRan = true;
-                          $rootScope.$broadcast('radioReady');
-
-                        }else{ return false; }
                       }
-
                       // The documents object contains a Response object with all documents of type "product".
                       var page = response.page; // The current page number, the first one being 1
                       var results = response.results; // An array containing the results of the current page;
@@ -461,8 +426,6 @@ var radioRan = false;
                         return results;
                   });
             });
-
-
     };
 
 
