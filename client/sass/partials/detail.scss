@@ -1,0 +1,136 @@
+
+.detail{
+  width:100vw;
+  position: relative;
+  margin-top: 30vh;
+  z-index: $z-detail;
+}
+
+.detail-images{
+  .detail-images-single{
+    &:nth-child(1){
+      margin-top: 10vh;
+    }
+    .detail-img{
+      max-width: 20vw;
+      margin: auto;
+      display: block;
+      margin-top: 25vh;
+
+
+      @include respond-to(phone){
+        max-width: 52vw;
+      }
+    }
+  }
+}
+
+.detail-images.zoom{
+  width:100vw;
+  height:auto;
+  .detail-images-single{
+    width:100vw;
+    height:100vh;
+    img{
+      max-width: 80vw !important;
+    }
+  }
+}
+
+
+
+.detail-functions{
+  position: fixed;
+  right: $margin-sides;
+  top: 50%;
+  width: auto;
+  margin-top: -10px;
+  height: auto;
+  z-index: $z-detail-functions;
+  @include respond-to(phone){
+    top:auto;
+    bottom:$margin-sides;
+    width:100px;
+    left:50%;
+    margin-left: -50px;
+
+  }
+}
+
+.detail-add{
+  position: relative;
+  top: 0;
+  left:0;
+  height:auto;
+  width:auto;
+  display: block;
+  float:left;
+  margin-left: $margin-left-paragraph;
+  p{
+    display: block;
+    width:100%;
+    text-align: left;
+    vertical-align: middle;
+    margin:0;
+    @include paragraph();
+    @include hover-effect-glow($red);
+
+  }
+}
+
+
+.detail-price{
+  position: absolute;
+  display:block;
+  height: $line-height-paragraph;
+  width:100%;
+  bottom: -28px;
+  left: 0;
+  float:none;
+  @include respond-to(phone){
+    position: fixed;
+    bottom: $margin-sides;
+    left:$margin-sides;
+    width:50px;
+  }
+  p{
+    height:100%;
+    width:100%;
+    color: $red;
+    text-align: right;
+    @include paragraph();
+  }
+  // z-index: $z-price;
+
+}
+
+
+.detail-modifiers{
+  position: relative;
+  // top: $margin-top-paragraph;
+  display: block;
+  float:left;
+  .detail-modifiers-ul{
+    display: block;
+    width:auto;
+    .detail-modifiers-ul-placeholder{
+      width:auto;
+      display: block;
+      float:left;
+      @include paragraph();
+    }
+    .detail-modifiers-variations{
+      width:auto;
+      display: block;
+      float:left;
+      margin-left: $margin-left-paragraph;
+      .detail-modifiers-variations-li{
+        display: block;
+        clear: both;
+        a{
+          @include paragraph();
+        }
+      }
+    }
+  }
+}

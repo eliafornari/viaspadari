@@ -1,0 +1,13 @@
+.archive{
+  width:100vw;
+  height:100vh;
+}
+
+.archive-p{
+  width:200px;
+  margin: auto;
+  display: block;
+  text-align: center;
+  @include paragraph();
+  color: $red;
+}

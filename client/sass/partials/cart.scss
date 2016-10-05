@@ -1,0 +1,305 @@
+.cart{
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: $z-cart;
+  background-color: rgba(255, 255, 255, 1);
+  // border: 1px solid white;
+  @include respond-to(phone){
+    height: 100vh;
+    width: 100vw;
+    bottom: 0px;
+    top:auto;
+    bottom:0;
+    margin:0;
+    left: 0;
+  }
+}
+
+
+
+
+.cart-close{
+  position: fixed;
+  right:$margin-sides;
+  top:$margin-sides;
+  width: 40px;
+  height:40px;
+  z-index: $z-clickOut;
+  svg{
+    width: 100%;
+    height:100%;
+    line{
+      stroke: $red;
+    }
+  }
+}
+
+.cart-contents{
+  height: 100%;
+}
+.cart-ul{
+  position: relative;
+  left: $form-sides;
+  margin-top:$form-sides;
+  width:70vw;
+  height:auto;
+  max-height:450px;
+  overflow:scroll;
+  @include respond-to(phone){
+    left: $margin-sides;
+    margin-top: $form-sides-mobile;
+    width:90vw;
+  }
+  .cart-li{
+    width:100%;
+    display:block;
+    height: 70px;
+    position: relative;
+    margin-top: $margin-top-li;
+    .cart-img{
+      height: 70px;
+      width:auto;
+      float:left;
+    }
+    &:nth-child(1){
+      margin-top:50px;
+    }
+
+    .cart-name{
+      margin-left: $margin-right-p;
+      @include respond-to(phone){
+        margin-left: $margin-right-p-mobile;
+        width:200px;
+      }
+    }
+    .cart-price{
+      float:right;
+      margin-right: 100px;
+      @include respond-to(phone){
+        float:left;
+        margin-right:auto;
+      }
+    }
+    .cart-remove{
+      float:right;
+      @include paragraph();
+      position: absolute;
+      right: 0;
+      line-height: 70px;
+      height:70px;
+      @include hover-effect-glow($red);
+      @include respond-to(phone){
+        line-height: $line-height-paragraph;
+        height:auto;
+      }
+
+    }
+    p{
+      @include paragraph();
+      float:left;
+      line-height: 70px;
+      height:70px;
+      @include respond-to(phone){
+        line-height: $line-height-paragraph;
+        height:auto;
+      }
+    }
+  }
+}
+
+.cart-total{
+  position: relative;
+  left:$form-sides;
+  height: 70px;
+  width: auto;
+  margin-top: $margin-top-li;
+  @include respond-to(phone){
+    left: $margin-sides;
+    width:90vw;
+  }
+  .cart-total-tax{
+    @include paragraph();
+    height: 70px;
+    line-height: 70px;
+  }
+  .cart-total-amount{
+    @include paragraph();
+    height: 70px;
+    line-height: 70px;
+    span{
+      margin-left: $margin-right-p;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.form-title{
+  @include h2();
+  color: $red;
+}
+
+
+
+.checkout-button{
+  position: absolute;
+  bottom: $margin-sides;
+  right:$margin-sides;
+  text-align: right;
+  width:400px;
+  height:$button-height;
+  cursor:pointer;
+  color: $red;
+  background-color: transparent;
+  border-bottom: 2px solid $red;
+
+  @include h2();
+  @include hover-effect-glow($red);
+  border: 0;
+  border-bottom: 2px solid $red;
+  outline: 0;
+  padding: 0;
+
+  @include respond-to(phone){
+    box-sizing: border-box;
+    width:90vw;
+  }
+}
+
+.cart-back{
+  position: absolute;
+  left:$margin-sides;
+  bottom: $margin-sides;
+  width: auto;
+  p{
+    height:100%;
+    @include h2();
+    @include hover-effect-glow($red);
+    line-height: normal;
+    @include respond-to(phone){
+      height:$line-height-h2;
+      line-height:$line-height-h2;
+    }
+  }
+}
+
+
+.form-entry{
+  width:100%;
+  height:20px;
+  position: relative;
+  margin-top: 5px;
+  &:nth-child(1){
+    margin-top: 15px;
+  }
+  input{
+    width: 80%;
+    left: 0px;
+    position: absolute;
+    top: 50%;
+    height: 20px;
+    margin-top: -10px;
+    color: $red;
+    background-color: transparent;
+    border:0;
+    border-bottom:2px solid $red;
+    text-align: left;
+    outline:0;
+    border-radius: 0%;
+    -webkit-border-radius: 0%;
+    -moz-border-radius: 0%;
+    @include paragraph();
+    @include respond-to(phone){
+      line-height: normal;
+      width:100%;
+    }
+    &:hover, &:focus{
+      outline:0;
+    }
+
+    &::-webkit-input-placeholder {
+       color: $red;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+       color: $red;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: $red;
+    }
+
+    &:-ms-input-placeholder {
+        color: $red;
+    }
+
+  }
+
+}
+
+
+
+
+select{
+  width: 80%;
+  left: 0px;
+  position: absolute;
+  top: 50%;
+  height: 20px;
+  margin-top: -10px;
+  color: $red;
+  background-color: transparent;
+  border:0;
+  border-bottom:2px solid $red;
+  text-align: left;
+  outline:0;
+  @include paragraph();
+  $placeholder-color:#FFFFFF;
+  border-radius: 0%;
+  -webkit-border-radius: 0%;
+  -moz-border-radius: 0%;
+  outline: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+  line-height: normal;
+  @include respond-to(phone){
+    width:100%;
+  }
+
+  &::-webkit-input-placeholder {
+     color: $red;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+     color: $red;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+     color: $red;
+  }
+
+  &:-ms-input-placeholder {
+      color: $red;
+  }
+}
+
+
+
+
+// .ng-valid .ng-pending .ng-pristine .ng-submitted
+
+input.ng-dirty.ng-invalid , select.ng-dirty.ng-invalid{
+  border-bottom: 1px solid #FFFF00;
+}

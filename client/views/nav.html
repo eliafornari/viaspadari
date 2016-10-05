@@ -1,0 +1,33 @@
+<nav ng-controller="navCtrl" class="nav">
+
+   <div class="nav-logo">
+     <a href="/">
+       <logo-directive></logo-directive>
+     </a>
+   </div>
+
+
+     <table class="nav-table">
+       <tr>
+         <td>
+           <div class="nav-list" >
+             <div class="nav-main">
+               <a class="nav-main-a" href="/{{c.slug}}" ng-class="{'active': isLocation('/shop')}" ng-repeat="c in Categories">{{c.title}}</a>
+
+             </div>
+
+
+
+             <div class="nav-right">
+
+             </div>
+
+           </div>
+         </td>
+       </tr>
+     </table>
+
+
+
+
+</nav>

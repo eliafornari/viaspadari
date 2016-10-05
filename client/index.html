@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"  ng-controller="appCtrl"> <!--<![endif]-->
+
+
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=0">
+  <title>VIASPADARI</title>
+
+
+<meta name="google-site-verification" content="">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="https://viaspadari.com/client/assets/images/profile.jpg">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@">
+<meta name="twitter:site" content="@viaspadari">
+<meta name="twitter:title" content="viaspadari">
+<meta name="twitter:description" content="viaspadari">
+<meta name="twitter:image" content="https://viaspadari.com/client/assets/images/profile.jpg">
+
+<meta name="description" content="viaspadari">
+<meta name="robots" content="noodp">
+<meta name="keywords" content="">
+<link rel="canonical" href="https://viaspadari.com/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="website">
+<meta property="og:title" content="viaspadari">
+<meta property="og:description" content="viaspadari">
+<meta property="og:url" content="https://viaspadari.com/">
+<meta property="og:site_name" content="viaspadari">
+
+
+  <meta name=“author” title=“Elia Fornari | Qual Agency”>
+
+  <link rel=”author” href=”https://plus.google.com/u/1/+eliafornarichannel”/>
+  <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico" >
+
+
+<!--
+=======================================================================
+
+    Chapter | 2016
+
+    Designed and developed by Elia Fornari | ELIA LLC.
+
+    sowftware is how we make art
+
+=======================================================================
+
+-->
+
+  <script>
+
+  </script>
+
+  <base href="/">
+</head>
+
+
+
+<!-- .................................. Body ...............................-->
+
+<body>
+
+
+    <nav-directive ></nav-directive>
+
+  <div ng-show="pageLoading" class="page-loader-div">
+    <div class="loading-logo">
+    </div>
+  </div>
+
+
+  <div class="dollar" ng-click="openCart()" ng-cloak>
+    <p ng-if="Cart.total_items == 0">cart</p>
+    <ul class="dollar-ul">
+      <li class="dollar-li" id="dollar-li-{{$index}}" ng-repeat="c in Cart.contents">
+        <img class="dollar-img"  src="{{c.images[0].url.https}}" alt="{{c.images[0].name}}"/>
+      </li>
+    </ul>
+    <!-- <p class="dollar-contents" ng-cloak>{{Cart.totals.post_discount.formatted.without_tax}}</p> -->
+  </div>
+
+
+
+  <div class="cart-close" ng-click="closeCart()" ng-show="showCart" ng-cloak>
+    <ex-directive></ex-directive>
+  </div>
+
+  <div class="cart" ng-include="template.url" ng-show="showCart" ng-controller="cartCtrl" >
+
+  </div>
+
+
+  <main ng-view class="main {{pageClass}}"></main>
+
+
+
+</body>
+
+  <link rel="stylesheet" type="text/css" href="/dist/style.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="/dist/bundle.js"></script>
+
+</html>

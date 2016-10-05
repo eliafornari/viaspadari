@@ -1,0 +1,14 @@
+.contact{
+  width:100vw;
+  height:100vh;
+}
+
+.contact-a{
+  width:200px;
+  margin: auto;
+  display: block;
+  text-align: center;
+  @include paragraph();
+  color: $red;
+  @include hover-effect-glow($red);
+}

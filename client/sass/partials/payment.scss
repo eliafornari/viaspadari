@@ -1,0 +1,55 @@
+
+.payment{
+  width:100%;
+  height:100%;
+  position: fixed;
+  top: 0;
+}
+
+
+.payment-form{
+  width:100%;
+  height:100%;
+  .payment-form-div{
+    width:35%;
+    height:200px;
+    display:block;
+    position: relative;
+    margin-top: $form-sides;
+    left: $form-sides;
+    @include respond-to(phone){
+      width:50%;
+      left: $margin-sides;
+    }
+  }
+}
+
+
+
+  .payment-total{
+    position: relative;
+    left:$form-sides;
+    height: 70px;
+    width:35%;
+    margin-top: $margin-top-li;
+    margin-bottom: $margin-sides;
+    background-color: transparent;
+    @include respond-to(phone){
+      width:50%;
+    }
+    p{
+      @include paragraph();
+      width:80%;
+      span{
+        float:right;
+        @include paragraph();
+      }
+    }
+  }
+
+
+
+
+.payment-header{
+  @include h2();
+}

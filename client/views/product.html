@@ -1,0 +1,24 @@
+<div class="product" ng-controller="productCtrl">
+
+
+
+      <div class="product-content" ng-class="{'openDetail': isDetailOpen}" >
+        <ul class="product-ul">
+          <li class="product-li" ng-repeat="p in Product " ng-click="openDetailFN(p.slug)" ng-init="productHovered=false">
+            <table>
+              <tr>
+                <td>
+                  <img class="product-li-img" src="{{p.images[0].url.http}}" alt="{{p.description}}" ng-class="{'opacityProducts': isDetailOpen && !productHovered}" ng-mouseenter="productHovered=true" ng-mouseleave="productHovered=false"/>
+                </td>
+              </tr>
+            </table>
+
+          </li>
+        </ul>
+
+      </div>
+
+
+
+
+</div>

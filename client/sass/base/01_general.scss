@@ -1,0 +1,261 @@
+/*....................................General settings..................................*/
+
+
+
+
+/*.....................TEXT MARK STYLES......................*/
+
+::-moz-selection {
+    background: $yellow;
+    color: #000000;
+    text-shadow: none;
+}
+
+
+::selection {
+    background: $yellow;
+    color: #000000;
+    text-shadow: none;
+}
+
+
+
+span::-moz-selection {
+    background: transparent;
+    color: $red;
+    text-shadow: none;
+}
+
+
+span::selection {
+    background: transparent;
+    color: $red;
+    text-shadow: none;
+}
+
+a::-moz-selection {
+    background: transparent;
+    color: $purple;
+    text-shadow: none;
+}
+
+
+a::selection {
+    background: transparent;
+    color: $purple;
+    text-shadow: none;
+}
+
+
+
+/*....................HIDING SCROLLBAR.....................*/
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+
+
+
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+
+
+/*.....................GENERAL STYLES......................*/
+
+html{
+  box-sizing: border-box;
+  font-family: $font-family-paragraph;
+  width: 100%;
+  height: auto;
+  margin: 0, 0;
+  padding: 0, 0;
+  color:$white;
+  min-height:100%;
+  background-color: $black;
+  @include respond-to(phone-device){
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: fixed;
+    height:100vh;
+    width:100vw;
+  }
+}
+
+
+body {
+  width: 100%;
+  height: auto;
+   color:$white;
+   min-height:100%;
+   background-color: $black;
+  margin: 0, 0;
+  padding: 0, 0;
+  display: table;
+  @include respond-to(phone-device){
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: fixed;
+    height:100vh;
+    width:100vw;
+  }
+
+/* Hide oversized content. This prevents the scroll bars. */
+// overflow: hidden;
+}
+
+
+p, a, li {
+  list-style-type: none;
+  letter-spacing:$letter-spacing;
+}
+
+p, span{
+  @include paragraph();
+  color:$white;
+}
+
+
+
+
+/*........................A.................................*/
+
+
+a:active {
+  text-shadow: 0 0 3px $purple;
+}
+.ng-click-active{
+  text-shadow: 0 0 3px $purple;
+}
+
+a{
+  cursor: pointer;
+  color: $white;
+  @include h2();
+  @include hover-effect-glow($purple);
+}
+
+
+/*.....................ACTIVE CLASSES......................*/
+
+.active{
+  text-shadow: 0 0 3px $purple;
+  pointer-events: none;
+}
+
+input, textarea, select, a, li {
+  text-decoration: none;
+}
+
+select, input, textarea{
+  line-height: normal;
+}
+
+
+table{
+  width:100%;
+  height:100%;
+  tr{
+    td{
+      vertical-align: middle;
+      height:100%;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+/*.........................MAIN............................*/
+main {
+  height: auto;
+  min-height:100%;
+  position: relative;
+  display: block;
+  list-style-type: none;
+  display: table;
+}
+
+/*.............................Loader............................*/
+
+
+
+// .page-loader-div{
+//   display: block;
+//   height: 100vh;
+//   display: block;
+//   width: 100vw;
+//   padding: 0;
+//   margin: 0;
+//   display: list-item;
+//   background-color: transparent;
+//   z-index: $z-loader;
+//   background-color: rgba(0,0,0,1);
+//   position: fixed;
+//   top:0;
+//   left:0;
+//   .loading-p{
+//     position: fixed;
+//     width:100vw;
+//     height:100vh;
+//     vertical-align: middle;
+//     text-align: center;
+//     font-size: $font-size-h2;
+//     font-family: helvetica;
+//   }
+// }
+//
+// .page-loader-div{
+//   opacity:1;
+// }
+//
+// .page-loader-div.ng-hide{
+//   opacity:0;
+// }
+//
+//
+// $animation-speed:2s;
+//
+// .page-loader-div.ng-hide-remove.ng-hide-remove-active{
+//   -webkit-transition: opacity $animation-speed $animation-bezier;
+//   -moz-transition: opacity $animation-speed $animation-bezier;
+//   -ms-transition: opacity $animation-speed $animation-bezier;
+//   -o-transition: opacity $animation-speed $animation-bezier;
+//   transition: opacity $animation-speed $animation-bezier;
+// }
+//
+// .page-loader-div.ng-hide-add.ng-hide-add-active{
+//   -webkit-transition: opacity $animation-speed $animation-bezier;
+//   -moz-transition: opacity $animation-speed $animation-bezier;
+//   -ms-transition: opacity $animation-speed $animation-bezier;
+//   -o-transition: opacity $animation-speed $animation-bezier;
+//   transition: opacity $animation-speed $animation-bezier;
+// }
+//
+
+
+
+
+
+/*.............................NG-CLOAK............................*/
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+cursor: pointer;
+}
