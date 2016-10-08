@@ -78,14 +78,14 @@
   </div>
 
 
-  <div class="dollar" ng-click="openCart()" ng-cloak>
-    <p ng-if="Cart.total_items == 0">cart</p>
-    <ul class="dollar-ul">
-      <li class="dollar-li" id="dollar-li-{{$index}}" ng-repeat="c in Cart.contents">
-        <img class="dollar-img"  src="{{c.images[0].url.https}}" alt="{{c.images[0].name}}"/>
-      </li>
-    </ul>
-    <!-- <p class="dollar-contents" ng-cloak>{{Cart.totals.post_discount.formatted.without_tax}}</p> -->
+  <div class="bag" ng-click="openCart()" ng-cloak>
+    <p class="bag-total" ng-if="Cart.total_items != 0">{{Cart.total_items}}</p>
+
+    <div class="bag-svg">
+      <bag-directive></bag-directive>
+      <!-- Creative Stall | Noun Project -->
+    </div>
+
   </div>
 
 
@@ -99,7 +99,7 @@
   </div>
 
 
-  <main ng-view class="main {{pageClass}}"></main>
+  <main ng-view class="main page {{pageClass}}"></main>
 
 
 

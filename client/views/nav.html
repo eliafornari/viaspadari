@@ -17,27 +17,25 @@
 
                <div class="nav-sub">
                  <a class="nav-sub-a" href="/{{c.slug}}" ng-repeat="c in p.children">{{c.title}}</a>
-
                </div>
-
              </div>
 
 
-
-             <div class="nav-bottom">
-
-               <div class="nav-bottom-lang">
-                 <p>{{lang.language}}</p>
-
-               </div>
-
-             </div>
 
            </div>
          </td>
        </tr>
      </table>
 
+
+     <div class="nav-bottom">
+       <div class="nav-bottom-lang">
+         <select name="nav-bottom-lang-select" ng-model="selectedLang" ng-change="selectLang()" required>
+           <option ng-repeat="l in lang" value="{{l.language}}" ng-selected="{{selectedLang = lang[0]}}">{{l.language}}</option>
+         </select>
+
+       </div>
+     </div>
 
 
 

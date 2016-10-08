@@ -89,13 +89,19 @@ app.get('/authenticate', function(req, res){
 
     app.post('/addProduct', function(req, res){
 
-      var id = req.body.id;
-      var token = req.body.access_token;
-      console.log();
-      res.setHeader("Authorization", "Bearer "+token);
+      var id = req.body.id.toString();
+      console.log(id);
+      // var token = req.body.access_token;
+      // console.log();
+      // res.setHeader("Authorization", "Bearer "+token);
 
       moltin.Cart.Insert(id, 1, null, function(items){
+          console.log(items);
         res.json(items);
+
+      },function(err, doc){
+        console.log(err, doc);
+        res.json(err);
       });
 
     });
@@ -388,15 +394,9 @@ app.get('/authenticate', function(req, res){
                   updateProductStock(thisProduct, stock);
                 }
               }
-
             }
-
           }
-
-
         }//for loop
-
-
     }
 
 
@@ -457,6 +457,23 @@ app.get('/authenticate', function(req, res){
 
 
 
+
+
+app.get('/data', function(req, res){
+  // Get content from file
+ var countries = fs.readFileSync("data/countries.json");
+ var locale = fs.readFileSync("data/locale.json");
+
+ var countries = JSON.parse(countries);
+ var locale = JSON.parse(locale);
+
+
+ var data= {};
+ data.countries = countries;
+ data.locale = locale;
+
+ res.json(data);
+});
 
 
 

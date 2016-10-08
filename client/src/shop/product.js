@@ -32,15 +32,7 @@ $rootScope.windowHeight = $window.innerHeight;
 $rootScope.Detail = {};
 
 
-$rootScope.showCart = false;
-$rootScope.template={};
-$rootScope.templates = [
-                          { name: 'cart', url: 'views/cart.html'},
-                          { name: 'shipment', url: 'views/shipment.html'},
-                          { name: 'payment', url: 'views/payment.html'},
-                          { name: 'processed', url: 'views/processed.html'}
-                        ];
-$rootScope.template = $rootScope.templates[0];
+
 
 
 
@@ -101,6 +93,8 @@ $rootScope.Detail;
             $rootScope.updateCart();
             $rootScope.pageLoading = false;
             console.log(response);
+          }, function(err){
+            console.log(err);
           });
     }//addToCart
 

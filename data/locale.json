@@ -1,0 +1,45 @@
+{
+  "IT":{
+    "meta":{
+      "language":"italiano",
+      "code":"IT"
+    },
+    "data":{
+      "cart":"carrello",
+      "checkout":"checkout",
+      "confirm_order":"conferma ordine",
+      "back": "indietro",
+      "menu":"menu",
+      "name": "nome",
+      "lastname": "cognome",
+      "email": "email",
+      "address": "indirizzo",
+      "county": "regione",
+      "country": "nazione",
+      "zip": "cap",
+      "different_billing": "diversa fatturazione"
+    }
+  },
+
+  "US":{
+    "meta":{
+      "language":"english",
+      "code":"US"
+    },
+    "data":{
+      "cart":"cart",
+      "checkout":"checkout",
+      "confirm_order":"confirm order",
+      "back": "back",
+      "menu":"menu",
+      "name": "name",
+      "lastname": "last name",
+      "email": "email",
+      "address": "address",
+      "county": "county",
+      "country": "country",
+      "zip": "zip",
+      "different_billing": "different billing"
+    }
+  }
+}

@@ -159,17 +159,52 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     $rootScope.authentication();
   }, 600);
 
+  $rootScope.showCart = false;
+  $rootScope.template = {};
+  $rootScope.templates = [{ name: 'cart', url: 'views/cart.html' }, { name: 'shipment', url: 'views/shipment.html' }, { name: 'payment', url: 'views/payment.html' }, { name: 'processed', url: 'views/processed.html' }];
+  $rootScope.template = $rootScope.templates[0];
+
   // select country
 
-  $rootScope.lang = { "code": "US", "country": "US", "language": "English" };
+  $rootScope.lang = [{ "code": "US", "country": "US", "language": "English", "selected": true }, { "code": "IT", "country": "Italy", "language": "Italiano", "selected": true }];
 
-  $rootScope.selectLang = function (code) {
-    if (code == "IT") {
-      $rootScope.lang = { "code": "IT", "country": "Italy", "language": "Italiano" };
-    } else {
-      $rootScope.lang = { "code": "US", "country": "US", "language": "English" };
+  $rootScope.selectLang = function () {
+    for (var i in $rootScope.lang) {
+      $rootScope.lang[i].selected = false;
+      if ($rootScope.lang[i].code == $scope.selectedLang.code) {
+        $rootScope.lang[i].selected = true;
+      };
+      console.log($rootScope.lang);
     }
   };
+
+  $rootScope.selectedLang = $rootScope.lang[0];
+  console.log($rootScope.selectedLang);
+  console.log("lang lang");
+  $rootScope.selectLang();
+
+  //getting json text meta data
+
+  $rootScope.countries = [];
+  $rootScope.locale = {};
+
+  $rootScope.getCountries = function () {
+    $http({
+      method: 'GET',
+      url: '/data'
+    }).then(function successCallback(response) {
+      $rootScope.countries = response.data.countries;
+      $rootScope.locale = response.data.locale;
+      console.log(response.data);
+    }, function errorCallback(response) {
+
+      $scope.error = { value: true, text: 'countries or locale not available, this page will be reloaded' };
+      setTimeout({
+        // $route.reload();
+      }, 2000);
+    });
+  };
+  $rootScope.getCountries();
 
   //..............................................................................MOBILE
 
@@ -307,7 +342,16 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   //             });
   //     };
   //
-}); //......end of the route controller
+}) //......end of the route controller
+
+.directive('bagDirective', function ($rootScope, $location, $window, $routeParams, $timeout) {
+  return {
+    restrict: 'E',
+    templateUrl: 'views/icon/bag.html',
+    replace: true,
+    link: function link(scope, elem, attrs) {}
+  };
+});
 
 var jquerymousewheel = require('./vendor/jquery.mousewheel.js')($);
 var infiniteScroll = require("./vendor/infiniteScroll.js");
@@ -619,26 +663,6 @@ Cart.controller('cartCtrl', function ($scope, $location, $rootScope, $timeout, $
     $rootScope.Cart = newValue;
   });
 
-  $rootScope.countries = [];
-
-  $rootScope.getCountries = function () {
-    $http({
-      method: 'GET',
-      url: 'assets/countries.json'
-    }).then(function successCallback(response) {
-
-      $rootScope.countries = response.data;
-      console.log(response.data);
-    }, function errorCallback(response) {
-
-      $scope.error = { value: true, text: 'countries not available, this page will be reloaded' };
-      setTimeout({
-        // $route.reload();
-      }, 2000);
-    });
-  };
-  $rootScope.getCountries();
-
   $scope.phoneRegex = '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$';
   $scope.postcodeRegex = '^\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d$';
 
@@ -948,11 +972,6 @@ Product.controller('productCtrl', function ($scope, $location, $rootScope, $rout
   $rootScope.isDetailOpen = false;
   $rootScope.windowHeight = $window.innerHeight;
   $rootScope.Detail = {};
-
-  $rootScope.showCart = false;
-  $rootScope.template = {};
-  $rootScope.templates = [{ name: 'cart', url: 'views/cart.html' }, { name: 'shipment', url: 'views/shipment.html' }, { name: 'payment', url: 'views/payment.html' }, { name: 'processed', url: 'views/processed.html' }];
-  $rootScope.template = $rootScope.templates[0];
 }); //controller
 
 Product.controller('detailCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $http, $sce, $document, anchorSmoothScroll, $window, transformRequestAsFormPost) {
@@ -1003,6 +1022,8 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
       $rootScope.updateCart();
       $rootScope.pageLoading = false;
       console.log(response);
+    }, function (err) {
+      console.log(err);
     });
   }; //addToCart
 

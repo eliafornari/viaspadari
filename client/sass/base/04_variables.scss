@@ -4,31 +4,29 @@ $z-nav: 4;
 
 
 
-// ........................................................FONT WEIGHTS
-$font-weight-light: 300;
-$font-weight-regular: 400;
-
-
 
 // ........................................................FONT SIZES
-$font-size-nav:20px;
+
 $font-size-h1:35px;
-$font-size-h2:11px;
+$font-size-h2:18px;
+$font-size-h3:11px;
 $font-size-paragraph: 11px;
 
-$font-size-nav-mobile:25px;
-$font-size-h1-mobile:30px;
-$font-size-h2-mobile:14px;
+
+$font-size-h1-mobile:35px;
+$font-size-h2-mobile:12px;
+$font-size-h3:11px;
 $font-size-paragraph-mobile: 12px;
 
 
-$letter-spacing: 1px;
+$letter-spacing: 2px;
 
 
 
 $font-family-nav: 'gillsans_light';
 $font-family-h1: 'didot';
 $font-family-h2: 'gillsans_light';
+$font-family-h3: 'gillsans_light';
 $font-family-paragraph: 'gillsans_light';
 
 
@@ -41,6 +39,7 @@ $line-height-paragraph: 30px;
 
 $line-height-h1-mobile: 40px;
 $line-height-h2-mobile: 24px;
+$line-height-h3:20px;
 $line-height-paragraph-mobile: 18px;
 
 $button-height:50px;
@@ -74,7 +73,7 @@ $margin-top: 200px;
 $margin-sides-mobile:10px;
 $margin-left-paragraph:10px;
 $margin-top-paragraph:10px;
-$margin-top-li:30px;
+$margin-top-li:20px;
 $margin-right-p:40px;
 $form-sides:100px;
 
@@ -111,7 +110,7 @@ $z-nav: 16;
 $z-loader: 16;
 
 
-$z-shop-dollar: 14;
+$z-bag: 14;
 $z-shop-content:13;
 $z-back: 12;
 

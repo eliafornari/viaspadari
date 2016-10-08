@@ -3,7 +3,7 @@
   height: 100vh;
   width: 100vw;
   z-index: $z-cart;
-  background-color: rgba(255, 255, 255, 1);
+  background-color: rgba(0, 0, 0, 1);
   // border: 1px solid white;
   @include respond-to(phone){
     height: 100vh;
@@ -23,14 +23,14 @@
   position: fixed;
   right:$margin-sides;
   top:$margin-sides;
-  width: 40px;
-  height:40px;
+  width: 25px;
+  height:25px;
   z-index: $z-clickOut;
   svg{
     width: 100%;
     height:100%;
     line{
-      stroke: $red;
+      stroke: $white;
     }
   }
 }
@@ -88,7 +88,7 @@
       right: 0;
       line-height: 70px;
       height:70px;
-      @include hover-effect-glow($red);
+      @include hover-effect-color($light-grey, $white);
       @include respond-to(phone){
         line-height: $line-height-paragraph;
         height:auto;
@@ -148,7 +148,7 @@
 
 .form-title{
   @include h2();
-  color: $red;
+  color: $light-grey;
 }
 
 
@@ -161,14 +161,12 @@
   width:400px;
   height:$button-height;
   cursor:pointer;
-  color: $red;
   background-color: transparent;
-  border-bottom: 2px solid $red;
+  border-bottom: 1px solid $light-grey;
 
   @include h2();
-  @include hover-effect-glow($red);
+  @include hover-effect-color($light-grey, $white);
   border: 0;
-  border-bottom: 2px solid $red;
   outline: 0;
   padding: 0;
 
@@ -186,7 +184,7 @@
   p{
     height:100%;
     @include h2();
-    @include hover-effect-glow($red);
+    @include hover-effect-color($light-grey, $white);
     line-height: normal;
     @include respond-to(phone){
       height:$line-height-h2;
@@ -211,10 +209,10 @@
     top: 50%;
     height: 20px;
     margin-top: -10px;
-    color: $red;
+    color: $light-grey;
     background-color: transparent;
     border:0;
-    border-bottom:2px solid $red;
+    border-bottom:1px solid $light-grey;
     text-align: left;
     outline:0;
     border-radius: 0%;
@@ -258,14 +256,13 @@ select{
   top: 50%;
   height: 20px;
   margin-top: -10px;
-  color: $red;
+
   background-color: transparent;
   border:0;
-  border-bottom:2px solid $red;
   text-align: left;
   outline:0;
   @include paragraph();
-  $placeholder-color:#FFFFFF;
+  color: $light-grey;
   border-radius: 0%;
   -webkit-border-radius: 0%;
   -moz-border-radius: 0%;
@@ -280,18 +277,18 @@ select{
   }
 
   &::-webkit-input-placeholder {
-     color: $red;
+     color: $light-grey;
   }
   &:-moz-placeholder { /* Firefox 18- */
-     color: $red;
+     color: $light-grey;
   }
 
   &::-moz-placeholder {  /* Firefox 19+ */
-     color: $red;
+     color: $light-grey;
   }
 
   &:-ms-input-placeholder {
-      color: $red;
+      color: $light-grey;
   }
 }
 

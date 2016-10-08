@@ -94,7 +94,10 @@ table {
     .nav-table .nav-list .nav-main {
       width: auto;
       height: auto;
-      margin-left: 20px; }
+      margin-left: 20px;
+      margin-top: 20px; }
+      .nav-table .nav-list .nav-main:nth-child(1) {
+        margin-top: 0; }
       .nav-table .nav-list .nav-main .nav-main-a {
         text-align: left;
         width: auto;
@@ -110,7 +113,19 @@ table {
           width: auto;
           display: block;
           clear: both;
-          text-transform: uppercase; }
+          text-transform: uppercase;
+          line-height: 27px; }
+
+.nav-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; }
+  .nav-bottom .nav-bottom-lang {
+    width: 50%;
+    position: absolute;
+    right: 0; }
 
 /*....................................General settings..................................*/
 /*.....................TEXT MARK STYLES......................*/
@@ -160,6 +175,7 @@ html {
   color: #d3d3d3;
   min-height: 100%;
   background-color: #000000;
+  font-weight: normal;
   /*  @if $media == large-desktop {
       @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
     }*/ }
@@ -194,20 +210,22 @@ body {
 
 p, a, li {
   list-style-type: none;
-  letter-spacing: 1px; }
+  letter-spacing: 2px; }
 
 p, span {
   font-size: 11px;
   line-height: 30px;
   font-family: "gillsans_light";
+  letter-spacing: 2px;
   color: #d3d3d3; }
 
 /*........................A.................................*/
 a {
   cursor: pointer;
   font-size: 11px;
-  line-height: 35px;
+  line-height: 20px;
   font-family: "gillsans_light";
+  letter-spacing: 2px;
   color: #d3d3d3;
   transition: color 0.4s ease;
   -webkit-transition: color 0.4s ease;
@@ -266,7 +284,7 @@ main {
 
 /*.............................Loader............................*/
 .page-loader {
-  display: block;
+  display: none;
   height: 100vh;
   display: block;
   width: calc(100vw - 250px);
@@ -286,13 +304,88 @@ main {
     vertical-align: middle;
     text-align: center;
     font-size: 11px;
-    font-family: helvetica; }
+    line-height: 20px;
+    font-family: "gillsans_light";
+    letter-spacing: 2px; }
 
-.page-loader-div {
-  opacity: 1; }
+@keyframes pageenter {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-webkit-keyframes pageenter {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-moz-keyframes pageenter {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-ms-keyframes pageenter {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+@-o-keyframes pageenter {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+/*.................................NG ENTER/LEAVE..................................*/
+.page.ng-enter {
+  animation: pageenter 1s both ease 0s;
+  -webkit-animation: pageenter 1s both ease 0s;
+  -moz-animation: pageenter 1s both ease 0s;
+  -ms-animation: pageenter 1s both ease 0s;
+  -o-animation: pageenter 1s both ease 0s; }
 
-.page-loader-div.ng-hide {
+.page.page-home.ng-leave {
+  animation: pageleave 0s ease;
+  -webkit-animation: pageleave 0s ease;
+  -moz-animation: pageleave 0s ease;
+  -ms-animation: pageleave 0s ease;
+  -o-animation: pageleave 0s ease; }
+
+.ng-enter {
+  z-index: 8888; }
+
+.ng-leave {
+  z-index: 9999; }
+
+.page.ng-enter {
+  opacity: 1;
+  -webkit-transition: opacity 1s ease;
+  -moz-transition: opacity 1s ease;
+  -ms-transition: opacity 1s ease;
+  -o-transition: opacity 1s ease;
+  transition: opacity 1s ease; }
+
+.page.ng-leave {
   opacity: 0; }
+
+.bag {
+  display: block;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 14;
+  width: 25px;
+  height: 25px; }
+  .bag .bag-svg {
+    width: 100%;
+    height: 100%; }
+    .bag .bag-svg svg {
+      width: 100%;
+      height: 100%; }
+  .bag .bag-total {
+    width: 100%;
+    height: 100%;
+    line-height: 32px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute; }
 
 /*.............................NG-CLOAK............................*/
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -310,16 +403,20 @@ main {
 .product-content {
   width: 100%; }
   .product-content .product-ul {
-    width: 80%;
+    width: 100%;
     display: block;
     margin: auto; }
     .product-content .product-ul .product-li {
-      width: 20vw;
-      height: auto; }
+      width: 30%;
+      height: auto;
+      margin-right: 5%; }
+      .product-content .product-ul .product-li:nth-child(2n) {
+        margin-right: 0%; }
       .product-content .product-ul .product-li .product-li-container .product-li-h1 {
         position: absolute;
         bottom: 0;
-        width: 100%;
+        width: 28%;
+        margin-left: 1%;
         font-size: 35px;
         line-height: 50px;
         font-family: "didot";
@@ -397,6 +494,7 @@ main {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     text-shadow: 0 0 0px #ec2224;
     transition: text-shadow 0.2s ease;
     -webkit-transition: text-shadow 0.2s ease;
@@ -447,7 +545,8 @@ main {
     text-align: right;
     font-size: 11px;
     line-height: 30px;
-    font-family: "gillsans_light"; }
+    font-family: "gillsans_light";
+    letter-spacing: 2px; }
 
 .about {
   height: 100vh;
@@ -478,6 +577,7 @@ main {
   font-size: 11px;
   line-height: 30px;
   font-family: "gillsans_light";
+  letter-spacing: 2px;
   color: #ec2224;
   text-shadow: 0 0 0px #ec2224;
   transition: text-shadow 0.2s ease;
@@ -505,229 +605,6 @@ main {
       .contact-a:hover {
         color: #ec2224 !important; } }
 
-.event {
-  width: 100vw;
-  height: 100vh; }
-
-.event-ul {
-  width: 400px;
-  margin: auto;
-  margin-top: 200px;
-  /*  @if $media == large-desktop {
-      @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-    }*/ }
-  @media only screen and (min-width: 0px) and (max-width: 767px) {
-    .event-ul {
-      width: 80vw; } }
-  .event-ul .event-li {
-    width: 400px;
-    clear: both;
-    margin: auto;
-    height: 50px;
-    position: relative;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/ }
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      .event-ul .event-li {
-        width: 80vw; } }
-    .event-ul .event-li:nth-child(1) {
-      margin-top: 0; }
-    .event-ul .event-li .event-date {
-      width: 400px;
-      margin: auto;
-      /*  @if $media == large-desktop {
-          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-        }*/ }
-      @media only screen and (min-width: 0px) and (max-width: 767px) {
-        .event-ul .event-li .event-date {
-          width: 80vw; } }
-      .event-ul .event-li .event-date span {
-        width: 20%;
-        text-align: center;
-        float: left; }
-
-.event-info-left {
-  position: absolute;
-  left: 0;
-  width: 200px;
-  vertical-align: middle; }
-  .event-info-left a {
-    font-size: 11px;
-    line-height: 30px;
-    font-family: "gillsans_light";
-    color: #ec2224;
-    text-shadow: 0 0 0px #ec2224;
-    transition: text-shadow 0.2s ease;
-    -webkit-transition: text-shadow 0.2s ease;
-    -moz-transition: text-shadow 0.2s ease;
-    -ms-transition: text-shadow 0.2s ease; }
-    .event-info-left a:hover {
-      text-shadow: 2px 2px 7px #ec2224;
-      /*  @if $media == large-desktop {
-          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-        }*/
-      /*  @if $media == large-desktop {
-          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-        }*/
-      /*  @if $media == large-desktop {
-          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-        }*/ }
-      @media only screen and (min-width: 0px) and (max-device-width: 767px) {
-        .event-info-left a:hover {
-          color: #ec2224 !important; } }
-      @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
-        .event-info-left a:hover {
-          color: #ec2224 !important; } }
-      @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
-        .event-info-left a:hover {
-          color: #ec2224 !important; } }
-  .event-info-left span {
-    font-size: 11px;
-    line-height: 30px;
-    font-family: "gillsans_light"; }
-
-.event-info-right {
-  position: absolute;
-  right: 0;
-  width: 200px;
-  vertical-align: middle;
-  text-align: right; }
-  .event-info-right span {
-    width: 100%;
-    text-align: right;
-    font-size: 11px;
-    line-height: 30px;
-    font-family: "gillsans_light"; }
-
-.event-image {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  width: 250px; }
-  .event-image img {
-    width: 100%; }
-
-.event-description {
-  position: fixed;
-  right: 20px;
-  bottom: 20px; }
-
-.event-date.shrinkDate {
-  width: 8vw !important; }
-
-.event-date.shrinkDate-add.shrinkDate-add-active {
-  -webkit-animation: shrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6);
-  -moz-animation: shrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6);
-  -ms-animation: shrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6);
-  animation: shrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6); }
-
-.event-date.shrinkDate-remove.shrinkDate-remove-active {
-  -webkit-animation: unShrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6);
-  -moz-animation: unShrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6);
-  -ms-animation: unShrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6);
-  animation: unShrink 0.2s cubic-bezier(0.17, 0.67, 0.91, 0.6); }
-
-@keyframes shrink {
-  0% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } }
-  100% {
-    width: 8vw; } }
-@-webkit-keyframes shrink {
-  0% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } }
-  100% {
-    width: 8vw; } }
-@-moz-keyframes shrink {
-  0% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } }
-  100% {
-    width: 8vw; } }
-@-ms-keyframes shrink {
-  0% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } }
-  100% {
-    width: 8vw; } }
-@-o-keyframes shrink {
-  0% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } }
-  100% {
-    width: 8vw; } }
-@keyframes unShrink {
-  0% {
-    width: 8vw; }
-  100% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } } }
-@-webkit-keyframes unShrink {
-  0% {
-    width: 8vw; }
-  100% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } } }
-@-moz-keyframes unShrink {
-  0% {
-    width: 8vw; }
-  100% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } } }
-@-ms-keyframes unShrink {
-  0% {
-    width: 8vw; }
-  100% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } } }
-@-o-keyframes unShrink {
-  0% {
-    width: 8vw; }
-  100% {
-    width: 400px;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      width: 80vw; } } }
 .home {
   position: fixed;
   width: 100vw;
@@ -769,111 +646,12 @@ main {
     .home-social .home-social-li a {
       display: block; }
 
-.radio {
-  width: 100vw;
-  height: 100vh; }
-
-.radio-ul {
-  width: 55vw;
-  margin: auto;
-  margin-top: 200px;
-  /*  @if $media == large-desktop {
-      @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-    }*/ }
-  @media only screen and (min-width: 0px) and (max-width: 767px) {
-    .radio-ul {
-      width: 80vw; } }
-  .radio-ul .radio-li {
-    width: 55vw;
-    clear: both;
-    margin: auto;
-    height: 50px;
-    line-height: 50px;
-    vertical-align: middle;
-    position: relative;
-    /*  @if $media == large-desktop {
-        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-      }*/ }
-    @media only screen and (min-width: 0px) and (max-width: 767px) {
-      .radio-ul .radio-li {
-        width: 80vw; } }
-    .radio-ul .radio-li:nth-child(1) {
-      margin-top: 0; }
-    .radio-ul .radio-li p {
-      text-shadow: 0 0 0px #ec2224;
-      transition: text-shadow 0.2s ease;
-      -webkit-transition: text-shadow 0.2s ease;
-      -moz-transition: text-shadow 0.2s ease;
-      -ms-transition: text-shadow 0.2s ease; }
-      .radio-ul .radio-li p:hover {
-        text-shadow: 2px 2px 7px #ec2224;
-        /*  @if $media == large-desktop {
-            @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-          }*/
-        /*  @if $media == large-desktop {
-            @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-          }*/
-        /*  @if $media == large-desktop {
-            @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-          }*/ }
-        @media only screen and (min-width: 0px) and (max-device-width: 767px) {
-          .radio-ul .radio-li p:hover {
-            color: #ec2224 !important; } }
-        @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
-          .radio-ul .radio-li p:hover {
-            color: #ec2224 !important; } }
-        @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
-          .radio-ul .radio-li p:hover {
-            color: #ec2224 !important; } }
-    .radio-ul .radio-li .radio-li-date {
-      width: 20%;
-      display: inline-block;
-      text-align: left;
-      float: left; }
-    .radio-ul .radio-li .radio-li-title {
-      width: 70%;
-      display: inline-block;
-      margin-left: 10%;
-      float: left; }
-
-.radio-image {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  width: 250px; }
-  .radio-image img {
-    width: 100%; }
-
-.radio-soundcloud {
-  position: fixed;
-  left: 20px;
-  bottom: 20px;
-  width: 200px;
-  height: 200px; }
-  .radio-soundcloud iframe {
-    width: 100%;
-    height: 100%; }
-
-.archive {
-  width: 100vw;
-  height: 100vh; }
-
-.archive-p {
-  width: 200px;
-  margin: auto;
-  display: block;
-  text-align: center;
-  font-size: 11px;
-  line-height: 30px;
-  font-family: "gillsans_light";
-  color: #ec2224; }
-
 .cart {
   position: fixed;
   height: 100vh;
   width: 100vw;
   z-index: 18;
-  background-color: white;
+  background-color: black;
   /*  @if $media == large-desktop {
       @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
     }*/ }
@@ -891,14 +669,14 @@ main {
   position: fixed;
   right: 20px;
   top: 20px;
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   z-index: 19; }
   .cart-close svg {
     width: 100%;
     height: 100%; }
     .cart-close svg line {
-      stroke: #ec2224; }
+      stroke: #FFFFFF; }
 
 .cart-contents {
   height: 100%; }
@@ -924,7 +702,7 @@ main {
     display: block;
     height: 70px;
     position: relative;
-    margin-top: 30px; }
+    margin-top: 20px; }
     .cart-ul .cart-li .cart-img {
       height: 70px;
       width: auto;
@@ -955,20 +733,22 @@ main {
       font-size: 11px;
       line-height: 30px;
       font-family: "gillsans_light";
+      letter-spacing: 2px;
       position: absolute;
       right: 0;
       line-height: 70px;
       height: 70px;
-      text-shadow: 0 0 0px #ec2224;
-      transition: text-shadow 0.2s ease;
-      -webkit-transition: text-shadow 0.2s ease;
-      -moz-transition: text-shadow 0.2s ease;
-      -ms-transition: text-shadow 0.2s ease;
+      color: #d3d3d3;
+      transition: color 0.4s ease;
+      -webkit-transition: color 0.4s ease;
+      -moz-transition: color 0.4s ease;
+      -ms-transition: color 0.4s ease;
+      -o-transition: color 0.4s ease;
       /*  @if $media == large-desktop {
           @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
         }*/ }
       .cart-ul .cart-li .cart-remove:hover {
-        text-shadow: 2px 2px 7px #ec2224;
+        color: #FFFFFF;
         /*  @if $media == large-desktop {
             @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
           }*/
@@ -980,13 +760,13 @@ main {
           }*/ }
         @media only screen and (min-width: 0px) and (max-device-width: 767px) {
           .cart-ul .cart-li .cart-remove:hover {
-            color: #ec2224 !important; } }
+            color: #d3d3d3 !important; } }
         @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
           .cart-ul .cart-li .cart-remove:hover {
-            color: #ec2224 !important; } }
+            color: #d3d3d3 !important; } }
         @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
           .cart-ul .cart-li .cart-remove:hover {
-            color: #ec2224 !important; } }
+            color: #d3d3d3 !important; } }
       @media only screen and (min-width: 0px) and (max-width: 767px) {
         .cart-ul .cart-li .cart-remove {
           line-height: 30px;
@@ -995,6 +775,7 @@ main {
       font-size: 11px;
       line-height: 30px;
       font-family: "gillsans_light";
+      letter-spacing: 2px;
       float: left;
       line-height: 70px;
       height: 70px;
@@ -1011,7 +792,7 @@ main {
   left: 100px;
   height: 70px;
   width: auto;
-  margin-top: 30px;
+  margin-top: 20px;
   /*  @if $media == large-desktop {
       @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
     }*/ }
@@ -1023,22 +804,25 @@ main {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     height: 70px;
     line-height: 70px; }
   .cart-total .cart-total-amount {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     height: 70px;
     line-height: 70px; }
     .cart-total .cart-total-amount span {
       margin-left: 40px; }
 
 .form-title {
-  font-size: 11px;
+  font-size: 18px;
   line-height: 35px;
   font-family: "gillsans_light";
-  color: #ec2224; }
+  letter-spacing: 2px;
+  color: #d3d3d3; }
 
 .checkout-button {
   position: absolute;
@@ -1048,26 +832,26 @@ main {
   width: 400px;
   height: 50px;
   cursor: pointer;
-  color: #ec2224;
   background-color: transparent;
-  border-bottom: 2px solid #ec2224;
-  font-size: 11px;
+  border-bottom: 1px solid #d3d3d3;
+  font-size: 18px;
   line-height: 35px;
   font-family: "gillsans_light";
-  text-shadow: 0 0 0px #ec2224;
-  transition: text-shadow 0.2s ease;
-  -webkit-transition: text-shadow 0.2s ease;
-  -moz-transition: text-shadow 0.2s ease;
-  -ms-transition: text-shadow 0.2s ease;
+  letter-spacing: 2px;
+  color: #d3d3d3;
+  transition: color 0.4s ease;
+  -webkit-transition: color 0.4s ease;
+  -moz-transition: color 0.4s ease;
+  -ms-transition: color 0.4s ease;
+  -o-transition: color 0.4s ease;
   border: 0;
-  border-bottom: 2px solid #ec2224;
   outline: 0;
   padding: 0;
   /*  @if $media == large-desktop {
       @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
     }*/ }
   .checkout-button:hover {
-    text-shadow: 2px 2px 7px #ec2224;
+    color: #FFFFFF;
     /*  @if $media == large-desktop {
         @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
       }*/
@@ -1079,13 +863,13 @@ main {
       }*/ }
     @media only screen and (min-width: 0px) and (max-device-width: 767px) {
       .checkout-button:hover {
-        color: #ec2224 !important; } }
+        color: #d3d3d3 !important; } }
     @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
       .checkout-button:hover {
-        color: #ec2224 !important; } }
+        color: #d3d3d3 !important; } }
     @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
       .checkout-button:hover {
-        color: #ec2224 !important; } }
+        color: #d3d3d3 !important; } }
   @media only screen and (min-width: 0px) and (max-width: 767px) {
     .checkout-button {
       box-sizing: border-box;
@@ -1098,20 +882,22 @@ main {
   width: auto; }
   .cart-back p {
     height: 100%;
-    font-size: 11px;
+    font-size: 18px;
     line-height: 35px;
     font-family: "gillsans_light";
-    text-shadow: 0 0 0px #ec2224;
-    transition: text-shadow 0.2s ease;
-    -webkit-transition: text-shadow 0.2s ease;
-    -moz-transition: text-shadow 0.2s ease;
-    -ms-transition: text-shadow 0.2s ease;
+    letter-spacing: 2px;
+    color: #d3d3d3;
+    transition: color 0.4s ease;
+    -webkit-transition: color 0.4s ease;
+    -moz-transition: color 0.4s ease;
+    -ms-transition: color 0.4s ease;
+    -o-transition: color 0.4s ease;
     line-height: normal;
     /*  @if $media == large-desktop {
         @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
       }*/ }
     .cart-back p:hover {
-      text-shadow: 2px 2px 7px #ec2224;
+      color: #FFFFFF;
       /*  @if $media == large-desktop {
           @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
         }*/
@@ -1123,13 +909,13 @@ main {
         }*/ }
       @media only screen and (min-width: 0px) and (max-device-width: 767px) {
         .cart-back p:hover {
-          color: #ec2224 !important; } }
+          color: #d3d3d3 !important; } }
       @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
         .cart-back p:hover {
-          color: #ec2224 !important; } }
+          color: #d3d3d3 !important; } }
       @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
         .cart-back p:hover {
-          color: #ec2224 !important; } }
+          color: #d3d3d3 !important; } }
     @media only screen and (min-width: 0px) and (max-width: 767px) {
       .cart-back p {
         height: 35px;
@@ -1149,10 +935,10 @@ main {
     top: 50%;
     height: 20px;
     margin-top: -10px;
-    color: #ec2224;
+    color: #d3d3d3;
     background-color: transparent;
     border: 0;
-    border-bottom: 2px solid #ec2224;
+    border-bottom: 1px solid #d3d3d3;
     text-align: left;
     outline: 0;
     border-radius: 0%;
@@ -1161,6 +947,7 @@ main {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     /*  @if $media == large-desktop {
         @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
       }*/ }
@@ -1188,15 +975,15 @@ select {
   top: 50%;
   height: 20px;
   margin-top: -10px;
-  color: #ec2224;
   background-color: transparent;
   border: 0;
-  border-bottom: 2px solid #ec2224;
   text-align: left;
   outline: 0;
   font-size: 11px;
   line-height: 30px;
   font-family: "gillsans_light";
+  letter-spacing: 2px;
+  color: #d3d3d3;
   border-radius: 0%;
   -webkit-border-radius: 0%;
   -moz-border-radius: 0%;
@@ -1213,15 +1000,15 @@ select {
     select {
       width: 100%; } }
   select::-webkit-input-placeholder {
-    color: #ec2224; }
+    color: #d3d3d3; }
   select:-moz-placeholder {
     /* Firefox 18- */
-    color: #ec2224; }
+    color: #d3d3d3; }
   select::-moz-placeholder {
     /* Firefox 19+ */
-    color: #ec2224; }
+    color: #d3d3d3; }
   select:-ms-input-placeholder {
-    color: #ec2224; }
+    color: #d3d3d3; }
 
 input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
   border-bottom: 1px solid #FFFF00; }
@@ -1255,7 +1042,7 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
   left: 100px;
   height: 70px;
   width: 35%;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 20px;
   background-color: transparent;
   /*  @if $media == large-desktop {
@@ -1268,17 +1055,20 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     width: 80%; }
     .payment-total p span {
       float: right;
       font-size: 11px;
       line-height: 30px;
-      font-family: "gillsans_light"; }
+      font-family: "gillsans_light";
+      letter-spacing: 2px; }
 
 .payment-header {
-  font-size: 11px;
+  font-size: 18px;
   line-height: 35px;
-  font-family: "gillsans_light"; }
+  font-family: "gillsans_light";
+  letter-spacing: 2px; }
 
 .shipment {
   width: 100%;
@@ -1292,9 +1082,10 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
       position: relative; }
 
 .shipment-h1 {
-  font-size: 11px;
+  font-size: 18px;
   line-height: 35px;
   font-family: "gillsans_light";
+  letter-spacing: 2px;
   position: absolute;
   top: 20px;
   left: 20px; }
@@ -1361,11 +1152,13 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     color: #ec2224; }
   .isBillingDifferent input {
     font-size: 11px;
     line-height: 30px;
     font-family: "gillsans_light";
+    letter-spacing: 2px;
     color: #ec2224; }
 
 .processed {
@@ -1384,7 +1177,8 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     width: 70%;
     font-size: 11px;
     line-height: 30px;
-    font-family: "gillsans_light"; }
+    font-family: "gillsans_light";
+    letter-spacing: 2px; }
   .processed-thankyou a {
     width: 50px;
     height: 50px;
@@ -1396,4 +1190,5 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     margin-top: 200px;
     font-size: 11px;
     line-height: 30px;
-    font-family: "gillsans_light"; }
+    font-family: "gillsans_light";
+    letter-spacing: 2px; }

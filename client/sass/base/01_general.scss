@@ -77,6 +77,7 @@ html{
   color:$light-grey;
   min-height:100%;
   background-color: $black;
+  font-weight: normal;
   @include respond-to(phone-device){
     overflow-x: hidden;
     overflow-y: hidden;
@@ -134,7 +135,7 @@ a:active {
 
 a{
   cursor: pointer;
-  @include h2();
+  @include h3();
   @include hover-effect-color($light-grey, $white);
 }
 
@@ -190,7 +191,7 @@ main {
 
 
 .page-loader{
-  display: block;
+  display: none;
   height: 100vh;
   display: block;
   width: calc(100vw - 250px);
@@ -209,22 +210,100 @@ main {
     height:100vh;
     vertical-align: middle;
     text-align: center;
-    font-size: $font-size-h2;
-    font-family: helvetica;
+    @include h3();
+
   }
 }
 
-.page-loader-div{
+$animation-speed:1s;
+$animation-bezier:ease;
+//
+// .page-loader-div{
+//   opacity:1;
+// }
+//
+// .page-loader-div.ng-hide{
+//   opacity:0;
+// }
+
+
+
+
+@keyframes pageenter {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+@-webkit-keyframes pageenter {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+@-moz-keyframes pageenter {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+@-ms-keyframes pageenter {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+@-o-keyframes pageenter {
+  0% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+/*.................................NG ENTER/LEAVE..................................*/
+
+$fade-in: 1s;
+
+.page.ng-enter {
+  animation: pageenter $fade-in both ease 0s;
+  -webkit-animation: pageenter $fade-in both ease 0s;
+  -moz-animation: pageenter $fade-in both ease 0s;
+  -ms-animation: pageenter $fade-in both ease 0s;
+  -o-animation: pageenter $fade-in both ease 0s;
+}
+
+.page.page-home.ng-leave {
+  animation: pageleave 0s ease;
+  -webkit-animation: pageleave 0s ease;
+  -moz-animation: pageleave 0s ease;
+  -ms-animation: pageleave 0s ease;
+  -o-animation: pageleave 0s ease;
+    // opacity: 0;
+}
+
+.ng-enter       { z-index: 8888; }
+.ng-leave       { z-index: 9999; }
+
+
+
+// .page.ng-hide{
+//   opacity:0;
+// }
+
+.page.ng-enter{
   opacity:1;
+  -webkit-transition: opacity $animation-speed $animation-bezier;
+  -moz-transition: opacity $animation-speed $animation-bezier;
+  -ms-transition: opacity $animation-speed $animation-bezier;
+  -o-transition: opacity $animation-speed $animation-bezier;
+  transition: opacity $animation-speed $animation-bezier;
 }
 
-.page-loader-div.ng-hide{
+.page.ng-leave{
   opacity:0;
+  // -webkit-animation: opacity $animation-speed $animation-bezier;
+  // -moz-animation: opacity $animation-speed $animation-bezier;
+  // -ms-animation: opacity $animation-speed $animation-bezier;
+  // -o-animation: opacity $animation-speed $animation-bezier;
+  // animation: opacity $animation-speed $animation-bezier;
 }
 
-//
-// $animation-speed:2s;
-//
+
+
 // .page-loader-div.ng-hide-remove.ng-hide-remove-active{
 //   -webkit-transition: opacity $animation-speed $animation-bezier;
 //   -moz-transition: opacity $animation-speed $animation-bezier;
@@ -240,7 +319,34 @@ main {
 //   -o-transition: opacity $animation-speed $animation-bezier;
 //   transition: opacity $animation-speed $animation-bezier;
 // }
-//
+
+
+.bag{
+  display: block;
+  position: fixed;
+  top:$margin-sides;
+  right:$margin-sides;
+  z-index: $z-bag;
+  width:25px;
+  height:25px;
+  .bag-svg{
+    width: 100%;
+    height:100%;
+    svg{
+      width: 100%;
+      height:100%;
+    }
+  }
+  .bag-total{
+    width: 100%;
+    height:100%;
+    line-height: 32px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute;
+  }
+}
+
 
 
 
