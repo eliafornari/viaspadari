@@ -11,14 +11,25 @@
        <tr>
          <td>
            <div class="nav-list" >
-             <div class="nav-main">
-               <a class="nav-main-a" href="/{{c.slug}}" ng-class="{'active': isLocation('/shop')}" ng-repeat="c in Categories">{{c.title}}</a>
+             <div class="nav-main" ng-repeat="p in Categories | orderBy: 'order' track by p.order">
+
+               <a class="nav-main-a" href="/{{p.slug}}" ng-class="{'active': isLocation('/shop')}" >{{p.title}}</a>
+
+               <div class="nav-sub">
+                 <a class="nav-sub-a" href="/{{c.slug}}" ng-repeat="c in p.children">{{c.title}}</a>
+
+               </div>
 
              </div>
 
 
 
-             <div class="nav-right">
+             <div class="nav-bottom">
+
+               <div class="nav-bottom-lang">
+                 <p>{{lang.language}}</p>
+
+               </div>
 
              </div>
 

@@ -24,7 +24,6 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $rootScope.pageLoading = true;
 
   //a change of path should not reload the page
-
   var original = $location.path;
   $location.path = function (path, reload) {
     if (reload === false) {
@@ -70,10 +69,12 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     templateUrl: 'views/contact.html'
   }).when('/:category/:detail', {
     templateUrl: 'views/detail.html',
-    controller: 'detailCtrl'
+    controller: 'detailCtrl',
+    reloadOnSearch: false
   }).when('/:category', {
     templateUrl: 'views/product.html',
-    controller: 'productCtrl'
+    controller: 'productCtrl',
+    reloadOnSearch: false
   }).when('/privacy', {
     templateUrl: 'privacy/privacy.html',
     controller: 'privacyCtrl'
@@ -83,7 +84,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   .when('/', {
     templateUrl: 'views/home.html',
-    controller: 'appCtrl',
+    controller: 'homeCtrl',
     resolve: {}
 
   })
@@ -133,20 +134,24 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
       console.log(response);
       $rootScope.Product = response.data;
       console.log(response.data);
+      $rootScope.$broadcast("productReady");
       $rootScope.pageLoading = false;
-    }).then(function () {
-      console.log("an error occurred");
+    }, function (error) {
+      console.log("products status 400");
     });
   };
 
   $rootScope.getCategories = function () {
     $http({ method: 'GET', url: '/getCategories' }).then(function (response) {
-      console.log(response);
-      if (response.status == 400) {
-        console.log("an error occurred in getting the categories");
-      }
+      console.log("categories status 200");
       $rootScope.Categories = response.data;
       console.log(response.data);
+    }, function (error) {
+      console.log(error);
+      if (response.status == 400) {
+        console.log("categories status 400");
+        console.log("an error occurred in getting the categories");
+      }
     });
   };
 
@@ -154,37 +159,19 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     $rootScope.authentication();
   }, 600);
 
-  // font-family: 'Roboto Mono', monospace;
-  // font-family: 'Roboto', sans-serif;
+  // select country
 
-  $rootScope.desaturate = true;
-  $rootScope.elia = false;
-  $rootScope.font = 'Roboto Mono';
+  $rootScope.lang = { "code": "US", "country": "US", "language": "English" };
 
-  document.addEventListener("keydown", function (event) {
-    console.log(event.which);
-    var key = event.which;
-
-    if (key == 66) {
-      $rootScope.desaturate = false;
-    } else if (key == 87) {
-      $rootScope.desaturate = true;
-    } else if (key == 49) {
-      $rootScope.font = 'Roboto Mono';
-    } else if (key == 50) {
-      $rootScope.font = 'Roboto';
+  $rootScope.selectLang = function (code) {
+    if (code == "IT") {
+      $rootScope.lang = { "code": "IT", "country": "Italy", "language": "Italiano" };
+    } else {
+      $rootScope.lang = { "code": "US", "country": "US", "language": "English" };
     }
+  };
 
-    if (key == 69) {
-      $rootScope.elia = true;
-      setTimeout(function () {
-        $rootScope.elia = false;
-        console.log($rootScope.elia);
-        $rootScope.$apply();
-      }, 3000);
-    }
-    $rootScope.$apply();
-  });
+  //..............................................................................MOBILE
 
   $rootScope.windowHeight = $window.innerHeight;
 
@@ -195,7 +182,6 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     $scope.$apply();
   });
 
-  //..............................................................................mobile
   //....this is the function that checks the header of the browser and sees what device it is
   $rootScope.isMobile, $rootScope.isDevice, $rootScope.isMobileDevice;
   $rootScope.checkSize = function () {
@@ -278,42 +264,49 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   $scope.landscapeFunction();
 
-  $rootScope.Home = [];
-  var homeRan = false;
-
-  $rootScope.getContentType = function (type, orderField) {
-    _prismic2.default.Api('https://viaspadari.cdn.prismic.io/api', function (err, Api) {
-      Api.form('everything').ref(Api.master()).query(_prismic2.default.Predicates.at("document.type", type)).orderings('[' + orderField + ']').pageSize(100).submit(function (err, response) {
-        var Data = response;
-
-        if (type == 'home') {
-          $rootScope.Home = response.results;
-          console.log("home");
-          console.log(response.results);
-          if (homeRan == false) {
-            console.log("homeRanReady");
-            homeRan = true;
-            setTimeout(function () {
-              $rootScope.$broadcast('homeRanReady');
-            }, 900);
-          } else {
-            return false;
-          }
-        }
-        // The documents object contains a Response object with all documents of type "product".
-        var page = response.page; // The current page number, the first one being 1
-        var results = response.results; // An array containing the results of the current page;
-        // you may need to retrieve more pages to get all results
-        var prev_page = response.prev_page; // the URL of the previous page (may be null)
-        var next_page = response.next_page; // the URL of the next page (may be null)
-        var results_per_page = response.results_per_page; // max number of results per page
-        var results_size = response.results_size; // the size of the current page
-        var total_pages = response.total_pages; // the number of pages
-        var total_results_size = response.total_results_size; // the total size of results across all pages
-        return results;
-      });
-    });
-  };
+  // $rootScope.Home = [];
+  // var homeRan = false;
+  //
+  //
+  //     $rootScope.getContentType = function(type, orderField){
+  //           Prismic.Api('https://viaspadari.cdn.prismic.io/api', function (err, Api) {
+  //               Api.form('everything')
+  //                   .ref(Api.master())
+  //                   .query(Prismic.Predicates.at("document.type", type))
+  //                   .orderings('['+orderField+']')
+  //                   .pageSize(100)
+  //                   .submit(function (err, response) {
+  //                       var Data = response;
+  //
+  //                       if (type =='home'){
+  //                         $rootScope.Home = response.results;
+  //                         console.log("home");
+  //                         console.log(response.results);
+  //                         if(homeRan == false){
+  //                           console.log("homeRanReady");
+  //                           homeRan = true;
+  //                           setTimeout(function(){
+  //                             $rootScope.$broadcast('homeRanReady');
+  //                           }, 900);
+  //
+  //                         }else{ return false; }
+  //
+  //                       }
+  //                       // The documents object contains a Response object with all documents of type "product".
+  //                       var page = response.page; // The current page number, the first one being 1
+  //                       var results = response.results; // An array containing the results of the current page;
+  //                       // you may need to retrieve more pages to get all results
+  //                       var prev_page = response.prev_page; // the URL of the previous page (may be null)
+  //                       var next_page = response.next_page; // the URL of the next page (may be null)
+  //                       var results_per_page = response.results_per_page; // max number of results per page
+  //                       var results_size = response.results_size; // the size of the current page
+  //                       var total_pages = response.total_pages; // the number of pages
+  //                       var total_results_size = response.total_results_size; // the total size of results across all pages
+  //                         return results;
+  //                   });
+  //             });
+  //     };
+  //
 }); //......end of the route controller
 
 var jquerymousewheel = require('./vendor/jquery.mousewheel.js')($);
@@ -937,6 +930,13 @@ Product.filter('productFilter', function ($sce, $routeParams, $rootScope) {
           filtered = filtered.concat($rootScope.Product[i]);
           console.log(filtered);
         }
+
+        if ($rootScope.Product[i].category.data[c].parent != null) {
+
+          $rootScope.Product[i].category.child = $rootScope.Product[i].category.data[c].slug;
+
+          console.log();
+        }
       }
     }
     return filtered;
@@ -956,8 +956,12 @@ Product.controller('productCtrl', function ($scope, $location, $rootScope, $rout
 }); //controller
 
 Product.controller('detailCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $http, $sce, $document, anchorSmoothScroll, $window, transformRequestAsFormPost) {
-
+  $rootScope.Detail;
   $scope.$on('$routeChangeSuccess', function () {
+
+    // $scope.$on("productReady", function(){
+
+    console.log("product ready");
 
     // $rootScope.openDetailFN();
     $rootScope.isDetailOpen = true;
@@ -965,7 +969,7 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
     $rootScope.updateCart();
 
     setTimeout(function () {
-      if (!$rootScope.Detail.id) {
+      if (!$rootScope.Detail) {
         $rootScope.detailUpdate($routeParams.detail);
         $scope.$apply();
         console.log("I loaded it again");
@@ -976,6 +980,8 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
         return false;
       }
     }, 3000);
+
+    // })
   });
 
   $rootScope.addToCart = function (id) {
@@ -1002,96 +1008,81 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
 
   //......VARIATIONS
 
-  $rootScope.addVariation = function () {
+  // $rootScope.addVariation = function(){
+  //
+  //   if($rootScope.selectedVariation){
+  //     $http({
+  //       url: '/addVariation',
+  //       method: 'POST',
+  //       headers: {
+  //         // 'Content-Type': 'application/json'
+  //         // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+  //         // 'Content-Type': 'application/x-www-form-urlencoded'
+  //       },
+  //       // transformRequest: transformRequestAsFormPost,
+  //       data: $rootScope.selectedVariation
+  //     }).then(function(response){
+  //       // $rootScope.Cart = response;
+  //       $rootScope.updateCart();
+  //       console.log(response);
+  //     });
+  //   }else{
+  //     $scope.variationErrorMessage = "select a size first"
+  //     setTimeout(function(){
+  //       $scope.variationErrorMessage = false;
+  //       $rootScope.$apply();
+  //     });
+  //   }
+  //
+  //
+  // }//addToCart
 
-    if ($rootScope.selectedVariation) {
-      $http({
-        url: '/addVariation',
-        method: 'POST',
-        headers: {
-          // 'Content-Type': 'application/json'
-          // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-          // 'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        // transformRequest: transformRequestAsFormPost,
-        data: $rootScope.selectedVariation
-      }).then(function (response) {
-        // $rootScope.Cart = response;
-        $rootScope.updateCart();
-        console.log(response);
-      });
-    } else {
-      $scope.variationErrorMessage = "select a size first";
-      setTimeout(function () {
-        $scope.variationErrorMessage = false;
-        $rootScope.$apply();
-      });
-    }
-  }; //addToCart
+  //detail Update
 
-  //variations
-
-  $rootScope.selectedVariation = {};
-  $rootScope.howManyVAriationsSelected = 0;
   $rootScope.detailUpdate = function (slug) {
 
-    $rootScope.selectedVariation = {};
-    $rootScope.howManyVAriationsSelected = 0;
-    $rootScope.Detail.total_variations = 0;
+    console.log("detail update: " + slug);
 
     for (var i in $rootScope.Product) {
+      console.log(i);
       if ($rootScope.Product[i].slug == slug) {
         $rootScope.Detail = $rootScope.Product[i];
-        $rootScope.Detail.total_variations = 0;
-        $rootScope.Detail.has_variation = $rootScope.has_variation;
-
-        var go = true;
-        //has variation
-        for (i in $rootScope.Detail.modifiers) {
-          $rootScope.Detail.modifiers[i].open = false;
-          $rootScope.Detail.total_variations = $rootScope.Detail.total_variations + 1;
-          // if($rootScope.Detail.modifiers[i].id){$rootScope.has_variation=true;}else{$rootScope.has_variation=false;}
-          $rootScope.Detail.has_variation = true;
-          $rootScope.showSelection($rootScope.Detail.modifiers[i].id);
-          go = false;
-        }
-
-        if (go == true) {
-          //does not have variation
-          $rootScope.Detail.has_variation = false;
-          for (i in $rootScope.Detail.modifiers) {}
-        }
+        console.log("detail");
+        console.log($rootScope.Detail);
       }
     }
   };
 
-  $rootScope.showSelection = function (modifier_id) {
-    console.log('modifier_id', modifier_id);
-    for (var m in $rootScope.Detail.modifiers) {
-      if ($rootScope.Detail.modifiers[m].id == modifier_id) {
-        $rootScope.Detail.modifiers[m].open = !$rootScope.Detail.modifiers[m].open;
-      }
-    }
-  };
-
-  $rootScope.thisVariation = function (id, modifier_id, modifier_title, variation_id, variation_title) {
-    var i = 0;
-    for (i in $rootScope.Detail.modifiers) {
-
-      if ($rootScope.Detail.modifiers[i].id == modifier_id) {
-        $rootScope.selectedVariation[i] = {
-          id: id,
-          modifier_id: modifier_id,
-          modifier_title: modifier_title,
-          variation_id: variation_id,
-          variation_title: variation_title
-        };
-        if ($rootScope.howManyVAriationsSelected < $rootScope.Detail.total_variations) {
-          $rootScope.howManyVAriationsSelected = $rootScope.howManyVAriationsSelected + 1;
-        }
-      }
-    }
-  };
+  // $rootScope.showSelection = function(modifier_id){
+  //   console.log('modifier_id',modifier_id);
+  //   for (var m in $rootScope.Detail.modifiers){
+  //     if($rootScope.Detail.modifiers[m].id == modifier_id){
+  //       $rootScope.Detail.modifiers[m].open = !$rootScope.Detail.modifiers[m].open;
+  //     }
+  //   }
+  // }
+  //
+  //
+  //
+  // $rootScope.thisVariation = function(id, modifier_id, modifier_title, variation_id, variation_title){
+  //   var i=0;
+  //   for ( i in $rootScope.Detail.modifiers){
+  //
+  //     if($rootScope.Detail.modifiers[i].id==modifier_id){
+  //       $rootScope.selectedVariation[i] =
+  //         {
+  //           id: id,
+  //           modifier_id: modifier_id,
+  //           modifier_title: modifier_title,
+  //           variation_id: variation_id,
+  //           variation_title: variation_title
+  //         }
+  //         if($rootScope.howManyVAriationsSelected<$rootScope.Detail.total_variations){
+  //           $rootScope.howManyVAriationsSelected = $rootScope.howManyVAriationsSelected+1;
+  //         }
+  //     }
+  //   }
+  // }
 });
 
 Product.directive('detailDirective', function ($rootScope, $location, $window, $routeParams, $timeout) {

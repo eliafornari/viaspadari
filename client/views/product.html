@@ -1,17 +1,21 @@
 <div class="product" ng-controller="productCtrl">
 
 
-
       <div class="product-content" ng-class="{'openDetail': isDetailOpen}" >
         <ul class="product-ul">
-          <li class="product-li" ng-repeat="p in Product | productFilter" ng-click="openDetailFN(p.slug)" ng-init="productHovered=false">
+          <li class="product-li" ng-repeat="p in Product | productFilter" ng-init="productHovered=false" ng-mouseenter="productHovered=true" ng-mouseleave="productHovered=false" ng-cloak>
+            <a href="/{{p.category.child}}/{{p.slug}}">
             <table>
               <tr>
                 <td>
-                  <img class="product-li-img" src="{{p.images[0].url.http}}" alt="{{p.description}}" ng-class="{'opacityProducts': isDetailOpen && !productHovered}" ng-mouseenter="productHovered=true" ng-mouseleave="productHovered=false"/>
+                  <div class="product-li-container">
+                    <img class="product-li-img" src="{{p.images[0].url.http}}" alt="{{p.description}}" ng-class="{'opacityProducts': !productHovered}"/>
+                    <h1 class="product-li-h1" ng-show="productHovered">{{p.title}}</h1>
+                  </div>
                 </td>
               </tr>
             </table>
+            </a>
 
           </li>
         </ul>

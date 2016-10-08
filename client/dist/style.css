@@ -46,14 +46,14 @@ table {
   border-spacing: 0; }
 
 @font-face {
-  font-family: folio;
-  src: url("/assets/fonts/folio.woff") format("woff"); }
+  font-family: gillsans_light;
+  src: url("/assets/fonts/gillsans/light/GillSans-Light.woff2") format("woff2"), url("/assets/fonts/gillsans/light/GillSans-Light.woff") format("woff"), url("/assets/fonts/gillsans/light/GillSans-Light.otf") format("otf"); }
 @font-face {
-  font-family: basil;
-  src: url("/assets/fonts/BasilQT-Regular.otf") format("woff"); }
+  font-family: gillsans;
+  src: url("/assets/fonts/gillsans/regular/GillSans.woff2") format("woff2"), url("/assets/fonts/gillsans/regular/GillSans.woff") format("woff"), url("/assets/fonts/gillsans/regular/GillSans.otf") format("otf"); }
 @font-face {
-  font-family: graebenbach;
-  src: url("/assets/fonts/gbcamweba-webfont.woff") format("woff"); }
+  font-family: didot;
+  src: url("/assets/fonts/didot/Didot.woff2") format("woff2"), url("/assets/fonts/didot/Didot.woff") format("woff"), url("/assets/fonts/didot/Didot.otf") format("otf"); }
 /*....................................SCSS VARIABLES..................................*/
 /*....................................................................................*/
 /*.................................................................................*/
@@ -62,17 +62,18 @@ table {
 /*....................................SCSS MIXINS..................................*/
 .nav {
   position: fixed;
-  width: 200px;
-  height: 100px;
+  width: 250px;
+  height: 100vh;
   background-color: #000000;
   left: 0;
   top: 0;
-  z-index: 16; }
+  z-index: 16;
+  border-right: 1px solid #3d3d3d; }
 
 .nav-logo {
-  width: 200px;
+  width: 100%;
   height: 100px;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0; }
   .nav-logo svg {
@@ -83,7 +84,7 @@ table {
 
 .nav-table {
   position: absolute;
-  top: 200px;
+  top: 100px;
   left: 0;
   width: 100%;
   height: 600px; }
@@ -91,44 +92,54 @@ table {
     width: 100%;
     height: auto; }
     .nav-table .nav-list .nav-main {
-      width: 100%;
-      height: 400px; }
+      width: auto;
+      height: auto;
+      margin-left: 20px; }
       .nav-table .nav-list .nav-main .nav-main-a {
-        text-align: center;
-        width: 100%;
+        text-align: left;
+        width: auto;
         display: block;
-        clear: both; }
+        clear: both;
+        text-transform: uppercase; }
+      .nav-table .nav-list .nav-main .nav-sub {
+        width: auto;
+        height: auto;
+        margin-left: 15px; }
+        .nav-table .nav-list .nav-main .nav-sub .nav-sub-a {
+          text-align: left;
+          width: auto;
+          display: block;
+          clear: both;
+          text-transform: uppercase; }
 
 /*....................................General settings..................................*/
 /*.....................TEXT MARK STYLES......................*/
 ::-moz-selection {
-  background: #ede611;
-  color: #000000;
+  color: #FFFFFF;
   text-shadow: none; }
 
 ::selection {
-  background: #ede611;
-  color: #000000;
+  color: #FFFFFF;
   text-shadow: none; }
 
 span::-moz-selection {
   background: transparent;
-  color: #ec2224;
+  color: #FFFFFF;
   text-shadow: none; }
 
 span::selection {
   background: transparent;
-  color: #ec2224;
+  color: #FFFFFF;
   text-shadow: none; }
 
 a::-moz-selection {
   background: transparent;
-  color: #884f9e;
+  color: #FFFFFF;
   text-shadow: none; }
 
 a::selection {
   background: transparent;
-  color: #884f9e;
+  color: #FFFFFF;
   text-shadow: none; }
 
 /*....................HIDING SCROLLBAR.....................*/
@@ -141,12 +152,12 @@ a::selection {
 /*.....................GENERAL STYLES......................*/
 html {
   box-sizing: border-box;
-  font-family: helvetica;
+  font-family: "gillsans_light";
   width: 100%;
   height: auto;
   margin: 0, 0;
   padding: 0, 0;
-  color: #FFFFFF;
+  color: #d3d3d3;
   min-height: 100%;
   background-color: #000000;
   /*  @if $media == large-desktop {
@@ -163,7 +174,7 @@ html {
 body {
   width: 100%;
   height: auto;
-  color: #FFFFFF;
+  color: #d3d3d3;
   min-height: 100%;
   background-color: #000000;
   margin: 0, 0;
@@ -186,31 +197,25 @@ p, a, li {
   letter-spacing: 1px; }
 
 p, span {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 30px;
-  font-weight: 700;
-  color: #FFFFFF; }
+  font-family: "gillsans_light";
+  color: #d3d3d3; }
 
 /*........................A.................................*/
-a:active {
-  text-shadow: 0 0 3px #884f9e; }
-
-.ng-click-active {
-  text-shadow: 0 0 3px #884f9e; }
-
 a {
   cursor: pointer;
-  color: #FFFFFF;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 35px;
-  font-weight: 700;
-  text-shadow: 0 0 0px #884f9e;
-  transition: text-shadow 0.2s ease;
-  -webkit-transition: text-shadow 0.2s ease;
-  -moz-transition: text-shadow 0.2s ease;
-  -ms-transition: text-shadow 0.2s ease; }
+  font-family: "gillsans_light";
+  color: #d3d3d3;
+  transition: color 0.4s ease;
+  -webkit-transition: color 0.4s ease;
+  -moz-transition: color 0.4s ease;
+  -ms-transition: color 0.4s ease;
+  -o-transition: color 0.4s ease; }
   a:hover {
-    text-shadow: 2px 2px 7px #884f9e;
+    color: #FFFFFF;
     /*  @if $media == large-desktop {
         @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
       }*/
@@ -222,13 +227,13 @@ a {
       }*/ }
     @media only screen and (min-width: 0px) and (max-device-width: 767px) {
       a:hover {
-        color: #884f9e !important; } }
+        color: #d3d3d3 !important; } }
     @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
       a:hover {
-        color: #884f9e !important; } }
+        color: #d3d3d3 !important; } }
     @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
       a:hover {
-        color: #884f9e !important; } }
+        color: #d3d3d3 !important; } }
 
 /*.....................ACTIVE CLASSES......................*/
 .active {
@@ -252,12 +257,43 @@ table {
 main {
   height: auto;
   min-height: 100%;
+  width: calc(100vw - 250px);
   position: relative;
   display: block;
   list-style-type: none;
-  display: table; }
+  display: table;
+  margin-left: 250px; }
 
 /*.............................Loader............................*/
+.page-loader {
+  display: block;
+  height: 100vh;
+  display: block;
+  width: calc(100vw - 250px);
+  padding: 0;
+  margin: 0;
+  display: list-item;
+  background-color: transparent;
+  z-index: 16;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 250px; }
+  .page-loader .loading-p {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 11px;
+    font-family: helvetica; }
+
+.page-loader-div {
+  opacity: 1; }
+
+.page-loader-div.ng-hide {
+  opacity: 0; }
+
 /*.............................NG-CLOAK............................*/
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
@@ -267,25 +303,53 @@ main {
 [x-ng-click] {
   cursor: pointer; }
 
+.product {
+  width: 100%;
+  height: 100%; }
+
+.product-content {
+  width: 100%; }
+  .product-content .product-ul {
+    width: 80%;
+    display: block;
+    margin: auto; }
+    .product-content .product-ul .product-li {
+      width: 20vw;
+      height: auto; }
+      .product-content .product-ul .product-li .product-li-container .product-li-h1 {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        font-size: 35px;
+        line-height: 50px;
+        font-family: "didot";
+        text-transform: uppercase; }
+      .product-content .product-ul .product-li .product-li-container .product-li-img {
+        width: 100%;
+        display: block; }
+
 .detail {
-  width: 100vw;
+  width: 100%;
   position: relative;
-  margin-top: 30vh;
   z-index: 10; }
 
-.detail-images .detail-images-single:nth-child(1) {
-  margin-top: 10vh; }
-.detail-images .detail-images-single .detail-img {
-  max-width: 20vw;
-  margin: auto;
-  display: block;
-  margin-top: 25vh;
-  /*  @if $media == large-desktop {
-      @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-    }*/ }
-  @media only screen and (min-width: 0px) and (max-width: 767px) {
+.detail-images {
+  width: 80%; }
+  .detail-images .detail-images-single {
+    width: 50%;
+    float: left; }
+    .detail-images .detail-images-single:nth-child(-n+2) {
+      margin-top: 200px; }
     .detail-images .detail-images-single .detail-img {
-      max-width: 52vw; } }
+      max-width: 100%;
+      margin: auto;
+      display: block;
+      /*  @if $media == large-desktop {
+          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+        }*/ }
+      @media only screen and (min-width: 0px) and (max-width: 767px) {
+        .detail-images .detail-images-single .detail-img {
+          max-width: 52vw; } }
 
 .detail-images.zoom {
   width: 100vw;
@@ -330,9 +394,9 @@ main {
     text-align: left;
     vertical-align: middle;
     margin: 0;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     text-shadow: 0 0 0px #ec2224;
     transition: text-shadow 0.2s ease;
     -webkit-transition: text-shadow 0.2s ease;
@@ -381,36 +445,9 @@ main {
     width: 100%;
     color: #ec2224;
     text-align: right;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700; }
-
-.detail-modifiers {
-  position: relative;
-  display: block;
-  float: left; }
-  .detail-modifiers .detail-modifiers-ul {
-    display: block;
-    width: auto; }
-    .detail-modifiers .detail-modifiers-ul .detail-modifiers-ul-placeholder {
-      width: auto;
-      display: block;
-      float: left;
-      font-size: 12px;
-      line-height: 30px;
-      font-weight: 700; }
-    .detail-modifiers .detail-modifiers-ul .detail-modifiers-variations {
-      width: auto;
-      display: block;
-      float: left;
-      margin-left: 10px; }
-      .detail-modifiers .detail-modifiers-ul .detail-modifiers-variations .detail-modifiers-variations-li {
-        display: block;
-        clear: both; }
-        .detail-modifiers .detail-modifiers-ul .detail-modifiers-variations .detail-modifiers-variations-li a {
-          font-size: 12px;
-          line-height: 30px;
-          font-weight: 700; }
+    font-family: "gillsans_light"; }
 
 .about {
   height: 100vh;
@@ -438,9 +475,9 @@ main {
   margin: auto;
   display: block;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 30px;
-  font-weight: 700;
+  font-family: "gillsans_light";
   color: #ec2224;
   text-shadow: 0 0 0px #ec2224;
   transition: text-shadow 0.2s ease;
@@ -516,9 +553,9 @@ main {
   width: 200px;
   vertical-align: middle; }
   .event-info-left a {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     color: #ec2224;
     text-shadow: 0 0 0px #ec2224;
     transition: text-shadow 0.2s ease;
@@ -546,9 +583,9 @@ main {
         .event-info-left a:hover {
           color: #ec2224 !important; } }
   .event-info-left span {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700; }
+    font-family: "gillsans_light"; }
 
 .event-info-right {
   position: absolute;
@@ -559,9 +596,9 @@ main {
   .event-info-right span {
     width: 100%;
     text-align: right;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700; }
+    font-family: "gillsans_light"; }
 
 .event-image {
   position: fixed;
@@ -826,9 +863,9 @@ main {
   margin: auto;
   display: block;
   text-align: center;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 30px;
-  font-weight: 700;
+  font-family: "gillsans_light";
   color: #ec2224; }
 
 .cart {
@@ -915,9 +952,9 @@ main {
           margin-right: auto; } }
     .cart-ul .cart-li .cart-remove {
       float: right;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 30px;
-      font-weight: 700;
+      font-family: "gillsans_light";
       position: absolute;
       right: 0;
       line-height: 70px;
@@ -955,9 +992,9 @@ main {
           line-height: 30px;
           height: auto; } }
     .cart-ul .cart-li p {
-      font-size: 12px;
+      font-size: 11px;
       line-height: 30px;
-      font-weight: 700;
+      font-family: "gillsans_light";
       float: left;
       line-height: 70px;
       height: 70px;
@@ -983,24 +1020,24 @@ main {
       left: 20px;
       width: 90vw; } }
   .cart-total .cart-total-tax {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     height: 70px;
     line-height: 70px; }
   .cart-total .cart-total-amount {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     height: 70px;
     line-height: 70px; }
     .cart-total .cart-total-amount span {
       margin-left: 40px; }
 
 .form-title {
-  font-size: 13px;
+  font-size: 11px;
   line-height: 35px;
-  font-weight: 700;
+  font-family: "gillsans_light";
   color: #ec2224; }
 
 .checkout-button {
@@ -1014,9 +1051,9 @@ main {
   color: #ec2224;
   background-color: transparent;
   border-bottom: 2px solid #ec2224;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 35px;
-  font-weight: 700;
+  font-family: "gillsans_light";
   text-shadow: 0 0 0px #ec2224;
   transition: text-shadow 0.2s ease;
   -webkit-transition: text-shadow 0.2s ease;
@@ -1061,9 +1098,9 @@ main {
   width: auto; }
   .cart-back p {
     height: 100%;
-    font-size: 13px;
+    font-size: 11px;
     line-height: 35px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     text-shadow: 0 0 0px #ec2224;
     transition: text-shadow 0.2s ease;
     -webkit-transition: text-shadow 0.2s ease;
@@ -1121,9 +1158,9 @@ main {
     border-radius: 0%;
     -webkit-border-radius: 0%;
     -moz-border-radius: 0%;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     /*  @if $media == large-desktop {
         @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
       }*/ }
@@ -1157,9 +1194,9 @@ select {
   border-bottom: 2px solid #ec2224;
   text-align: left;
   outline: 0;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 30px;
-  font-weight: 700;
+  font-family: "gillsans_light";
   border-radius: 0%;
   -webkit-border-radius: 0%;
   -moz-border-radius: 0%;
@@ -1228,20 +1265,20 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     .payment-total {
       width: 50%; } }
   .payment-total p {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     width: 80%; }
     .payment-total p span {
       float: right;
-      font-size: 12px;
+      font-size: 11px;
       line-height: 30px;
-      font-weight: 700; }
+      font-family: "gillsans_light"; }
 
 .payment-header {
-  font-size: 13px;
+  font-size: 11px;
   line-height: 35px;
-  font-weight: 700; }
+  font-family: "gillsans_light"; }
 
 .shipment {
   width: 100%;
@@ -1255,9 +1292,9 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
       position: relative; }
 
 .shipment-h1 {
-  font-size: 13px;
+  font-size: 11px;
   line-height: 35px;
-  font-weight: 700;
+  font-family: "gillsans_light";
   position: absolute;
   top: 20px;
   left: 20px; }
@@ -1321,14 +1358,14 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
       left: 45%;
       margin-left: 30px; } }
   .isBillingDifferent label {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     color: #ec2224; }
   .isBillingDifferent input {
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700;
+    font-family: "gillsans_light";
     color: #ec2224; }
 
 .processed {
@@ -1345,9 +1382,9 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
   margin-left: 100px; }
   .processed-thankyou p {
     width: 70%;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700; }
+    font-family: "gillsans_light"; }
   .processed-thankyou a {
     width: 50px;
     height: 50px;
@@ -1357,6 +1394,6 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     display: block;
     margin: auto;
     margin-top: 200px;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 30px;
-    font-weight: 700; }
+    font-family: "gillsans_light"; }

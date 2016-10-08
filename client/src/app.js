@@ -20,8 +20,6 @@ angular.module('myApp', [
 $rootScope.pageLoading = true;
 
 //a change of path should not reload the page
-
-
     var original = $location.path;
     $location.path = function (path, reload) {
         if (reload === false) {
@@ -44,6 +42,8 @@ $rootScope.pageLoading = true;
     };
 
   }])
+
+
 
   .filter('trustUrl', function ($sce) {
       return function(url) {
@@ -83,12 +83,14 @@ $sceProvider.enabled(false);
 
     .when('/:category/:detail', {
       templateUrl: 'views/detail.html',
-      controller: 'detailCtrl'
+      controller: 'detailCtrl',
+      reloadOnSearch: false
     })
 
     .when('/:category', {
       templateUrl: 'views/product.html',
-      controller: 'productCtrl'
+      controller: 'productCtrl',
+      reloadOnSearch: false
     })
 
 
@@ -115,7 +117,7 @@ $sceProvider.enabled(false);
 
     .when('/', {
       templateUrl: 'views/home.html',
-      controller: 'appCtrl',
+      controller: 'homeCtrl',
       resolve: {
 
         }
@@ -180,26 +182,41 @@ $rootScope.Home;
 
     }//addToCart
 
+
+
+
+
+
     $rootScope.getProductsFN=function(){
       $http({method: 'GET', url: '/getProducts'}).then(function(response){
         console.log("product: ");
         console.log(response);
         $rootScope.Product = response.data;
         console.log(response.data);
+        $rootScope.$broadcast("productReady");
         $rootScope.pageLoading = false;
-      }).then(function(){
-        console.log("an error occurred");
-      })
+      }, function(error){
+        console.log("products status 400");
+      });
     }
+
+
+
+
+
 
     $rootScope.getCategories = function(){
       $http({method: 'GET', url: '/getCategories'}).then(function(response){
-        console.log(response);
-        if(response.status == 400){
-          console.log("an error occurred in getting the categories");
-        }
+        console.log("categories status 200");
         $rootScope.Categories = response.data;
         console.log(response.data);
+
+      },function(error){
+        console.log(error);
+        if(response.status == 400){
+          console.log("categories status 400");
+          console.log("an error occurred in getting the categories");
+        }
 
       });
     }
@@ -216,44 +233,17 @@ $rootScope.Home;
 
 
 
+// select country
 
+$rootScope.lang = {"code": "US", "country":"US", "language":"English"};
 
-  // font-family: 'Roboto Mono', monospace;
-  // font-family: 'Roboto', sans-serif;
-
-
-
-  $rootScope.desaturate = true;
-  $rootScope.elia = false;
-  $rootScope.font = 'Roboto Mono';
-
-
-  document.addEventListener("keydown", function(event) {
-    console.log(event.which);
-    var key = event.which
-
-    if(key == 66){
-      $rootScope.desaturate = false;
-    }else if(key == 87){
-      $rootScope.desaturate = true;
-    }else if(key == 49){
-      $rootScope.font = 'Roboto Mono';
-    }else if(key == 50){
-      $rootScope.font = 'Roboto';
-    }
-
-
-
-    if(key == 69){
-      $rootScope.elia = true;
-      setTimeout(function() {
-        $rootScope.elia = false;
-        console.log($rootScope.elia);
-        $rootScope.$apply();
-      }, 3000);
-    }
-    $rootScope.$apply();
-  })
+$rootScope.selectLang = (code)=>{
+  if (code == "IT"){
+    $rootScope.lang = {"code": "IT", "country":"Italy", "language":"Italiano"};
+  }else{
+    $rootScope.lang = {"code": "US", "country":"US", "language":"English"};
+  }
+}
 
 
 
@@ -273,6 +263,7 @@ $rootScope.Home;
 
 
 
+    //..............................................................................MOBILE
 
     $rootScope.windowHeight = $window.innerHeight;
 
@@ -285,7 +276,7 @@ $rootScope.Home;
 
 
 
-    //..............................................................................mobile
+
     //....this is the function that checks the header of the browser and sees what device it is
     $rootScope.isMobile, $rootScope.isDevice, $rootScope.isMobileDevice;
     $rootScope.checkSize = function(){
@@ -385,49 +376,49 @@ $rootScope.Home;
 
 
 
-$rootScope.Home = [];
-var homeRan = false;
-
-
-    $rootScope.getContentType = function(type, orderField){
-          Prismic.Api('https://viaspadari.cdn.prismic.io/api', function (err, Api) {
-              Api.form('everything')
-                  .ref(Api.master())
-                  .query(Prismic.Predicates.at("document.type", type))
-                  .orderings('['+orderField+']')
-                  .pageSize(100)
-                  .submit(function (err, response) {
-                      var Data = response;
-
-                      if (type =='home'){
-                        $rootScope.Home = response.results;
-                        console.log("home");
-                        console.log(response.results);
-                        if(homeRan == false){
-                          console.log("homeRanReady");
-                          homeRan = true;
-                          setTimeout(function(){
-                            $rootScope.$broadcast('homeRanReady');
-                          }, 900);
-
-                        }else{ return false; }
-
-                      }
-                      // The documents object contains a Response object with all documents of type "product".
-                      var page = response.page; // The current page number, the first one being 1
-                      var results = response.results; // An array containing the results of the current page;
-                      // you may need to retrieve more pages to get all results
-                      var prev_page = response.prev_page; // the URL of the previous page (may be null)
-                      var next_page = response.next_page; // the URL of the next page (may be null)
-                      var results_per_page = response.results_per_page; // max number of results per page
-                      var results_size = response.results_size; // the size of the current page
-                      var total_pages = response.total_pages; // the number of pages
-                      var total_results_size = response.total_results_size; // the total size of results across all pages
-                        return results;
-                  });
-            });
-    };
-
+// $rootScope.Home = [];
+// var homeRan = false;
+//
+//
+//     $rootScope.getContentType = function(type, orderField){
+//           Prismic.Api('https://viaspadari.cdn.prismic.io/api', function (err, Api) {
+//               Api.form('everything')
+//                   .ref(Api.master())
+//                   .query(Prismic.Predicates.at("document.type", type))
+//                   .orderings('['+orderField+']')
+//                   .pageSize(100)
+//                   .submit(function (err, response) {
+//                       var Data = response;
+//
+//                       if (type =='home'){
+//                         $rootScope.Home = response.results;
+//                         console.log("home");
+//                         console.log(response.results);
+//                         if(homeRan == false){
+//                           console.log("homeRanReady");
+//                           homeRan = true;
+//                           setTimeout(function(){
+//                             $rootScope.$broadcast('homeRanReady');
+//                           }, 900);
+//
+//                         }else{ return false; }
+//
+//                       }
+//                       // The documents object contains a Response object with all documents of type "product".
+//                       var page = response.page; // The current page number, the first one being 1
+//                       var results = response.results; // An array containing the results of the current page;
+//                       // you may need to retrieve more pages to get all results
+//                       var prev_page = response.prev_page; // the URL of the previous page (may be null)
+//                       var next_page = response.next_page; // the URL of the next page (may be null)
+//                       var results_per_page = response.results_per_page; // max number of results per page
+//                       var results_size = response.results_size; // the size of the current page
+//                       var total_pages = response.total_pages; // the number of pages
+//                       var total_results_size = response.total_results_size; // the total size of results across all pages
+//                         return results;
+//                   });
+//             });
+//     };
+//
 
 
 

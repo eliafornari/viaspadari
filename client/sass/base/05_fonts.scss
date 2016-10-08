@@ -5,16 +5,16 @@
 //     src: url('assets/fonts/GT-Walsheim/woff/GTWalsheimProBlack-Oblique.woff') format('woff'), url('assets/fonts/GT-Walsheim/otf/GTWalsheimProBlack-Oblique.otf') format('otf');
 // }
 @font-face {
-    font-family: folio;
-    src: url('/assets/fonts/folio.woff') format('woff');
+    font-family: gillsans_light;
+    src: url('/assets/fonts/gillsans/light/GillSans-Light.woff2') format('woff2'), url('/assets/fonts/gillsans/light/GillSans-Light.woff') format('woff'), url('/assets/fonts/gillsans/light/GillSans-Light.otf') format('otf');
 }
 
 @font-face {
-    font-family: basil;
-    src: url('/assets/fonts/BasilQT-Regular.otf') format('woff');
+    font-family: gillsans;
+    src: url('/assets/fonts/gillsans/regular/GillSans.woff2') format('woff2'), url('/assets/fonts/gillsans/regular/GillSans.woff') format('woff'), url('/assets/fonts/gillsans/regular/GillSans.otf') format('otf');
 }
 
 @font-face {
-    font-family: graebenbach;
-    src: url('/assets/fonts/gbcamweba-webfont.woff') format('woff');
+    font-family: didot;
+    src: url('/assets/fonts/didot/Didot.woff2') format('woff2'), url('/assets/fonts/didot/Didot.woff') format('woff'), url('/assets/fonts/didot/Didot.otf') format('otf');
 }

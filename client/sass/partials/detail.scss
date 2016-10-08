@@ -1,21 +1,22 @@
 
 .detail{
-  width:100vw;
+  width:100%;
   position: relative;
-  margin-top: 30vh;
   z-index: $z-detail;
 }
 
 .detail-images{
+  width:80%;
   .detail-images-single{
-    &:nth-child(1){
-      margin-top: 10vh;
+    width:50%;
+    float: left;
+    &:nth-child(-n+2) {
+      margin-top: $margin-top;
     }
     .detail-img{
-      max-width: 20vw;
+      max-width: 100%;
       margin: auto;
       display: block;
-      margin-top: 25vh;
 
 
       @include respond-to(phone){
@@ -102,35 +103,4 @@
   }
   // z-index: $z-price;
 
-}
-
-
-.detail-modifiers{
-  position: relative;
-  // top: $margin-top-paragraph;
-  display: block;
-  float:left;
-  .detail-modifiers-ul{
-    display: block;
-    width:auto;
-    .detail-modifiers-ul-placeholder{
-      width:auto;
-      display: block;
-      float:left;
-      @include paragraph();
-    }
-    .detail-modifiers-variations{
-      width:auto;
-      display: block;
-      float:left;
-      margin-left: $margin-left-paragraph;
-      .detail-modifiers-variations-li{
-        display: block;
-        clear: both;
-        a{
-          @include paragraph();
-        }
-      }
-    }
-  }
 }

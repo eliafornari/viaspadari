@@ -6,15 +6,13 @@
 /*.....................TEXT MARK STYLES......................*/
 
 ::-moz-selection {
-    background: $yellow;
-    color: #000000;
-    text-shadow: none;
+      color: $white;
+      text-shadow: none;
 }
 
 
 ::selection {
-    background: $yellow;
-    color: #000000;
+    color: $white;
     text-shadow: none;
 }
 
@@ -22,27 +20,27 @@
 
 span::-moz-selection {
     background: transparent;
-    color: $red;
+    color: $white;
     text-shadow: none;
 }
 
 
 span::selection {
     background: transparent;
-    color: $red;
+    color: $white;
     text-shadow: none;
 }
 
 a::-moz-selection {
     background: transparent;
-    color: $purple;
+    color: $white;
     text-shadow: none;
 }
 
 
 a::selection {
     background: transparent;
-    color: $purple;
+    color: $white;
     text-shadow: none;
 }
 
@@ -76,7 +74,7 @@ html{
   height: auto;
   margin: 0, 0;
   padding: 0, 0;
-  color:$white;
+  color:$light-grey;
   min-height:100%;
   background-color: $black;
   @include respond-to(phone-device){
@@ -92,7 +90,7 @@ html{
 body {
   width: 100%;
   height: auto;
-   color:$white;
+   color:$light-grey;
    min-height:100%;
    background-color: $black;
   margin: 0, 0;
@@ -118,7 +116,7 @@ p, a, li {
 
 p, span{
   @include paragraph();
-  color:$white;
+  color:$light-grey;
 }
 
 
@@ -128,17 +126,16 @@ p, span{
 
 
 a:active {
-  text-shadow: 0 0 3px $purple;
+
 }
 .ng-click-active{
-  text-shadow: 0 0 3px $purple;
+
 }
 
 a{
   cursor: pointer;
-  color: $white;
   @include h2();
-  @include hover-effect-glow($purple);
+  @include hover-effect-color($light-grey, $white);
 }
 
 
@@ -180,49 +177,51 @@ table{
 main {
   height: auto;
   min-height:100%;
+  width:calc(100vw - 250px);
   position: relative;
   display: block;
   list-style-type: none;
   display: table;
+  margin-left: 250px;
 }
 
 /*.............................Loader............................*/
 
 
 
-// .page-loader-div{
-//   display: block;
-//   height: 100vh;
-//   display: block;
-//   width: 100vw;
-//   padding: 0;
-//   margin: 0;
-//   display: list-item;
-//   background-color: transparent;
-//   z-index: $z-loader;
-//   background-color: rgba(0,0,0,1);
-//   position: fixed;
-//   top:0;
-//   left:0;
-//   .loading-p{
-//     position: fixed;
-//     width:100vw;
-//     height:100vh;
-//     vertical-align: middle;
-//     text-align: center;
-//     font-size: $font-size-h2;
-//     font-family: helvetica;
-//   }
-// }
-//
-// .page-loader-div{
-//   opacity:1;
-// }
-//
-// .page-loader-div.ng-hide{
-//   opacity:0;
-// }
-//
+.page-loader{
+  display: block;
+  height: 100vh;
+  display: block;
+  width: calc(100vw - 250px);
+  padding: 0;
+  margin: 0;
+  display: list-item;
+  background-color: transparent;
+  z-index: $z-loader;
+  background-color: rgba(0,0,0,1);
+  position: fixed;
+  top:0;
+  left:250px;
+  .loading-p{
+    position: fixed;
+    width:100vw;
+    height:100vh;
+    vertical-align: middle;
+    text-align: center;
+    font-size: $font-size-h2;
+    font-family: helvetica;
+  }
+}
+
+.page-loader-div{
+  opacity:1;
+}
+
+.page-loader-div.ng-hide{
+  opacity:0;
+}
+
 //
 // $animation-speed:2s;
 //

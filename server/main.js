@@ -10,7 +10,17 @@ let routes  = require('./routes');
 let path = require('path');
 var util = require('util');
 let ejs = require('ejs');
+var geoip = require('geoip-lite');
 let app = express();
+
+
+
+
+// { range: [ 3479299040, 3479299071 ],
+//   country: 'US',
+//   region: 'CA',
+//   city: 'San Francisco',
+//   ll: [37.7484, -122.4156] }
 
 
 let moltin = require('moltin')({
@@ -48,8 +58,13 @@ app.get('/profile', function(req, res){
 
 app.get('/authenticate', function(req, res){
 
+  var ip = req.ip;
+  var ip = "207.97.227.239";
+  var geo = geoip.lookup(ip);
+
   moltin.Authenticate(function(data) {
     console.log(data);
+    data.geo = geo;
     if(data){
       res.status(200);
       res.json(data);
@@ -60,6 +75,16 @@ app.get('/authenticate', function(req, res){
   });
 });
 
+
+
+
+    function getUserCountry(req, res){
+      var ip = req.ip;
+      var ip = "207.97.227.239";
+      var geo = geoip.lookup(ip);
+
+      console.log(geo);
+    }
 
 
     app.post('/addProduct', function(req, res){
@@ -207,10 +232,11 @@ app.get('/authenticate', function(req, res){
         moltin.Product.List(null, function(data) {
           console.log(data);
           Product = data;
-            res.json(data);
+          res.status(200).json(data);
 
         }, function(error) {
             // Something went wrong...
+            res.status(400).json(error);
             console.log("Something went wrong in getting the products..");
         });
     }
@@ -218,12 +244,22 @@ app.get('/authenticate', function(req, res){
 
 
     function getCategories(req, res){
-      moltin.Category.List(null, function(category) {
-          console.log(category);
-          res.json(category);
+      // moltin.Category.List(null, function(category) {
+      //     console.log(category);
+      //     res.status(200).json(category);
+      // }, function(error) {
+      //   console.log(error);
+      //   res.status(400).json(error);
+      //     // Something went wrong...
+      // });
+
+
+      moltin.Category.Tree({}, function(tree) {
+        console.log(tree);
+        res.status(200).json(tree);
       }, function(error) {
-        res.json(error);
-          // Something went wrong...
+        console.log(error);
+        res.status(400).json(error);
       });
     }
 
@@ -416,8 +452,13 @@ app.get('/authenticate', function(req, res){
       }, function(error) {
           // Something went wrong...
       });
-
     }
+
+
+
+
+
+
 
 
 

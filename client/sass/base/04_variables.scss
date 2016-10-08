@@ -11,10 +11,10 @@ $font-weight-regular: 400;
 
 
 // ........................................................FONT SIZES
-$font-size-nav:35px;
+$font-size-nav:20px;
 $font-size-h1:35px;
-$font-size-h2:13px;
-$font-size-paragraph: 12px;
+$font-size-h2:11px;
+$font-size-paragraph: 11px;
 
 $font-size-nav-mobile:25px;
 $font-size-h1-mobile:30px;
@@ -26,10 +26,10 @@ $letter-spacing: 1px;
 
 
 
-$font-family-nav: helvetica;
-$font-family-h1: helvetica;
-$font-family-h2: helvetica;
-$font-family-paragraph: helvetica;
+$font-family-nav: 'gillsans_light';
+$font-family-h1: 'didot';
+$font-family-h2: 'gillsans_light';
+$font-family-paragraph: 'gillsans_light';
 
 
 
@@ -56,6 +56,9 @@ $padding-headline-bottom: 20px;
 $black: #000000;
 $purple: #884f9e;
 $red: #ec2224;
+$deep_grey: #3d3d3d;
+$dark_grey: #515151;
+$light_grey: #979797;
 $white: #FFFFFF;
 $yellow: #ede611;
 $green: #009900;
