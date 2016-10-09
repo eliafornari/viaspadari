@@ -10,7 +10,7 @@ let routes  = require('./routes');
 let path = require('path');
 var util = require('util');
 let ejs = require('ejs');
-var geoip = require('geoip-lite');
+// var geoip = require('geoip-lite');
 let app = express();
 
 
@@ -58,13 +58,13 @@ app.get('/profile', function(req, res){
 
 app.get('/authenticate', function(req, res){
 
-  var ip = req.ip;
-  var ip = "207.97.227.239";
-  var geo = geoip.lookup(ip);
+  // var ip = req.ip;
+  // var ip = "207.97.227.239";
+  // var geo = geoip.lookup(ip);
 
   moltin.Authenticate(function(data) {
     console.log(data);
-    data.geo = geo;
+    // data.geo = geo;
     if(data){
       res.status(200);
       res.json(data);
