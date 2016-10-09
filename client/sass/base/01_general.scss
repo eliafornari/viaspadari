@@ -77,7 +77,9 @@ html{
   color:$light-grey;
   min-height:100%;
   background-color: $black;
-  font-weight: normal;
+  font-weight: normal !important;
+  // font-smooth: never;
+  // // -webkit-font-smoothing : none;
   @include respond-to(phone-device){
     overflow-x: hidden;
     overflow-y: hidden;
@@ -110,15 +112,25 @@ body {
 }
 
 
-p, a, li {
+
+
+
+
+/*.........................MAIN............................*/
+main {
+  height: auto;
+  min-height:100%;
+  width:calc(100vw - 250px);
+  position: relative;
+  display: block;
   list-style-type: none;
-  letter-spacing:$letter-spacing;
+  display: table;
+  margin-left: 250px;
 }
 
-p, span{
-  @include paragraph();
-  color:$light-grey;
-}
+
+
+
 
 
 
@@ -147,14 +159,10 @@ a{
   pointer-events: none;
 }
 
-input, textarea, select, a, li {
-  text-decoration: none;
-}
 
-select, input, textarea{
-  line-height: normal;
-}
 
+
+/*.....................TABLE......................*/
 
 table{
   width:100%;
@@ -172,19 +180,37 @@ table{
 
 
 
-
-
-/*.........................MAIN............................*/
-main {
-  height: auto;
-  min-height:100%;
-  width:calc(100vw - 250px);
-  position: relative;
-  display: block;
-  list-style-type: none;
-  display: table;
-  margin-left: 250px;
+input, textarea, select, a, li {
+  text-decoration: none;
 }
+
+select, input, textarea{
+  line-height: normal;
+}
+
+
+h1{
+  @include h1();
+}
+h2{
+  @include h2();
+}
+h3{
+  @include h2();
+}
+
+p, a, li {
+  list-style-type: none;
+  letter-spacing:$letter-spacing;
+}
+
+p, span{
+  @include paragraph();
+  color:$light-grey;
+}
+
+
+
 
 /*.............................Loader............................*/
 
@@ -327,8 +353,8 @@ $fade-in: 1s;
   top:$margin-sides;
   right:$margin-sides;
   z-index: $z-bag;
-  width:25px;
-  height:25px;
+  width:22px;
+  height:22px;
   .bag-svg{
     width: 100%;
     height:100%;
@@ -338,11 +364,12 @@ $fade-in: 1s;
     }
   }
   .bag-total{
+    display: block;
     width: 100%;
     height:100%;
-    line-height: 32px;
+    line-height: 28px;
     text-align: center;
-    font-size: 10px;
+    font-size: 9px;
     position: absolute;
   }
 }

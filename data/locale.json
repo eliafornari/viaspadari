@@ -17,7 +17,12 @@
       "county": "regione",
       "country": "nazione",
       "zip": "cap",
-      "different_billing": "diversa fatturazione"
+      "different_billing": "diversa fatturazione",
+      "origin":"provenienza",
+      "weight":"peso",
+      "certification":"certificazione",
+      "price": "prezzo",
+      "quantity": "quantità"
     }
   },
 
@@ -39,7 +44,12 @@
       "county": "county",
       "country": "country",
       "zip": "zip",
-      "different_billing": "different billing"
+      "different_billing": "different billing",
+      "origin": "origin",
+      "weight": "weight",
+      "certification":"certification",
+      "price": "price",
+      "quantity": "quantity"
     }
   }
 }

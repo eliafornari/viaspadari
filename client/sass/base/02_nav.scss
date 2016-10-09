@@ -1,12 +1,12 @@
 .nav{
   position: fixed;
-  width:250px;
+  width:270px;
   height:100vh;
   background-color: $black;
   left:0;
   top:0;
   z-index:$z-nav;
-  border-right: 1px solid $deep_grey;
+  border-right: 2px solid $deep_grey;
 }
 
 
@@ -43,12 +43,23 @@
       &:nth-child(1){
         margin-top: 0;
       }
-      .nav-main-a{
-        text-align: left;
+      .nav-main-category{
         width:auto;
         display: block;
         clear: both;
-        text-transform: uppercase;
+        position: relative;
+        .nav-main-category-a{
+          text-align: left;
+          display: inline-block;
+          text-transform: uppercase;
+        }
+        .nav-main-category-span{
+          display: inline-block;
+          position: relative;
+          margin-left:5px;
+          text-align: right;
+          text-transform: uppercase;
+        }
       }
       .nav-sub{
         width:auto;
@@ -69,6 +80,16 @@
 
   }//nav list
 }//nav table
+
+
+
+
+.closeCategory{
+  height:0;
+  display:none;
+}
+
+
 
 .nav-bottom{
   position: absolute;

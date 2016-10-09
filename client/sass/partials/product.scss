@@ -13,6 +13,7 @@
       width: 30%;
       height:auto;
       margin-right: 5%;
+      float:left;
       &:nth-child(2n){
         margin-right: 0%;
       }
@@ -22,16 +23,13 @@
           bottom:0;
           width: 28%;
           margin-left: 1%;
-          @include h1();
+          @include h2();
         }
         .product-li-img{
           width:100%;
           display: block;
         }
       }
-
     }
-
   }
-
 }

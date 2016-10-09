@@ -11,12 +11,16 @@
        <tr>
          <td>
            <div class="nav-list" >
-             <div class="nav-main" ng-repeat="p in Categories | orderBy: 'order' track by p.order">
+             <div class="nav-main" ng-repeat="p in Categories | orderBy: 'order' track by p.order" ng-if="p.status.data.key==1">
 
-               <a class="nav-main-a" href="/{{p.slug}}" ng-class="{'active': isLocation('/shop')}" >{{p.title}}</a>
+               <div class="nav-main-category">
+                 <a class="nav-main-category-a" href="/{{p.slug}}" ng-class="{'active': isLocation('/shop')}" >{{p.title}} </a>
+                 <span class="nav-main-category-span" ng-init="categoryOpen=true"ng-click="categoryOpen = ! categoryOpen">{{ !categoryOpen ? '+' : '-' }}</span>
+               </div>
 
-               <div class="nav-sub">
-                 <a class="nav-sub-a" href="/{{c.slug}}" ng-repeat="c in p.children">{{c.title}}</a>
+
+               <div class="nav-sub" ng-class="{'closeCategory': !categoryOpen}">
+                 <a class="nav-sub-a" href="/{{c.slug}}" ng-repeat="c in p.children" ng-if="c.status.data.key==1">{{c.title}}</a>
                </div>
              </div>
 

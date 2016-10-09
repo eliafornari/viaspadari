@@ -195,11 +195,11 @@ $transition-slow: 1s;
 
 @mixin hover-effect-background-color($color, $hover){
   background-color: $color;
-  transition:         background-color $transition-slow ease;
-  -webkit-transition: background-color $transition-slow ease;
-  -moz-transition:    background-color $transition-slow ease;
-  -ms-transition:     background-color $transition-slow ease;
-  -o-transition:      background-color $transition-slow ease;
+  transition:         background-color $transition-medium ease;
+  -webkit-transition: background-color $transition-medium ease;
+  -moz-transition:    background-color $transition-medium ease;
+  -ms-transition:     background-color $transition-medium ease;
+  -o-transition:      background-color $transition-medium ease;
 
   &:hover {
     background-color: $hover;
@@ -365,12 +365,15 @@ $transition-slow: 1s;
   line-height: $line-height-h1;
   font-family: $font-family-h1;
   text-transform: uppercase;
+  color: $white;
 }
 @mixin h2(){
   font-size: $font-size-h2;
   line-height: $line-height-h2;
   font-family: $font-family-h2;
   letter-spacing: 2px;
+  text-transform: capitalize;
+  color: $white;
 
 }
 
@@ -399,4 +402,31 @@ $transition-slow: 1s;
   &:hover {
     box-shadow: $horizontal-final $vertical-final $thickness-final 0 rgba(0, 0, 0, $opacity);
   }
+}
+
+
+
+
+
+@mixin input(){
+  color: $light-grey;
+  background-color: transparent;
+  border:0;
+  text-align: left;
+  outline:0;
+  border-radius: 0%;
+  -webkit-border-radius: 0%;
+  -moz-border-radius: 0%;
+  @include paragraph();
+  @include respond-to(phone){
+    line-height: normal;
+    width:100%;
+  }
+  &:hover, &:focus{
+    outline:0;
+  }
+  &::-webkit-input-placeholder { color: $light-grey; }
+  &:-moz-placeholder { color: $light-grey; }
+  &::-moz-placeholder { color: $light-grey; }
+  &:-ms-input-placeholder { color: $light-grey; }
 }

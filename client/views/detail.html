@@ -1,4 +1,4 @@
-<div class="detail">
+<div class="detail" ng-class="{'zoom': zoomImage}">
 
   <div class="detail-images" ng-init="zoomImage=false" ng-click="zoomImage=!zoomImage" ng-class="{'zoom': zoomImage}">
     <div class="detail-images-single" ng-repeat="i in Detail.images">
@@ -9,22 +9,47 @@
 
   <div class="detail-functions">
 
-      <!-- <div class="detail-modifiers">
-        <ul class="detail-modifiers-ul" ng-repeat="m in Detail.modifiers">
-          <p class="detail-modifiers-ul-placeholder" ng-click="showSelection(m.id)">{{m.title}} </p>
 
-          <div class="detail-modifiers-variations" ng-click="showSelection(m.id)">
-            <li class="detail-modifiers-variations-li" ng-repeat="v in m.variations" ng-click="thisVariation(Detail.id , m.id, m.title, v.id, v.title);" ng-show="selectedVariation[m.id].variation_title==v.title || m.open==true">
-              <a>{{v.title}}</a>
-            </li>
-          </div>
-        </ul>
-      </div> -->
+    <div class="detail-functions-name">
+      <h2>{{Detail.title}}</h2>
+    </div>
+
+
+    <div class="detail-functions-specs">
+      <p>{{Locale.data.origin}}: {{Detail.origin}}</p>
+      <p>{{Locale.data.weight}}: {{Detail.product_weight}}</p>
+      <p>{{Locale.data.certification}}: {{Detail.certification}}</p>
+    </div>
+
+
+    <div class="detail-functions-description">
+      <p>{{Detail.description}}</p>
+    </div>
+
+
+
+
+
+    <div class="detail-functions-price">
+      <p class="detail-functions-price-p">
+        <span class="detail-functions-price-p-text">{{Locale.data.price}}:</span>
+        <span class="detail-functions-price-p-value">{{Detail.price.data.formatted.without_tax}}</span>
+      </p>
+    </div>
+
+    <div class="detail-functions-quantity">
+      <p class="detail-functions-quantity-p">
+        <span class="detail-functions-quantity-p-text">{{Locale.data.quantity}}:</span>
+        <span class="detail-functions-quantity-p-value"><b>-</b><input type="integer" name="name" value="1" ng-init="addValue=1" ng-model="addValue" min="1" max="{{Detail.stock_level}}"><b>+</b></span>
+      </p>
+    </div>
+
+
+
       <div class="detail-add">
-        <p class="detail-add-plus-variation" ng-hide="Detail.has_variation" ng-click="addToCart(Detail.id)">ADD</p>
+        <p class="detail-add-text" ng-hide="Detail.has_variation" ng-click="addToCart(Detail.id)">ADD</p>
         <!-- <p class="detail-add-plus-variation" ng-show="Detail.has_variation" ng-click="addVariation()" ng-class="{'activeAdd': howManyVAriationsSelected>=Detail.total_variations}">ADD</p> -->
       </div>
-      <p class="detail-price" ng-cloak>{{Detail.price.data.formatted.without_tax}}</p>
 
   </div>
 

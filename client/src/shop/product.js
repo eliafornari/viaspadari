@@ -1,29 +1,5 @@
 var Product = angular.module('myApp');
-Product.filter('productFilter', function ($sce, $routeParams, $rootScope) {
-    return function(data) {
-      var category = $routeParams.category;
-      var filtered = [];
-      console.log('category: '+category);
-      for (var i in $rootScope.Product){
-        for (var c in $rootScope.Product[i].category.data){
-          if($rootScope.Product[i].category.data[c].slug == category){
-            filtered = filtered.concat($rootScope.Product[i]);
-            console.log(filtered);
-          }
 
-          if($rootScope.Product[i].category.data[c].parent != null){
-
-            $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
-
-
-            console.log();
-          }
-        }
-
-      }
-      return filtered;
-    };
-  })
 Product.controller('productCtrl', function($scope, $location, $rootScope, $routeParams, $timeout,	$http, $sce, $document, anchorSmoothScroll, $window, transformRequestAsFormPost){
 
 $rootScope.pageClass = "page-product";

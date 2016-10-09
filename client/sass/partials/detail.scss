@@ -5,6 +5,10 @@
   z-index: $z-detail;
 }
 
+.detail.zoom{
+  z-index:99999;
+}
+
 .detail-images{
   width:80%;
   .detail-images-single{
@@ -28,79 +32,161 @@
 
 .detail-images.zoom{
   width:100vw;
-  height:auto;
+  height:100vh;
+  position: fixed;
+  left:0;
+  top:0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: $black;
   .detail-images-single{
     width:100vw;
-    height:100vh;
+    height:auto;
     img{
-      max-width: 80vw !important;
+      max-width: 100vw !important;
+      display:block;
     }
   }
 }
 
 
+.detail-images.zoom-remove.zoom-remove-active{
+  -webkit-transition: all $animation-speed $animation-bezier;
+  -moz-transition: all $animation-speed $animation-bezier;
+  -ms-transition: all $animation-speed $animation-bezier;
+  -o-transition: all $animation-speed $animation-bezier;
+  transition: all $animation-speed $animation-bezier;
+}
+
+
+
+
+
+
+
+//right bar
 
 .detail-functions{
   position: fixed;
-  right: $margin-sides;
-  top: 50%;
-  width: auto;
-  margin-top: -10px;
-  height: auto;
+  right: 0;
+  top: 0;
+  width: 270px;
+  height: 100vh;
   z-index: $z-detail-functions;
+  border-left: 2px solid $deep_grey;
   @include respond-to(phone){
     top:auto;
     bottom:$margin-sides;
     width:100px;
     left:50%;
     margin-left: -50px;
+  }
 
+  .detail-functions-name{
+    width:88%;
+    height:100px;
+    margin: auto;
+    margin-top: 100px;
+    h2{
+      width:100%;
+      display: block;
+      margin: auto;
+      text-align: center;
+    }
+  }
+  .detail-functions-specs{
+    width: 88%;
+    height:auto;
+    margin: auto;
+    margin-top: $margin-top-li;
+    border: 2px solid $deep_grey;
+    p{
+      text-align: center;
+      &:nth-child(1){
+        margin-top:10px;
+      }
+      &:nth-child(3){
+        margin-bottom:10px;
+      }
+    }
+  }
+  .detail-functions-description{
+    width:88%;
+    height: auto;
+    max-height: 100px;
+    overflow-y: scroll;
+    margin: auto;
+    margin-top: $margin-top-li;
+
+  }
+  .detail-functions-price{
+    width: 88%;
+    height:auto;
+    margin: auto;
+    margin-top: $margin-top-li;
+    .detail-functions-price-p{
+      width:100%;
+      position: relative;
+      height: 40px;
+      line-height: 40px;
+      .detail-functions-price-p-text{
+        position: absolute;
+        left:0;
+      }
+      .detail-functions-price-p-value{
+        position: absolute;
+        right:0;
+      }
+    }
+  }
+
+  .detail-functions-quantity{
+    width: 88%;
+    height:auto;
+    margin: auto;
+    // margin-top: $margin-top-li;
+    .detail-functions-quantity-p{
+      width:100%;
+      position: relative;
+      height: 40px;
+      line-height: 40px;
+      .detail-functions-quantity-p-text{
+        position: absolute;
+        left:0;
+      }
+      .detail-functions-quantity-p-value{
+        position: absolute;
+        right:0;
+        input{
+          width:20px;
+          @include input();
+          text-align: center;
+        }
+      }
+    }
   }
 }
 
 .detail-add{
   position: relative;
-  top: 0;
-  left:0;
-  height:auto;
-  width:auto;
+  height:40px;
+  width:100%;
   display: block;
-  float:left;
-  margin-left: $margin-left-paragraph;
+  margin-top: $margin-top-li;
+  background-color: $deep-grey;
+  @include hover-effect-background-color($deep-grey, $light-grey);
   p{
     display: block;
     width:100%;
+    @include paragraph();
+    @include hover-effect-color($light-grey, $white);
+    color: $light-grey;
+    line-height: 40px;
+    height:100%;
     text-align: left;
     vertical-align: middle;
     margin:0;
-    @include paragraph();
-    @include hover-effect-glow($red);
+    text-align: center;
 
   }
-}
-
-
-.detail-price{
-  position: absolute;
-  display:block;
-  height: $line-height-paragraph;
-  width:100%;
-  bottom: -28px;
-  left: 0;
-  float:none;
-  @include respond-to(phone){
-    position: fixed;
-    bottom: $margin-sides;
-    left:$margin-sides;
-    width:50px;
-  }
-  p{
-    height:100%;
-    width:100%;
-    color: $red;
-    text-align: right;
-    @include paragraph();
-  }
-  // z-index: $z-price;
-
 }

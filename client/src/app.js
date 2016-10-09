@@ -58,6 +58,29 @@ $rootScope.pageLoading = true;
 
 
 
+  .filter('productFilter', function ($sce, $routeParams, $rootScope) {
+      return function(data) {
+        var category = $routeParams.category;
+        var filtered = [];
+        console.log('category: '+category);
+        for (var i in $rootScope.Product){
+          for (var c in $rootScope.Product[i].category.data){
+            if($rootScope.Product[i].category.data[c].slug == category){
+              filtered = filtered.concat($rootScope.Product[i]);
+              console.log(filtered);
+            }
+
+            if($rootScope.Product[i].category.data[c].parent != null){
+              $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
+              console.log();
+            }
+          }
+
+        }
+        return filtered;
+      };
+    })
+
 
 .config(['$routeProvider', '$locationProvider' ,'$sceProvider', function($routeProvider, $locationProvider, $sceProvider) {
 
@@ -185,14 +208,22 @@ $rootScope.Home;
 
 
 
-
+    //attaching child to the product object for URL
+    $rootScope.attachChild=()=>{
+      for (var i in $rootScope.Product){
+        for (var c in $rootScope.Product[i].category.data){
+          if($rootScope.Product[i].category.data[c].parent != null){
+            $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
+          }
+        }
+      }
+    }
 
     $rootScope.getProductsFN=function(){
       $http({method: 'GET', url: '/getProducts'}).then(function(response){
-        console.log("product: ");
-        console.log(response);
         $rootScope.Product = response.data;
         console.log(response.data);
+        $rootScope.attachChild();
         $rootScope.$broadcast("productReady");
         $rootScope.pageLoading = false;
       }, function(error){
@@ -205,21 +236,27 @@ $rootScope.Home;
 
 
 
-    $rootScope.getCategories = function(){
-      $http({method: 'GET', url: '/getCategories'}).then(function(response){
-        console.log("categories status 200");
-        $rootScope.Categories = response.data;
-        console.log(response.data);
 
-      },function(error){
-        console.log(error);
-        if(response.status == 400){
-          console.log("categories status 400");
-          console.log("an error occurred in getting the categories");
-        }
+  //getting product categories
+  $rootScope.getCategories = function(){
+    $http({method: 'GET', url: '/getCategories'}).then(function(response){
+      console.log("categories status 200");
+      $rootScope.Categories = response.data;
+      console.log(response.data);
 
-      });
-    }
+
+    },function(error){
+      console.log(error);
+      if(response.status == 400){
+        console.log("categories status 400");
+        console.log("an error occurred in getting the categories");
+      }
+
+    });
+  }
+
+
+
 
 
 
@@ -246,8 +283,8 @@ $rootScope.Home;
 // select country
 
 $rootScope.lang = [
-  {"code": "US", "country":"US", "language":"English", "selected":true},
-  {"code": "IT", "country":"Italy", "language":"Italiano", "selected":true}
+  {"code": "US", "country":"US", "language":"English", "selected":false},
+  {"code": "IT", "country":"Italy", "language":"Italiano", "selected":false}
 ]
 
 
@@ -257,7 +294,12 @@ $rootScope.selectLang = () => {
   for (var i in $rootScope.lang){
     $rootScope.lang[i].selected = false;
     if($rootScope.lang[i].code == $scope.selectedLang.code){ $rootScope.lang[i].selected = true };
-    console.log($rootScope.lang);
+    // console.log($rootScope.lang);
+    for (var l in $rootScope.locales){
+      if($rootScope.lang[i].code == $rootScope.locales[l].meta.code){
+        $rootScope.Locale = $rootScope.locales[l];
+      }
+    }
   }
 }
 
@@ -265,7 +307,8 @@ $rootScope.selectLang = () => {
 $rootScope.selectedLang = $rootScope.lang[0];
 console.log($rootScope.selectedLang);
 console.log("lang lang");
-$rootScope.selectLang();
+
+
 
 
 
@@ -279,7 +322,8 @@ $rootScope.selectLang();
 //getting json text meta data
 
   $rootScope.countries = [];
-  $rootScope.locale = {};
+  $rootScope.locales = {};
+  $rootScope.Locale = {};
 
   $rootScope.getCountries = function(){
     $http({
@@ -287,8 +331,9 @@ $rootScope.selectLang();
       url: '/data'
     }).then(function successCallback(response) {
       $rootScope.countries = response.data.countries;
-      $rootScope.locale = response.data.locale;
+      $rootScope.locales = response.data.locale;
       console.log(response.data);
+      $rootScope.selectLang();
     }, function errorCallback(response) {
 
       $scope.error = {value: true, text:'countries or locale not available, this page will be reloaded'};
@@ -298,6 +343,19 @@ $rootScope.selectLang();
     });
   };
   $rootScope.getCountries();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

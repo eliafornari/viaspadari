@@ -3,4 +3,28 @@
 
 
 
+        <div class="home-content" ng-class="{'openDetail': isDetailOpen}" >
+          <ul class="home-ul">
+            <li class="home-li" ng-repeat="p in Product | orderBy: '-date' track by p.date" ng-init="productHovered=false" ng-mouseenter="homeProductHovered=true" ng-mouseleave="homeProductHovered=false" ng-cloak ng-if="p.status.data.key==1">
+              <a href="/{{p.category.child}}/{{p.slug}}">
+              <table>
+                <tr>
+                  <td>
+                    <div class="home-li-container">
+                      <h1 class="home-li-h1" ng-show="homeProductHovered">{{p.title}}</h1>
+                      <img class="home-li-img" src="{{i.url.http}}" alt="{{p.description}}" ng-class="{'opacityProducts': !homeProductHovered}" ng-repeat="i in p.images"/>
+
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              </a>
+
+            </li>
+          </ul>
+
+        </div>
+
+
+
 </div>
