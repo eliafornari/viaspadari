@@ -10,6 +10,7 @@ let routes  = require('./routes');
 let path = require('path');
 var util = require('util');
 let ejs = require('ejs');
+let request = require('request');
 // var geoip = require('geoip-lite');
 let app = express();
 
@@ -44,7 +45,7 @@ app.set('views', __dirname + '/../client');
 app.use( express.static(__dirname + "/../client") );
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+var token;
 
 
 
@@ -66,6 +67,7 @@ app.get('/authenticate', function(req, res){
     console.log(data);
     // data.geo = geo;
     if(data){
+      token = data.access_token;
       res.status(200);
       res.json(data);
     }else{
@@ -90,12 +92,13 @@ app.get('/authenticate', function(req, res){
     app.post('/addProduct', function(req, res){
 
       var id = req.body.id.toString();
+      var quantity = req.body.quantity;
       console.log(id);
       // var token = req.body.access_token;
       // console.log();
       // res.setHeader("Authorization", "Bearer "+token);
 
-      moltin.Cart.Insert(id, 1, null, function(items){
+      moltin.Cart.Insert(id, quantity, null, function(items){
           console.log(items);
         res.json(items);
 
@@ -190,6 +193,15 @@ app.get('/authenticate', function(req, res){
     app.post('/emptyCart', function(req, res){
       emptyCart(req, res);
     });
+
+    app.post('/createUser', function(req, res){
+      createUser(req, res);
+    });
+
+    app.post('/loginUser', function(req, res){
+      loginUser(req, res);
+    });
+
 
 
 
@@ -474,6 +486,88 @@ app.get('/data', function(req, res){
 
  res.json(data);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function createUser(req, res){
+
+  var body = req.body;
+
+  console.log(body);
+
+  //create customer
+  moltin.Customer.Create({
+      first_name:  body.first_name,
+      last_name:  body.last_name,
+      email: body.email,
+      password: body.password,
+      country: body.country
+  }, function(customer) {
+    console.log("customer");
+      console.log(customer);
+      res.json(c);
+  }, function(error, response, c) {
+    console.log(error);
+    console.log(response);
+    console.log(c);
+    res.status(c).json(response);
+      // Something went wrong...
+  });
+
+
+}
+
+
+
+function loginUser(req, res){
+
+  var body = req.body;
+  console.log(body);
+
+  request({
+      url: 'https://api.molt.in/v1/customers/token', //URL to hit
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer '+token
+      },
+      json: {
+        "email": body.email,
+        "password": body.password
+             } //Query string data
+      }, function(error, response, body){
+          if(error) {
+              console.log("PUT entry error");
+              console.log(error);
+              res.status(response.statusCode).json(body);
+          } else {
+              console.log("ok");
+              console.log(body);
+              res.status(response.statusCode).json(body);
+          }
+  });
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

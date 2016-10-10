@@ -1,0 +1,60 @@
+<div class="register" ng-controller="userCtrl">
+
+
+
+  <form class="register-form" name="registerForm" novalidate ng-submit="createUser(register)" >
+
+      <h2 class="form-title">REGISTER</h2>
+      <div class="form-entry">
+        <input type="text" name="name" value="name" ng-model="register.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
+          <span class="form-error" ng-show="registerForm.name.$error.required && registerForm.name.$touched">required</span>
+        </input>
+      </div>
+
+      <div class="form-entry">
+        <input type="text" name="lastname" value="lastname" ng-model="register.last_name" required placeholder="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'lastname'">
+          <span class="form-error" ng-show="registerForm.lastname.$error.required && registerForm.lastname.$touched">required</span>
+        </input>
+      </div>
+
+
+      <div class="form-entry">
+
+          <select name="country" ng-model="register.country" required>
+            <option value="" disabled selected>country</option>
+            <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}</option>
+            <span class="form-error" ng-show="registerForm.country.$error.required && registerForm.country.$touched">required</span>
+          </select>
+          <!-- <input type="text" name="country_shipment" value="country" ng-model="checkout.shipment.country" required placeholder="country" onfocus="this.placeholder = ''" onblur="this.placeholder = 'country'"> -->
+      </div>
+
+      <div class="form-entry">
+        <input type="email" name="email" value="email" ng-model="register.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+          <span class="form-error" ng-show="registerForm.email.$error.required && registerForm.email.$touched">required</span>
+          <span class="form-error" ng-show="registerForm.email.$error.email && registerForm.email.$touched">invalid email</span>
+        </input>
+      </div>
+
+      <div class="form-entry">
+        <input type="password" name="password" value="password" ng-model="register.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+          <span class="form-error" ng-show="registerForm.password.$error.required && registerForm.password.$touched">required</span>
+        </input>
+      </div>
+
+
+
+      <button class="register-button button" type="submit" ng-class="{'invalid': registerForm.$invalid}" ng-disabled="registerForm.$invalid">register</button>
+
+
+  </form>
+
+
+
+  <div class="register-error">
+    <p ng-repeat="e in registerError">
+      {{e}}
+    </p>
+  </div>
+
+
+</div>

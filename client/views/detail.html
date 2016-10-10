@@ -37,17 +37,17 @@
       </p>
     </div>
 
-    <div class="detail-functions-quantity">
+    <div class="detail-functions-quantity" ng-init="addValue=1">
       <p class="detail-functions-quantity-p">
         <span class="detail-functions-quantity-p-text">{{Locale.data.quantity}}:</span>
-        <span class="detail-functions-quantity-p-value"><b>-</b><input type="integer" name="name" value="1" ng-init="addValue=1" ng-model="addValue" min="1" max="{{Detail.stock_level}}"><b>+</b></span>
+        <span class="detail-functions-quantity-p-value"><b ng-click="addValue =addValue-1">-</b><input type="integer" name="addValue" value="1" ng-model="addValue" min="1" max="{{Detail.stock_level}}"><b ng-click="addValue=addValue+ 1">+</b></span>
       </p>
     </div>
 
 
 
       <div class="detail-add">
-        <p class="detail-add-text" ng-hide="Detail.has_variation" ng-click="addToCart(Detail.id)">ADD</p>
+        <p class="detail-add-text" ng-hide="Detail.has_variation" ng-click="addToCart(Detail.id, addValue)">ADD</p>
         <!-- <p class="detail-add-plus-variation" ng-show="Detail.has_variation" ng-click="addVariation()" ng-class="{'activeAdd': howManyVAriationsSelected>=Detail.total_variations}">ADD</p> -->
       </div>
 

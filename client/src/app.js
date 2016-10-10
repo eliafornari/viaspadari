@@ -92,8 +92,16 @@ $sceProvider.enabled(false);
   $routeProvider
 
 
-  // $locationChangeStart
-
+    // $locationChangeStart
+    .when('/register', {
+      templateUrl: 'views/user/register.html'
+    })
+    .when('/login', {
+      templateUrl: 'views/user/login.html'
+    })
+    .when('/account', {
+      templateUrl: 'views/user/account.html'
+    })
 
     .when('/about', {
       templateUrl: 'views/about.html'
@@ -164,6 +172,7 @@ $rootScope.location = $location.path();
 $rootScope.firstLoading = true;
 $rootScope.pageClass = "page-home";
 $rootScope.Home;
+$rootScope.User={"status":false};
 
 
 
@@ -547,3 +556,4 @@ var service = require("./services.js");
 var cart = require("./shop/cart.js");
 var shop = require("./shop/product.js");
 var shop = require("./shop/checkout.js");
+var user = require("./user.js");

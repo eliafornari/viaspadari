@@ -82,8 +82,13 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $routeProvider
 
   // $locationChangeStart
-
-  .when('/about', {
+  .when('/register', {
+    templateUrl: 'views/user/register.html'
+  }).when('/login', {
+    templateUrl: 'views/user/login.html'
+  }).when('/account', {
+    templateUrl: 'views/user/account.html'
+  }).when('/about', {
     templateUrl: 'views/about.html'
   }).when('/contact', {
     templateUrl: 'views/contact.html'
@@ -117,6 +122,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $rootScope.firstLoading = true;
   $rootScope.pageClass = "page-home";
   $rootScope.Home;
+  $rootScope.User = { "status": false };
 
   $rootScope.Auth, $rootScope.Categories;
 
@@ -399,8 +405,9 @@ var service = require("./services.js");
 var cart = require("./shop/cart.js");
 var shop = require("./shop/product.js");
 var shop = require("./shop/checkout.js");
+var user = require("./user.js");
 
-},{"./home.js":2,"./nav.js":3,"./services.js":4,"./shop/cart.js":5,"./shop/checkout.js":6,"./shop/product.js":7,"./vendor/infiniteScroll.js":8,"./vendor/jquery-ui.min.js":9,"./vendor/jquery.mousewheel.js":10,"angular":18,"angular-animate":12,"angular-resource":14,"angular-route":16,"jquery":31,"prismic.io":39}],2:[function(require,module,exports){
+},{"./home.js":2,"./nav.js":3,"./services.js":4,"./shop/cart.js":5,"./shop/checkout.js":6,"./shop/product.js":7,"./user.js":8,"./vendor/infiniteScroll.js":9,"./vendor/jquery-ui.min.js":10,"./vendor/jquery.mousewheel.js":11,"angular":19,"angular-animate":13,"angular-resource":15,"angular-route":17,"jquery":32,"prismic.io":40}],2:[function(require,module,exports){
 'use strict';
 
 var Home = angular.module('myApp');
@@ -1018,7 +1025,7 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
     // })
   });
 
-  $rootScope.addToCart = function (id) {
+  $rootScope.addToCart = function (id, quantity) {
 
     $http({
       url: '/addProduct',
@@ -1030,6 +1037,7 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
       transformRequest: transformRequestAsFormPost,
       data: {
         id: id,
+        quantity: quantity,
         access_token: "helloooo"
       }
     }).then(function (response) {
@@ -1133,6 +1141,74 @@ Product.directive('detailDirective', function ($rootScope, $location, $window, $
 },{}],8:[function(require,module,exports){
 'use strict';
 
+var User = angular.module('myApp');
+
+User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $http, $sce, $document, anchorSmoothScroll, $window, transformRequestAsFormPost) {
+
+  $rootScope.windowHeight = $window.innerHeight;
+  $rootScope.pageClass = "page-user";
+
+  $rootScope.User = { "status": false };
+  $rootScope.register;
+  $scope.registerError;
+  $scope.loginError;
+
+  $rootScope.createUser = function (data) {
+
+    $http({
+      url: '/createUser',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: transformRequestAsFormPost,
+      data: data
+    }).then(function (response) {
+
+      $rootScope.User.data = response.data;
+      $rootScope.User.status = true;
+      console.log(response);
+      console.log("posted successfully");
+    }, function (response) {
+      console.error("error in posting");
+      console.log(response);
+      $scope.registerError = response.data;
+      $rootScope.User.status = false;
+    });
+  };
+
+  $rootScope.loginUser = function (data) {
+
+    $http({
+      url: '/loginUser',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: transformRequestAsFormPost,
+      data: data
+    }).then(function (response) {
+      $rootScope.User.data = response.data.result;
+      $rootScope.User.status = true;
+      $location.path('/account');
+      console.log(response);
+      console.log("posted successfully");
+    }, function (response) {
+      console.error("error in posting");
+      console.log(response);
+      $scope.loginError = response.data;
+      $rootScope.User.status = false;
+    });
+  };
+
+  $rootScope.logOut = function () {
+    $rootScope.User = { "status": false };
+  };
+}); //controller
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
 /* ng-infinite-scroll - v1.0.0 - 2013-02-23 */
 var mod;
 
@@ -1203,7 +1279,7 @@ mod.directive('infiniteScroll', ['$rootScope', '$window', '$timeout', function (
   };
 }]);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -2335,7 +2411,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }));
 });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
@@ -2574,7 +2650,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 });
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -6722,11 +6798,11 @@ angular.module('ngAnimate', [])
 
 })(window, window.angular);
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular-animate');
 module.exports = 'ngAnimate';
 
-},{"./angular-animate":11}],13:[function(require,module,exports){
+},{"./angular-animate":12}],14:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -7586,11 +7662,11 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 require('./angular-resource');
 module.exports = 'ngResource';
 
-},{"./angular-resource":13}],15:[function(require,module,exports){
+},{"./angular-resource":14}],16:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -8657,11 +8733,11 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 require('./angular-route');
 module.exports = 'ngRoute';
 
-},{"./angular-route":15}],17:[function(require,module,exports){
+},{"./angular-route":16}],18:[function(require,module,exports){
 /**
  * @license AngularJS v1.5.7
  * (c) 2010-2016 Google, Inc. http://angularjs.org
@@ -40135,11 +40211,11 @@ $provide.value("$locale", {
 })(window);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":17}],19:[function(require,module,exports){
+},{"./angular":18}],20:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -40265,9 +40341,9 @@ var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 	exports.fromByteArray = uint8ToBase64
 }(typeof exports === 'undefined' ? (this.base64js = {}) : exports))
 
-},{}],20:[function(require,module,exports){
-
 },{}],21:[function(require,module,exports){
+
+},{}],22:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -40379,7 +40455,7 @@ exports.allocUnsafeSlow = function allocUnsafeSlow(size) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"buffer":22}],22:[function(require,module,exports){
+},{"buffer":23}],23:[function(require,module,exports){
 (function (global){
 /*!
  * The buffer module from node.js, for the browser.
@@ -41931,7 +42007,7 @@ function blitBuffer (src, dst, offset, length) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":19,"ieee754":27,"isarray":30}],23:[function(require,module,exports){
+},{"base64-js":20,"ieee754":28,"isarray":31}],24:[function(require,module,exports){
 module.exports = {
   "100": "Continue",
   "101": "Switching Protocols",
@@ -41996,7 +42072,7 @@ module.exports = {
   "511": "Network Authentication Required"
 }
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -42107,7 +42183,7 @@ function objectToString(o) {
 }
 
 }).call(this,{"isBuffer":require("../../is-buffer/index.js")})
-},{"../../is-buffer/index.js":29}],25:[function(require,module,exports){
+},{"../../is-buffer/index.js":30}],26:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -42411,7 +42487,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var http = require('http');
 
 var https = module.exports;
@@ -42427,7 +42503,7 @@ https.request = function (params, cb) {
     return http.request.call(this, params, cb);
 }
 
-},{"http":48}],27:[function(require,module,exports){
+},{"http":49}],28:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -42513,7 +42589,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -42538,7 +42614,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * Determine if an object is Buffer
  *
@@ -42557,14 +42633,14 @@ module.exports = function (obj) {
     ))
 }
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.0.0
  * https://jquery.com/
@@ -52603,7 +52679,7 @@ if ( !noGlobal ) {
 return jQuery;
 } ) );
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -53404,7 +53480,7 @@ module.exports = {
 };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./cache":33,"./documents":34,"./experiments":35,"./predicates":38,"./requests":40}],33:[function(require,module,exports){
+},{"./cache":34,"./documents":35,"./experiments":36,"./predicates":39,"./requests":41}],34:[function(require,module,exports){
 
 "use strict";
 
@@ -53459,7 +53535,7 @@ ApiCache.prototype = {
 
 module.exports = ApiCache;
 
-},{"./lru":37}],34:[function(require,module,exports){
+},{"./lru":38}],35:[function(require,module,exports){
 "use strict";
 
 /**
@@ -54045,7 +54121,7 @@ module.exports = {
   GroupDoc: GroupDoc
 };
 
-},{"./fragments":36}],35:[function(require,module,exports){
+},{"./fragments":37}],36:[function(require,module,exports){
 
 "use strict";
 
@@ -54130,7 +54206,7 @@ module.exports = {
   Variation: Variation
 };
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 "use strict";
 
 var documents = require('./documents');
@@ -55384,7 +55460,7 @@ module.exports = {
   insertSpans: insertSpans
 };
 
-},{"./documents":34}],37:[function(require,module,exports){
+},{"./documents":35}],38:[function(require,module,exports){
 
 /**
  * A doubly linked list-based Least Recently Used (LRU) cache. Will keep most
@@ -55637,7 +55713,7 @@ LRUCache.prototype.toString = function() {
 
 module.exports = LRUCache;
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 
 "use strict";
 
@@ -55919,7 +55995,7 @@ module.exports = {
 
 };
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 "use strict";
 
 var experiments = require('./experiments'),
@@ -55997,7 +56073,7 @@ module.exports = {
 
 module.exports.Prismic = module.exports; // Backward compatibility
 
-},{"./api":32,"./documents":34,"./experiments":35,"./fragments":36,"./predicates":38}],40:[function(require,module,exports){
+},{"./api":33,"./documents":35,"./experiments":36,"./fragments":37,"./predicates":39}],41:[function(require,module,exports){
 (function (process){
 
 "use strict";
@@ -56238,7 +56314,7 @@ module.exports = {
 };
 
 }).call(this,require('_process'))
-},{"../package.json":41,"_process":43,"http":48,"https":26,"url":60}],41:[function(require,module,exports){
+},{"../package.json":42,"_process":44,"http":49,"https":27,"url":61}],42:[function(require,module,exports){
 module.exports={
   "name": "prismic.io",
   "description": "JavaScript development kit for prismic.io",
@@ -56329,7 +56405,7 @@ module.exports={
   "readme": "ERROR: No README data found!"
 }
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -56376,7 +56452,7 @@ function nextTick(fn, arg1, arg2, arg3) {
 }
 
 }).call(this,require('_process'))
-},{"_process":43}],43:[function(require,module,exports){
+},{"_process":44}],44:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -56497,7 +56573,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (global){
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 ;(function(root) {
@@ -57034,7 +57110,7 @@ process.umask = function() { return 0; };
 }(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -57120,7 +57196,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -57207,13 +57283,13 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":45,"./encode":46}],48:[function(require,module,exports){
+},{"./decode":46,"./encode":47}],49:[function(require,module,exports){
 (function (global){
 var ClientRequest = require('./lib/request')
 var extend = require('xtend')
@@ -57295,7 +57371,7 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":50,"builtin-status-codes":23,"url":60,"xtend":63}],49:[function(require,module,exports){
+},{"./lib/request":51,"builtin-status-codes":24,"url":61,"xtend":64}],50:[function(require,module,exports){
 (function (global){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableByteStream)
 
@@ -57339,7 +57415,7 @@ function isFunction (value) {
 xhr = null // Help gc
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -57620,7 +57696,7 @@ var unsafeHeaders = [
 ]
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":49,"./response":51,"_process":43,"buffer":22,"inherits":28,"readable-stream":57,"to-arraybuffer":59}],51:[function(require,module,exports){
+},{"./capability":50,"./response":52,"_process":44,"buffer":23,"inherits":29,"readable-stream":58,"to-arraybuffer":60}],52:[function(require,module,exports){
 (function (process,global,Buffer){
 var capability = require('./capability')
 var inherits = require('inherits')
@@ -57804,7 +57880,7 @@ IncomingMessage.prototype._onXHRProgress = function () {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"./capability":49,"_process":43,"buffer":22,"inherits":28,"readable-stream":57}],52:[function(require,module,exports){
+},{"./capability":50,"_process":44,"buffer":23,"inherits":29,"readable-stream":58}],53:[function(require,module,exports){
 // a duplex stream is just a stream that is both readable and writable.
 // Since JS doesn't have multiple prototypal inheritance, this class
 // prototypally inherits from Readable, and then parasitically from
@@ -57880,7 +57956,7 @@ function forEach(xs, f) {
     f(xs[i], i);
   }
 }
-},{"./_stream_readable":54,"./_stream_writable":56,"core-util-is":24,"inherits":28,"process-nextick-args":42}],53:[function(require,module,exports){
+},{"./_stream_readable":55,"./_stream_writable":57,"core-util-is":25,"inherits":29,"process-nextick-args":43}],54:[function(require,module,exports){
 // a passthrough stream.
 // basically just the most minimal sort of Transform stream.
 // Every written chunk gets output as-is.
@@ -57907,7 +57983,7 @@ function PassThrough(options) {
 PassThrough.prototype._transform = function (chunk, encoding, cb) {
   cb(null, chunk);
 };
-},{"./_stream_transform":55,"core-util-is":24,"inherits":28}],54:[function(require,module,exports){
+},{"./_stream_transform":56,"core-util-is":25,"inherits":29}],55:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -58803,7 +58879,7 @@ function indexOf(xs, x) {
   return -1;
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":52,"_process":43,"buffer":22,"buffer-shims":21,"core-util-is":24,"events":25,"inherits":28,"isarray":30,"process-nextick-args":42,"string_decoder/":58,"util":20}],55:[function(require,module,exports){
+},{"./_stream_duplex":53,"_process":44,"buffer":23,"buffer-shims":22,"core-util-is":25,"events":26,"inherits":29,"isarray":31,"process-nextick-args":43,"string_decoder/":59,"util":21}],56:[function(require,module,exports){
 // a transform stream is a readable/writable stream where you do
 // something with the data.  Sometimes it's called a "filter",
 // but that's not a great name for it, since that implies a thing where
@@ -58984,7 +59060,7 @@ function done(stream, er) {
 
   return stream.push(null);
 }
-},{"./_stream_duplex":52,"core-util-is":24,"inherits":28}],56:[function(require,module,exports){
+},{"./_stream_duplex":53,"core-util-is":25,"inherits":29}],57:[function(require,module,exports){
 (function (process){
 // A bit simpler than readable streams.
 // Implement an async ._write(chunk, encoding, cb), and it'll handle all
@@ -59513,7 +59589,7 @@ function CorkedRequest(state) {
   };
 }
 }).call(this,require('_process'))
-},{"./_stream_duplex":52,"_process":43,"buffer":22,"buffer-shims":21,"core-util-is":24,"events":25,"inherits":28,"process-nextick-args":42,"util-deprecate":62}],57:[function(require,module,exports){
+},{"./_stream_duplex":53,"_process":44,"buffer":23,"buffer-shims":22,"core-util-is":25,"events":26,"inherits":29,"process-nextick-args":43,"util-deprecate":63}],58:[function(require,module,exports){
 (function (process){
 var Stream = (function (){
   try {
@@ -59533,7 +59609,7 @@ if (!process.browser && process.env.READABLE_STREAM === 'disable' && Stream) {
 }
 
 }).call(this,require('_process'))
-},{"./lib/_stream_duplex.js":52,"./lib/_stream_passthrough.js":53,"./lib/_stream_readable.js":54,"./lib/_stream_transform.js":55,"./lib/_stream_writable.js":56,"_process":43}],58:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":53,"./lib/_stream_passthrough.js":54,"./lib/_stream_readable.js":55,"./lib/_stream_transform.js":56,"./lib/_stream_writable.js":57,"_process":44}],59:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -59756,7 +59832,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":22}],59:[function(require,module,exports){
+},{"buffer":23}],60:[function(require,module,exports){
 var Buffer = require('buffer').Buffer
 
 module.exports = function (buf) {
@@ -59785,7 +59861,7 @@ module.exports = function (buf) {
 	}
 }
 
-},{"buffer":22}],60:[function(require,module,exports){
+},{"buffer":23}],61:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -60519,7 +60595,7 @@ Url.prototype.parseHost = function() {
   if (host) this.hostname = host;
 };
 
-},{"./util":61,"punycode":44,"querystring":47}],61:[function(require,module,exports){
+},{"./util":62,"punycode":45,"querystring":48}],62:[function(require,module,exports){
 'use strict';
 
 module.exports = {
@@ -60537,7 +60613,7 @@ module.exports = {
   }
 };
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 (function (global){
 
 /**
@@ -60608,7 +60684,7 @@ function config (name) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 module.exports = extend
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;

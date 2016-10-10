@@ -417,16 +417,88 @@ $transition-slow: 1s;
   border-radius: 0%;
   -webkit-border-radius: 0%;
   -moz-border-radius: 0%;
+  border-bottom: 1px solid $dark-grey;
   @include paragraph();
+  padding-left:5px;
   @include respond-to(phone){
     line-height: normal;
     width:100%;
   }
   &:hover, &:focus{
     outline:0;
+    border-bottom: 1px solid $light-grey;
   }
   &::-webkit-input-placeholder { color: $light-grey; }
   &:-moz-placeholder { color: $light-grey; }
   &::-moz-placeholder { color: $light-grey; }
   &:-ms-input-placeholder { color: $light-grey; }
+}
+
+
+
+
+
+@mixin select(){
+  @include paragraph();
+  background-color: transparent;
+  border:0;
+  text-align: left;
+  color: $light-grey;
+  border-radius: 0%;
+  -webkit-border-radius: 0%;
+  -moz-border-radius: 0%;
+  border-bottom: 1px solid $dark-grey;
+  outline: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+  line-height: normal;
+  padding-left:5px;
+  &:hover, &:focus{
+    outline:0;
+    border-bottom: 1px solid $light-grey;
+  }
+  &::-webkit-input-placeholder {
+     color: $light-grey;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+     color: $light-grey;
+  }
+
+  &::-moz-placeholder {  /* Firefox 19+ */
+     color: $light-grey;
+  }
+
+  &:-ms-input-placeholder {
+      color: $light-grey;
+  }
+}
+
+
+
+
+
+
+@mixin button(){
+  @include h3();
+  position: absolute;
+  bottom: $margin-sides;
+  left:50%;
+  width:90%;
+  margin-left: -45%;
+  display: block;
+  height:$button-height;
+  line-height: $button-height;
+  text-align: center;
+  text-transform: uppercase;
+  cursor:pointer;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  color: $white;
+  background-color: $deep-grey;
+  @include hover-effect-background-color($deep-grey, $light-grey);
+  // @include hover-effect-color($light-grey, $white);
+
 }

@@ -33,6 +33,11 @@
 
 
      <div class="nav-bottom">
+       <div class="nav-bottom-user">
+         <a href="/register">register</a>
+         <a href="/login" ng-if="User.status==false" ng-cloak>login</a>
+         <a href="/" ng-click="logOut()" ng-if="User.status==true" ng-cloak>logout</a>
+       </div>
        <div class="nav-bottom-lang">
          <select name="nav-bottom-lang-select" ng-model="selectedLang" ng-change="selectLang()" required>
            <option ng-repeat="l in lang" value="{{l.language}}" ng-selected="{{selectedLang = lang[0]}}">{{l.language}}</option>

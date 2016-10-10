@@ -319,6 +319,54 @@ p, span {
   letter-spacing: 2px;
   color: #d3d3d3; }
 
+button {
+  font-size: 11px;
+  line-height: 20px;
+  font-family: "gillsans_light";
+  letter-spacing: 2px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: 90%;
+  margin-left: -45%;
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  color: #FFFFFF;
+  background-color: #0a0a0a;
+  background-color: #0a0a0a;
+  transition: background-color 0.4s ease;
+  -webkit-transition: background-color 0.4s ease;
+  -moz-transition: background-color 0.4s ease;
+  -ms-transition: background-color 0.4s ease;
+  -o-transition: background-color 0.4s ease; }
+  button:hover {
+    background-color: #d3d3d3;
+    /*  @if $media == large-desktop {
+        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+      }*/
+    /*  @if $media == large-desktop {
+        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+      }*/
+    /*  @if $media == large-desktop {
+        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+      }*/ }
+    @media only screen and (min-width: 0px) and (max-device-width: 767px) {
+      button:hover {
+        background-color: #0a0a0a !important; } }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
+      button:hover {
+        background-color: #0a0a0a !important; } }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
+      button:hover {
+        background-color: #0a0a0a !important; } }
+
 /*.............................Loader............................*/
 .page-loader {
   display: none;
@@ -472,10 +520,10 @@ p, span {
   z-index: 10; }
 
 .detail.zoom {
-  z-index: 99999; }
+  z-index: 20; }
 
 .detail-images {
-  width: 80%; }
+  width: calc(100% - 270px); }
   .detail-images .detail-images-single {
     width: 50%;
     float: left; }
@@ -500,7 +548,8 @@ p, span {
   top: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #000000; }
+  background-color: #000000;
+  z-index: 21; }
   .detail-images.zoom .detail-images-single {
     width: 100vw;
     height: auto; }
@@ -603,10 +652,12 @@ p, span {
           border-radius: 0%;
           -webkit-border-radius: 0%;
           -moz-border-radius: 0%;
+          border-bottom: 1px solid #515151;
           font-size: 11px;
           line-height: 20px;
           font-family: "gillsans_light";
           letter-spacing: 2px;
+          padding-left: 5px;
           /*  @if $media == large-desktop {
               @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
             }*/
@@ -616,7 +667,8 @@ p, span {
               line-height: normal;
               width: 100%; } }
           .detail-functions .detail-functions-quantity .detail-functions-quantity-p .detail-functions-quantity-p-value input:hover, .detail-functions .detail-functions-quantity .detail-functions-quantity-p .detail-functions-quantity-p-value input:focus {
-            outline: 0; }
+            outline: 0;
+            border-bottom: 1px solid #d3d3d3; }
           .detail-functions .detail-functions-quantity .detail-functions-quantity-p .detail-functions-quantity-p-value input::-webkit-input-placeholder {
             color: #d3d3d3; }
           .detail-functions .detail-functions-quantity .detail-functions-quantity-p .detail-functions-quantity-p-value input:-moz-placeholder {
@@ -964,30 +1016,40 @@ p, span {
       margin-left: 40px; }
 
 .form-title {
-  font-size: 35px;
-  line-height: 50px;
-  font-family: "didot";
+  font-size: 11px;
+  line-height: 20px;
+  font-family: "gillsans_light";
   letter-spacing: 2px;
-  text-transform: capitalize;
-  color: #FFFFFF;
   color: #d3d3d3; }
 
 .checkout-button {
+  width: 400px;
+  font-size: 11px;
+  line-height: 20px;
+  font-family: "gillsans_light";
+  letter-spacing: 2px;
   position: absolute;
   bottom: 20px;
-  right: 20px;
-  text-align: right;
-  width: 400px;
+  left: 50%;
+  width: 90%;
+  margin-left: -45%;
+  display: block;
   height: 50px;
-  cursor: pointer;
-  background-color: transparent;
-  border-bottom: 1px solid #d3d3d3;
-  font-size: 35px;
   line-height: 50px;
-  font-family: "didot";
-  letter-spacing: 2px;
-  text-transform: capitalize;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  padding: 0;
   color: #FFFFFF;
+  background-color: #0a0a0a;
+  background-color: #0a0a0a;
+  transition: background-color 0.4s ease;
+  -webkit-transition: background-color 0.4s ease;
+  -moz-transition: background-color 0.4s ease;
+  -ms-transition: background-color 0.4s ease;
+  -o-transition: background-color 0.4s ease;
   color: #d3d3d3;
   transition: color 0.4s ease;
   -webkit-transition: color 0.4s ease;
@@ -1000,6 +1062,26 @@ p, span {
   /*  @if $media == large-desktop {
       @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
     }*/ }
+  .checkout-button:hover {
+    background-color: #d3d3d3;
+    /*  @if $media == large-desktop {
+        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+      }*/
+    /*  @if $media == large-desktop {
+        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+      }*/
+    /*  @if $media == large-desktop {
+        @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+      }*/ }
+    @media only screen and (min-width: 0px) and (max-device-width: 767px) {
+      .checkout-button:hover {
+        background-color: #0a0a0a !important; } }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
+      .checkout-button:hover {
+        background-color: #0a0a0a !important; } }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
+      .checkout-button:hover {
+        background-color: #0a0a0a !important; } }
   .checkout-button:hover {
     color: #FFFFFF;
     /*  @if $media == large-desktop {
@@ -1022,8 +1104,7 @@ p, span {
         color: #d3d3d3 !important; } }
   @media only screen and (min-width: 0px) and (max-width: 767px) {
     .checkout-button {
-      box-sizing: border-box;
-      width: 90vw; } }
+      box-sizing: border-box; } }
 
 .cart-back {
   position: absolute;
@@ -1077,11 +1158,11 @@ p, span {
   width: 100%;
   height: 20px;
   position: relative;
-  margin-top: 5px; }
+  margin-top: 10px; }
   .form-entry:nth-child(1) {
     margin-top: 15px; }
   .form-entry input {
-    width: 80%;
+    width: 100%;
     left: 0px;
     position: absolute;
     top: 50%;
@@ -1095,10 +1176,12 @@ p, span {
     border-radius: 0%;
     -webkit-border-radius: 0%;
     -moz-border-radius: 0%;
+    border-bottom: 1px solid #515151;
     font-size: 11px;
     line-height: 20px;
     font-family: "gillsans_light";
     letter-spacing: 2px;
+    padding-left: 5px;
     /*  @if $media == large-desktop {
         @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
       }*/ }
@@ -1107,7 +1190,8 @@ p, span {
         line-height: normal;
         width: 100%; } }
     .form-entry input:hover, .form-entry input:focus {
-      outline: 0; }
+      outline: 0;
+      border-bottom: 1px solid #d3d3d3; }
     .form-entry input::-webkit-input-placeholder {
       color: #d3d3d3; }
     .form-entry input:-moz-placeholder {
@@ -1118,36 +1202,34 @@ p, span {
       color: #d3d3d3; }
 
 select {
-  width: 80%;
+  width: 100%;
   left: 0px;
   position: absolute;
   top: 50%;
   height: 20px;
   margin-top: -10px;
-  background-color: transparent;
-  border: 0;
-  text-align: left;
-  outline: 0;
   font-size: 11px;
   line-height: 20px;
   font-family: "gillsans_light";
   letter-spacing: 2px;
+  background-color: transparent;
+  border: 0;
+  text-align: left;
   color: #d3d3d3;
   border-radius: 0%;
   -webkit-border-radius: 0%;
   -moz-border-radius: 0%;
+  border-bottom: 1px solid #515151;
   outline: 0;
   -webkit-appearance: none;
   appearance: none;
   box-shadow: none;
   border-radius: none;
   line-height: normal;
-  /*  @if $media == large-desktop {
-      @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
-    }*/ }
-  @media only screen and (min-width: 0px) and (max-width: 767px) {
-    select {
-      width: 100%; } }
+  padding-left: 5px; }
+  select:hover, select:focus {
+    outline: 0;
+    border-bottom: 1px solid #d3d3d3; }
   select::-webkit-input-placeholder {
     color: #d3d3d3; }
   select:-moz-placeholder {
@@ -1158,6 +1240,9 @@ select {
     color: #d3d3d3; }
   select:-ms-input-placeholder {
     color: #d3d3d3; }
+
+input.ng-dirty.ng-valid, select.ng-dirty.ng-valid {
+  border-bottom: 1px solid #d3d3d3; }
 
 input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
   border-bottom: 1px solid #FFFF00; }
@@ -1345,3 +1430,41 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
     line-height: 20px;
     font-family: "gillsans_light";
     letter-spacing: 2px; }
+
+.register {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: block;
+  position: absolute; }
+
+.register-form {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 200px; }
+
+.register-error {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 25px; }
+
+.login {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: block;
+  position: absolute; }
+
+.login-form {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 200px; }
+
+.login-error {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 25px; }

@@ -50,7 +50,7 @@ $rootScope.Detail;
   });
 
 
-      $rootScope.addToCart = function(id){
+      $rootScope.addToCart = function(id, quantity){
 
           $http({
             url: '/addProduct',
@@ -62,6 +62,7 @@ $rootScope.Detail;
             transformRequest: transformRequestAsFormPost,
             data: {
                     id: id,
+                    quantity: quantity,
                     access_token:"helloooo"
                   }
           }).then(function(response){

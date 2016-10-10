@@ -209,6 +209,9 @@ p, span{
   color:$light-grey;
 }
 
+button{
+  @include button();
+}
 
 
 

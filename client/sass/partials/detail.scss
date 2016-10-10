@@ -6,11 +6,11 @@
 }
 
 .detail.zoom{
-  z-index:99999;
+  z-index:20;
 }
 
 .detail-images{
-  width:80%;
+  width:calc(100% - 270px);
   .detail-images-single{
     width:50%;
     float: left;
@@ -21,8 +21,6 @@
       max-width: 100%;
       margin: auto;
       display: block;
-
-
       @include respond-to(phone){
         max-width: 52vw;
       }
@@ -39,6 +37,7 @@
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: $black;
+  z-index:21;
   .detail-images-single{
     width:100vw;
     height:auto;

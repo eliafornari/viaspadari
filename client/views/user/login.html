@@ -1,0 +1,35 @@
+<div class="login" ng-controller="userCtrl">
+
+
+
+  <form class="login-form" name="loginForm" novalidate ng-submit="loginUser(login)" >
+
+
+      <div class="form-entry">
+        <input type="email" name="email" value="email" ng-model="login.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+          <span class="form-error" ng-show="loginForm.email.$error.required && loginForm.email.$touched">required</span>
+          <span class="form-error" ng-show="loginForm.email.$error.email && loginForm.email.$touched">invalid email</span>
+        </input>
+      </div>
+
+      <div class="form-entry">
+        <input type="password" name="password" value="password" ng-model="login.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+          <span class="form-error" ng-show="loginForm.password.$error.required && loginForm.password.$touched">required</span>
+        </input>
+      </div>
+
+
+
+      <button class="login-button button" type="submit" ng-class="{'invalid': loginForm.$invalid}" ng-disabled="loginForm.$invalid">login</button>
+
+
+  </form>
+
+
+
+  <div class="login-error">
+    <p ng-repeat="e in loginError track by $index">{{e}}</p>
+  </div>
+
+
+</div>
