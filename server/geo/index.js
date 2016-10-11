@@ -18,17 +18,14 @@ exports.locate = function (req, res) {
 
   function reverseGeocoding(data){
     var coord = [ data.lat, data.lng];
-    console.log(coord);
 
     googleMapsClient.reverseGeocode({
       latlng: coord,
     }, function(err, response) {
       if (!err) {
-        console.log(response.json);
         res.status(response.status).json(response.json);
         next();
       }
-      console.log(response.status);
       res.status(response.status).json(err);
 
     })

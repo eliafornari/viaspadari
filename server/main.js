@@ -91,10 +91,17 @@ app.get('/authenticate', function(req, res){
     console.log(data);
     // data.geo = geo;
     if(data){
-      if(req.mySession.access_token){
+      console.log(data);
+      if(req.mySession.access_token && (req.mySession.access_token==data.access_token)){
+        console.log("same token", data.access_token, req.mySession.access_token);
+        res.status(200);
+        res.json(data);
+      }else if(data.token){
+        console.log("same token", data.access_token, req.mySession.access_token);
         res.status(200);
         res.json(data);
       }else{
+        console.log("different token", data.access_token, req.mySession.access_token);
         req.mySession.access_token = data.access_token;
         res.status(200);
         res.json(data);
