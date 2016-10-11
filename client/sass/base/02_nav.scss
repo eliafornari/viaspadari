@@ -52,6 +52,7 @@
           text-align: left;
           display: inline-block;
           text-transform: uppercase;
+          @include p();
         }
         .nav-main-category-span{
           display: inline-block;
@@ -59,6 +60,7 @@
           margin-left:5px;
           text-align: right;
           text-transform: uppercase;
+          @include p();
         }
       }
       .nav-sub{
@@ -66,12 +68,14 @@
         height:auto;
         margin-left: 15px;
         .nav-sub-a{
+          @include p();
           text-align: left;
           width:auto;
           display: block;
           clear: both;
           text-transform: uppercase;
           line-height: 28px;
+
         }
       }
     }
@@ -90,17 +94,87 @@
 }
 
 
+$line-height-nav-small: 23px;
+
+
 
 .nav-bottom{
   position: absolute;
   bottom: 0;
   left:0;
   width:100%;
-  height:50px;
+  height:auto;
+  .nav-bottom-left{
+    width:0%;
+    position: relative;
+    display: table;
+    margin-left:$margin-sides;
+    margin-bottom:$margin-sides;
+    text-align: left;
+    .nav-bottom-left-li{
+      display: block;
+      height:$line-height-nav-small;
+      width:130px;
+      a{
+        display: block;
+        @include p2();
+        @include hover-effect-color($dark_grey, $white);
+        text-transform: uppercase;
+        line-height: $line-height-nav-small;
+        height:$line-height-nav-small;
+      }
+    }
+    .nav-bottom-left-philosophy{
+
+    }
+    .nav-bottom-left-terms{
+
+    }
+    .nav-bottom-left-user{
+      height:auto;
+      .nav-bottom-left-user-register{
+        @include p2();
+        height:$line-height-nav-small;
+        line-height: $line-height-nav-small;
+      }
+
+      .nav-bottom-left-user-login{
+        height:auto;
+        a{
+          display: block;
+          @include p2();
+          @include hover-effect-color($dark_grey, $white);
+          text-transform: uppercase;
+          line-height: $line-height-nav-small;
+          height:$line-height-nav-small;
+        }
+
+      }
+
+    }
+
+  }
   .nav-bottom-lang{
     width:50%;
     position: absolute;
-    right:0;
+    top:0;
+    right:$margin-sides;
+    text-align: right;
+    .nav-bottom-lang-ul{
+      .nav-bottom-lang-li{
+        // @include hover-effect-color($dark_grey, $white);
+
+        p{
+          display: block;
+          @include p2();
+          text-transform: uppercase;
+          line-height: $line-height-nav-small;
+          height:$line-height-nav-small;
+          text-align: right;
+          @include hover-effect-color($dark_grey, $white);
+        }
+      }
+    }
 
 
   }

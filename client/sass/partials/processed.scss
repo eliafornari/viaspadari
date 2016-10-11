@@ -18,7 +18,7 @@
   margin-left: $form-sides;
   p{
     width:70%;
-    @include paragraph();
+    @include p();
   }
 
   a{
@@ -30,6 +30,6 @@
     display: block;
     margin: auto;
     margin-top: $margin-top;
-    @include paragraph();
+    @include p();
   }
 }

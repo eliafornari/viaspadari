@@ -37,6 +37,8 @@
 
 .cart-contents{
   height: 100%;
+  width: 90%;
+  margin: auto;
 }
 .cart-ul{
   position: relative;
@@ -83,25 +85,25 @@
     }
     .cart-remove{
       float:right;
-      @include paragraph();
+      @include p();
       position: absolute;
       right: 0;
       line-height: 70px;
       height:70px;
       @include hover-effect-color($light-grey, $white);
       @include respond-to(phone){
-        line-height: $line-height-paragraph;
+        line-height: $line-height-p;
         height:auto;
       }
 
     }
     p{
-      @include paragraph();
+      @include p();
       float:left;
       line-height: 70px;
       height:70px;
       @include respond-to(phone){
-        line-height: $line-height-paragraph;
+        line-height: $line-height-p;
         height:auto;
       }
     }
@@ -119,12 +121,12 @@
     width:90vw;
   }
   .cart-total-tax{
-    @include paragraph();
+    @include p();
     height: 70px;
     line-height: 70px;
   }
   .cart-total-amount{
-    @include paragraph();
+    @include p();
     height: 70px;
     line-height: 70px;
     span{
@@ -176,9 +178,9 @@
   left:$margin-sides;
   bottom: $margin-sides;
   width: auto;
-  p{
+  h3{
     height:100%;
-    @include h2();
+    @include h3();
     @include hover-effect-color($light-grey, $white);
     line-height: normal;
     @include respond-to(phone){
@@ -207,8 +209,12 @@
     height: 20px;
     margin-top: -10px;
     @include input();
-
   }
+}
+
+.form-error{
+  position: absolute;
+  right:5px;
 
 }
 

@@ -9,29 +9,103 @@
     <!-- 2 -->
     <form name="shipmentForm" novalidate class="shipment-form" method="post" ng-submit="shipmentToPayment()">
 
-        <h1 class="h1 shipment-h1">SHIPMENT</h1>
+        <h2 class="shipment-h1">SHIPMENT</h2>
 
-      <div class="customer">
-        <h2 class="form-title">PERSONAL</h2>
-        <div class="form-entry">
-          <input type="text" name="name_customer" value="name" ng-model="checkout.customer.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
-            <span class="form-error" ng-show="checkoutForm.name_customer.$error.required && checkoutForm.name_customer.$touched">required</span>
-          </input>
+
+
+
+
+
+
+
+        <div class="customer" ng-if="User.status==false" >
+
+          logged in
+
         </div>
 
-        <div class="form-entry">
-          <input type="text" name="lastname_customer" value="lastname" ng-model="checkout.customer.last_name" required placeholder="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'lastname'">
-            <span class="form-error" ng-show="checkoutForm.lastname_customer.$error.required && checkoutForm.lastname_customer.$touched">required</span>
-          </input>
+
+
+
+
+
+      <div class="customer" ng-init="showLogin=false" ng-if="User.status==false">
+
+        <div class="customer-choice">
+          <h3 class="form-title">
+            <span ng-click="showLogin=false" ng-class="{'active': !showLogin}">REGISTER</span> | <span ng-click="showLogin=true" ng-class="{'active': showLogin}">LOGIN</span>
+          </h3>
         </div>
 
-        <div class="form-entry">
-          <input type="email" name="email_customer" value="email" ng-model="checkout.customer.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
-            <span class="form-error" ng-show="checkoutForm.email_customer.$error.required && checkoutForm.email_customer.$touched">required</span>
-            <span class="form-error" ng-show="checkoutForm.email_customer.$error.email && checkoutForm.email_customer.$touched">invalid email</span>
-          </input>
+
+
+        <div class="customer-register" ng-show="showLogin==false">
+
+          <div class="form-entry">
+            <input type="text" name="name_customer" value="name" ng-model="checkout.customer.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
+              <span class="form-error" ng-show="checkoutForm.name_customer.$error.required && checkoutForm.name_customer.$touched">required</span>
+            </input>
+          </div>
+
+          <div class="form-entry">
+            <input type="text" name="lastname_customer" value="lastname" ng-model="checkout.customer.last_name" required placeholder="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'lastname'">
+              <span class="form-error" ng-show="checkoutForm.lastname_customer.$error.required && checkoutForm.lastname_customer.$touched">required</span>
+            </input>
+          </div>
+
+          <div class="form-entry">
+            <input type="email" name="email_customer" value="email" ng-model="checkout.customer.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+              <span class="form-error" ng-show="checkoutForm.email_customer.$error.required && checkoutForm.email_customer.$touched">required</span>
+              <span class="form-error" ng-show="checkoutForm.email_customer.$error.email && checkoutForm.email_customer.$touched">invalid email</span>
+            </input>
+          </div>
+
         </div>
+
+
+        <div class="customer-login" ng-show="showLogin==true">
+
+          <div class="form-entry">
+            <input type="email" name="email" value="email" ng-model="login.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+              <span class="form-error" ng-show="loginForm.email.$error.required && loginForm.email.$touched">required</span>
+              <span class="form-error" ng-show="loginForm.email.$error.email && loginForm.email.$touched">invalid email</span>
+            </input>
+          </div>
+
+          <div class="form-entry">
+            <input type="password" name="password" value="password" ng-model="login.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+              <span class="form-error" ng-show="loginForm.password.$error.required && loginForm.password.$touched">required</span>
+            </input>
+          </div>
+
+          <button type="button" name="button" ng-submit="loginUser(login)">login</button>
+
+        </div>
+
+
+        <div class="login-error">
+          <p ng-repeat="e in loginError track by $index">{{e}}</p>
+        </div>
+
+
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="shipment-to">
+
+
 
       <div class="address">
 
@@ -170,14 +244,17 @@
 
           </div>
 
+          
+    </div><!-- shipment to -->
 
 
-    <button class="checkout-button hvr-sweep-to-right" type="submit" ng-class="{'invalid': shipmentForm.$invalid}" ng-disabled="shipmentForm.$invalid">PAYMENT</button>
+
+    <button class="shipment-button" type="submit" ng-class="{'invalid': shipmentForm.$invalid}" ng-disabled="shipmentForm.$invalid">PAYMENT</button>
     <!-- hvr-sweep-to-right -->
   </form>
 
   <div class="cart-back" ng-click="backFromShipment()">
-    <p class="hvr-bob">back</p>
+    <h3>back</h3>
   </div>
 
 </div>

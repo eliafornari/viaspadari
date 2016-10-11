@@ -177,7 +177,7 @@
   p{
     display: block;
     width:100%;
-    @include paragraph();
+    @include p();
     @include hover-effect-color($light-grey, $white);
     color: $light-grey;
     line-height: 40px;

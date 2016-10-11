@@ -62,17 +62,16 @@ $rootScope.pageLoading = true;
       return function(data) {
         var category = $routeParams.category;
         var filtered = [];
-        console.log('category: '+category);
+        // console.log('category: '+category);
         for (var i in $rootScope.Product){
           for (var c in $rootScope.Product[i].category.data){
             if($rootScope.Product[i].category.data[c].slug == category){
               filtered = filtered.concat($rootScope.Product[i]);
-              console.log(filtered);
+              // console.log(filtered);
             }
 
             if($rootScope.Product[i].category.data[c].parent != null){
               $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
-              console.log();
             }
           }
 
@@ -93,12 +92,22 @@ $sceProvider.enabled(false);
 
 
     // $locationChangeStart
+    .when('/philosophy', {
+      templateUrl: 'views/philosophy.html'
+    })
+
+    .when('/terms-services', {
+      templateUrl: 'views/terms.html'
+    })
+
     .when('/register', {
       templateUrl: 'views/user/register.html'
     })
+
     .when('/login', {
       templateUrl: 'views/user/login.html'
     })
+
     .when('/account', {
       templateUrl: 'views/user/account.html'
     })
@@ -114,14 +123,14 @@ $sceProvider.enabled(false);
 
     .when('/:category/:detail', {
       templateUrl: 'views/detail.html',
-      controller: 'detailCtrl',
-      reloadOnSearch: false
+      controller: 'detailCtrl'
+      // reloadOnSearch: false
     })
 
     .when('/:category', {
       templateUrl: 'views/product.html',
-      controller: 'productCtrl',
-      reloadOnSearch: false
+      controller: 'productCtrl'
+      // reloadOnSearch: false
     })
 
 
@@ -173,6 +182,84 @@ $rootScope.firstLoading = true;
 $rootScope.pageClass = "page-home";
 $rootScope.Home;
 $rootScope.User={"status":false};
+$rootScope.selectedLang={};
+
+
+
+
+// $scope.setCookie = (obj) => {
+//   var cookie;
+//   Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
+//     // console.log(val + ' -> ' + obj[val]);
+//    console.log(idx);
+//     var thisPart = val + "=" + obj[val] + ";"
+//     if(idx==0){
+//       cookie = thisPart;
+//     }else{
+//       cookie = cookie + thisPart;
+//     }
+//
+//     console.log(cookie);
+//   });
+// }
+
+
+
+
+
+
+
+
+
+// getting user location
+
+function showMap(position) {
+  console.log(position);
+  var obj = {};
+  obj.lat = position.coords.latitude;
+  obj.lng = position.coords.longitude;
+  $scope.getLocation(obj);
+// Show a map centered at (position.coords.latitude, position.coords.longitude).
+}
+
+
+
+
+$scope.getCoordinates=()=>{
+  navigator.geolocation.getCurrentPosition(showMap);
+}
+
+$scope.getCoordinates();
+
+$rootScope.Location;
+
+$scope.getLocation=(coord)=>{
+  $http({
+    url: '/locate',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    transformRequest: transformRequestAsFormPost,
+    data: coord
+  })
+   .then(function (response) {
+     console.log("updatestock");
+     console.log(response);
+     console.log(response.data.results);
+     var code = response.data.results[10].address_components[0].short_name;
+     console.log(response.data.results[10].address_components);
+     $rootScope.selectLang(code);
+
+   }, function(err){
+     console.log(err);
+
+   });
+
+}
+
+
+
 
 
 
@@ -229,6 +316,7 @@ $rootScope.User={"status":false};
     }
 
     $rootScope.getProductsFN=function(){
+      console.log("getting products");
       $http({method: 'GET', url: '/getProducts'}).then(function(response){
         $rootScope.Product = response.data;
         console.log(response.data);
@@ -296,26 +384,39 @@ $rootScope.lang = [
   {"code": "IT", "country":"Italy", "language":"Italiano", "selected":false}
 ]
 
+$scope.openLang = false;
+
+$rootScope.selectLang = $rootScope.lang[1];
 
 
-
-$rootScope.selectLang = () => {
-  for (var i in $rootScope.lang){
-    $rootScope.lang[i].selected = false;
-    if($rootScope.lang[i].code == $scope.selectedLang.code){ $rootScope.lang[i].selected = true };
-    // console.log($rootScope.lang);
-    for (var l in $rootScope.locales){
-      if($rootScope.lang[i].code == $rootScope.locales[l].meta.code){
-        $rootScope.Locale = $rootScope.locales[l];
-      }
+$rootScope.selectLang = (code) => {
+  for (var l in $rootScope.locales){
+    if(code == $rootScope.locales[l].meta.code){
+      $rootScope.Locale = $rootScope.locales[l];
     }
   }
+
+  for (var i in $rootScope.lang){
+    $rootScope.lang[i].selected = false;
+    console.log("codesss", $rootScope.lang[i].code, code);
+    if($rootScope.lang[i].code === code){
+      $rootScope.lang[i].selected = true;
+      $rootScope.selectedLang = $rootScope.lang[i];
+      $scope.openLang=false;
+      console.log("selected "+$rootScope.lang[i].code+" on purpose");
+      return false;
+    }
+    // console.log($rootScope.lang);
+  }
+
 }
 
 
-$rootScope.selectedLang = $rootScope.lang[0];
+// $rootScope.selectedLang = $rootScope.lang[0];
 console.log($rootScope.selectedLang);
 console.log("lang lang");
+
+
 
 
 
@@ -342,7 +443,7 @@ console.log("lang lang");
       $rootScope.countries = response.data.countries;
       $rootScope.locales = response.data.locale;
       console.log(response.data);
-      $rootScope.selectLang();
+      // $rootScope.selectLang("IT");
     }, function errorCallback(response) {
 
       $scope.error = {value: true, text:'countries or locale not available, this page will be reloaded'};

@@ -9,14 +9,17 @@
     "start": "node server/main.js"
   },
   "dependencies": {
+    "@google/maps": "^0.2.1",
     "angular": "^1.5.7",
     "angular-animate": "^1.5.7",
     "angular-resource": "^1.5.7",
     "angular-route": "^1.5.7",
     "angular-sanitize": "^1.5.7",
     "body-parser": "~1.5.2",
+    "client-sessions": "^0.7.0",
     "ejs": "^2.4.2",
     "express": "*",
+    "google-geolocation": "^1.0.1",
     "jquery": "^3.0.0",
     "jquery-mousewheel": "^3.1.13",
     "method-override": "~2.1.2",

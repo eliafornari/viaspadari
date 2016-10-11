@@ -12,16 +12,16 @@
          <td>
            <div class="nav-list" >
              <div class="nav-main" ng-repeat="p in Categories | orderBy: 'order' track by p.order" ng-if="p.status.data.key==1">
-
                <div class="nav-main-category">
-                 <a class="nav-main-category-a" href="/{{p.slug}}" ng-class="{'active': isLocation('/shop')}" >{{p.title}} </a>
+                 <a class="nav-main-category-a" href="/{{p.slug}}" >{{p.title}} </a>
+                 <!-- ng-class="{'active': isLocation(p.slug)}" -->
                  <span class="nav-main-category-span" ng-init="categoryOpen=true"ng-click="categoryOpen = ! categoryOpen">{{ !categoryOpen ? '+' : '-' }}</span>
                </div>
 
-
                <div class="nav-sub" ng-class="{'closeCategory': !categoryOpen}">
-                 <a class="nav-sub-a" href="/{{c.slug}}" ng-repeat="c in p.children" ng-if="c.status.data.key==1">{{c.title}}</a>
+                 <a class="nav-sub-a" href="/{{c.slug}}"  ng-repeat="c in p.children" ng-if="c.status.data.key==1">{{c.title}}</a>
                </div>
+               <!-- ng-class="{'active': isLocation(c.slug)}" -->
              </div>
 
 
@@ -33,15 +33,33 @@
 
 
      <div class="nav-bottom">
-       <div class="nav-bottom-user">
-         <a href="/register">register</a>
-         <a href="/login" ng-if="User.status==false" ng-cloak>login</a>
-         <a href="/" ng-click="logOut()" ng-if="User.status==true" ng-cloak>logout</a>
-       </div>
-       <div class="nav-bottom-lang">
-         <select name="nav-bottom-lang-select" ng-model="selectedLang" ng-change="selectLang()" required>
-           <option ng-repeat="l in lang" value="{{l.language}}" ng-selected="{{selectedLang = lang[0]}}">{{l.language}}</option>
-         </select>
+
+      <ul class="nav-bottom-left">
+        <li class="nav-bottom-left-li nav-bottom-left-philosophy">
+          <a href="/philosophy">{{Locale.data.philosophy}}</a>
+        </li>
+
+        <li class="nav-bottom-left-li nav-bottom-left-terms">
+          <a href="/terms-services">{{Locale.data.terms}}</a>
+        </li>
+
+
+         <li class="nav-bottom-left-li nav-bottom-left-user">
+           <a class="nav-bottom-left-user-register" href="/register">{{Locale.data.register}}</a>
+           <div class="nav-bottom-left-user-login">
+             <a href="/login" ng-if="User.status==false" ng-cloak>{{Locale.data.login}}</a>
+             <a href="/account" ng-if="User.status==true" ng-cloak>{{User.data.first_name}}</a>
+             <a href="/" ng-click="logOut()" ng-if="User.status==true" ng-cloak>{{Locale.data.logout}}</a>
+
+           </div>
+         </li>
+
+       </ul>
+       <div class="nav-bottom-lang" ng-init="openLang=false">
+         <ul class="nav-bottom-lang-ul" required>
+           <li class="nav-bottom-lang-li" ng-show="openLang==false" ng-click="openLang=true"><p>{{selectedLang.language}}</p></li>
+           <li class="nav-bottom-lang-li" ng-repeat="l in lang" ng-click="selectLang(l.code);" ng-show="openLang==true"><p>{{l.language}}</p></li>
+         </ul>
 
        </div>
      </div>

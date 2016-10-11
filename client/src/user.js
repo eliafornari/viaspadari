@@ -7,15 +7,15 @@ User.controller('userCtrl', function($scope, $location, $rootScope, $routeParams
 $rootScope.windowHeight = $window.innerHeight;
 $rootScope.pageClass = "page-user";
 
-
 $rootScope.User={"status":false};
 $rootScope.register;
 $scope.registerError;
-$scope.loginError;
+$rootScope.loginError;
 
 
 
 $rootScope.createUser = (data)=>{
+  $rootScope.pageLoading = true;
 
   $http({
     url: '/createUser',
@@ -31,16 +31,19 @@ $rootScope.createUser = (data)=>{
     $rootScope.User.status=true;
     console.log(response);
     console.log("posted successfully");
+    $rootScope.pageLoading = false;
     }, function(response) {
         console.error("error in posting");
         console.log(response);
         $scope.registerError = response.data;
         $rootScope.User.status=false;
+        $rootScope.pageLoading = false;
     })
 }
 
 
 $rootScope.loginUser = (data)=>{
+  $rootScope.pageLoading = true;
 
   $http({
     url: '/loginUser',
@@ -56,11 +59,13 @@ $rootScope.loginUser = (data)=>{
       $location.path('/account');
       console.log(response);
       console.log("posted successfully");
+      $rootScope.pageLoading = false;
     }, function(response) {
       console.error("error in posting");
       console.log(response);
-      $scope.loginError = response.data;
+      $rootScope.loginError = response.data;
       $rootScope.User.status=false;
+      $rootScope.pageLoading = false;
     })
 }
 

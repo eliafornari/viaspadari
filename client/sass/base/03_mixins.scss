@@ -275,7 +275,6 @@ $transition-slow: 1s;
   -ms-transform: $coordinate; /* IE 9 */
  	-webkit-transform: $coordinate; /* Safari */
   -moz-transform: $coordinate; /* Safari */
-  transform-origin: 0 0;
 }
 
 
@@ -382,12 +381,21 @@ $transition-slow: 1s;
   line-height: $line-height-h3;
   font-family: $font-family-h3;
   letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-@mixin paragraph(){
-  font-size: $font-size-paragraph;
-  line-height: $line-height-paragraph;
-  font-family: $font-family-paragraph;
+@mixin p(){
+  font-size: $font-size-p;
+  line-height: $line-height-p;
+  font-family: $font-family-p;
+  letter-spacing: 2px;
+}
+
+@mixin p2(){
+  font-size: $font-size-p2;
+  line-height: $line-height-p2;
+  font-family: $font-family-p2;
+  color: $dark-grey;
   letter-spacing: 2px;
 }
 
@@ -418,7 +426,7 @@ $transition-slow: 1s;
   -webkit-border-radius: 0%;
   -moz-border-radius: 0%;
   border-bottom: 1px solid $dark-grey;
-  @include paragraph();
+  @include p();
   padding-left:5px;
   @include respond-to(phone){
     line-height: normal;
@@ -439,7 +447,7 @@ $transition-slow: 1s;
 
 
 @mixin select(){
-  @include paragraph();
+  @include p();
   background-color: transparent;
   border:0;
   text-align: left;
@@ -482,12 +490,10 @@ $transition-slow: 1s;
 
 @mixin button(){
   @include h3();
-  position: absolute;
-  bottom: $margin-sides;
-  left:50%;
-  width:90%;
-  margin-left: -45%;
+  position: relative;
+  width:100%;
   display: block;
+  margin-top: $margin-top-li;
   height:$button-height;
   line-height: $button-height;
   text-align: center;

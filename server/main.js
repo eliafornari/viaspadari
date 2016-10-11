@@ -7,10 +7,13 @@ let fs = require('fs');
 let express = require("express");
 let bodyParser = require('body-parser');
 let routes  = require('./routes');
+let geo  = require('./geo');
+let user  = require('./user/user.js');
 let path = require('path');
 var util = require('util');
 let ejs = require('ejs');
 let request = require('request');
+let sessions = require('client-sessions');
 // var geoip = require('geoip-lite');
 let app = express();
 
@@ -45,7 +48,27 @@ app.set('views', __dirname + '/../client');
 app.use( express.static(__dirname + "/../client") );
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-var token;
+app.use(sessions({
+  cookieName: 'mySession', // cookie name dictates the key name added to the request object
+  secret: 'blargadeeblargblarg', // should be a large unguessable string
+  duration: 3600 * 1000, // how long the session will stay valid in ms
+  activeDuration: 3600 * 1000 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+}));
+
+app.use(function(req, res, next) {
+  if (req.mySession.access_token) {
+    console.log(req.mySession);
+    res.setHeader('X-Seen-You', 'true');
+  } else {
+    console.log(req.mySession);
+    // setting a property will automatically cause a Set-Cookie response
+    // to be sent
+
+    res.setHeader('X-Seen-You', 'false');
+  }
+   next();
+});
+
 
 
 
@@ -64,12 +87,19 @@ app.get('/authenticate', function(req, res){
   // var geo = geoip.lookup(ip);
 
   moltin.Authenticate(function(data) {
+    console.log("tried to auth");
     console.log(data);
     // data.geo = geo;
     if(data){
-      token = data.access_token;
-      res.status(200);
-      res.json(data);
+      if(req.mySession.access_token){
+        res.status(200);
+        res.json(data);
+      }else{
+        req.mySession.access_token = data.access_token;
+        res.status(200);
+        res.json(data);
+      }
+
     }else{
       res.status(500);
     }
@@ -195,11 +225,15 @@ app.get('/authenticate', function(req, res){
     });
 
     app.post('/createUser', function(req, res){
-      createUser(req, res);
+      user.create(req, res);
     });
 
     app.post('/loginUser', function(req, res){
-      loginUser(req, res);
+      user.login(req, res);
+    });
+
+    app.post('/locate', function(req, res){
+      geo.locate(req, res);
     });
 
 
@@ -248,10 +282,8 @@ app.get('/authenticate', function(req, res){
     var Product=[];
     function getProduct(req, res){
         moltin.Product.List(null, function(data) {
-          console.log(data);
           Product = data;
           res.status(200).json(data);
-
         }, function(error) {
             // Something went wrong...
             res.status(400).json(error);
@@ -486,80 +518,6 @@ app.get('/data', function(req, res){
 
  res.json(data);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function createUser(req, res){
-
-  var body = req.body;
-
-  console.log(body);
-
-  //create customer
-  moltin.Customer.Create({
-      first_name:  body.first_name,
-      last_name:  body.last_name,
-      email: body.email,
-      password: body.password,
-      country: body.country
-  }, function(customer) {
-    console.log("customer");
-      console.log(customer);
-      res.json(c);
-  }, function(error, response, c) {
-    console.log(error);
-    console.log(response);
-    console.log(c);
-    res.status(c).json(response);
-      // Something went wrong...
-  });
-
-
-}
-
-
-
-function loginUser(req, res){
-
-  var body = req.body;
-  console.log(body);
-
-  request({
-      url: 'https://api.molt.in/v1/customers/token', //URL to hit
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer '+token
-      },
-      json: {
-        "email": body.email,
-        "password": body.password
-             } //Query string data
-      }, function(error, response, body){
-          if(error) {
-              console.log("PUT entry error");
-              console.log(error);
-              res.status(response.statusCode).json(body);
-          } else {
-              console.log("ok");
-              console.log(body);
-              res.status(response.statusCode).json(body);
-          }
-  });
-
-}
-
-
 
 
 

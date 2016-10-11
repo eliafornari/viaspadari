@@ -56,17 +56,16 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   return function (data) {
     var category = $routeParams.category;
     var filtered = [];
-    console.log('category: ' + category);
+    // console.log('category: '+category);
     for (var i in $rootScope.Product) {
       for (var c in $rootScope.Product[i].category.data) {
         if ($rootScope.Product[i].category.data[c].slug == category) {
           filtered = filtered.concat($rootScope.Product[i]);
-          console.log(filtered);
+          // console.log(filtered);
         }
 
         if ($rootScope.Product[i].category.data[c].parent != null) {
           $rootScope.Product[i].category.child = $rootScope.Product[i].category.data[c].slug;
-          console.log();
         }
       }
     }
@@ -82,7 +81,11 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $routeProvider
 
   // $locationChangeStart
-  .when('/register', {
+  .when('/philosophy', {
+    templateUrl: 'views/philosophy.html'
+  }).when('/terms-services', {
+    templateUrl: 'views/terms.html'
+  }).when('/register', {
     templateUrl: 'views/user/register.html'
   }).when('/login', {
     templateUrl: 'views/user/login.html'
@@ -94,12 +97,12 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     templateUrl: 'views/contact.html'
   }).when('/:category/:detail', {
     templateUrl: 'views/detail.html',
-    controller: 'detailCtrl',
-    reloadOnSearch: false
+    controller: 'detailCtrl'
+    // reloadOnSearch: false
   }).when('/:category', {
     templateUrl: 'views/product.html',
-    controller: 'productCtrl',
-    reloadOnSearch: false
+    controller: 'productCtrl'
+    // reloadOnSearch: false
   }).when('/privacy', {
     templateUrl: 'privacy/privacy.html',
     controller: 'privacyCtrl'
@@ -123,6 +126,63 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $rootScope.pageClass = "page-home";
   $rootScope.Home;
   $rootScope.User = { "status": false };
+  $rootScope.selectedLang = {};
+
+  // $scope.setCookie = (obj) => {
+  //   var cookie;
+  //   Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
+  //     // console.log(val + ' -> ' + obj[val]);
+  //    console.log(idx);
+  //     var thisPart = val + "=" + obj[val] + ";"
+  //     if(idx==0){
+  //       cookie = thisPart;
+  //     }else{
+  //       cookie = cookie + thisPart;
+  //     }
+  //
+  //     console.log(cookie);
+  //   });
+  // }
+
+  // getting user location
+
+  function showMap(position) {
+    console.log(position);
+    var obj = {};
+    obj.lat = position.coords.latitude;
+    obj.lng = position.coords.longitude;
+    $scope.getLocation(obj);
+    // Show a map centered at (position.coords.latitude, position.coords.longitude).
+  }
+
+  $scope.getCoordinates = function () {
+    navigator.geolocation.getCurrentPosition(showMap);
+  };
+
+  $scope.getCoordinates();
+
+  $rootScope.Location;
+
+  $scope.getLocation = function (coord) {
+    $http({
+      url: '/locate',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: transformRequestAsFormPost,
+      data: coord
+    }).then(function (response) {
+      console.log("updatestock");
+      console.log(response);
+      console.log(response.data.results);
+      var code = response.data.results[10].address_components[0].short_name;
+      console.log(response.data.results[10].address_components);
+      $rootScope.selectLang(code);
+    }, function (err) {
+      console.log(err);
+    });
+  };
 
   $rootScope.Auth, $rootScope.Categories;
 
@@ -166,6 +226,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   };
 
   $rootScope.getProductsFN = function () {
+    console.log("getting products");
     $http({ method: 'GET', url: '/getProducts' }).then(function (response) {
       $rootScope.Product = response.data;
       console.log(response.data);
@@ -205,22 +266,32 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   $rootScope.lang = [{ "code": "US", "country": "US", "language": "English", "selected": false }, { "code": "IT", "country": "Italy", "language": "Italiano", "selected": false }];
 
-  $rootScope.selectLang = function () {
+  $scope.openLang = false;
+
+  $rootScope.selectLang = $rootScope.lang[1];
+
+  $rootScope.selectLang = function (code) {
+    for (var l in $rootScope.locales) {
+      if (code == $rootScope.locales[l].meta.code) {
+        $rootScope.Locale = $rootScope.locales[l];
+      }
+    }
+
     for (var i in $rootScope.lang) {
       $rootScope.lang[i].selected = false;
-      if ($rootScope.lang[i].code == $scope.selectedLang.code) {
+      console.log("codesss", $rootScope.lang[i].code, code);
+      if ($rootScope.lang[i].code === code) {
         $rootScope.lang[i].selected = true;
-      };
-      // console.log($rootScope.lang);
-      for (var l in $rootScope.locales) {
-        if ($rootScope.lang[i].code == $rootScope.locales[l].meta.code) {
-          $rootScope.Locale = $rootScope.locales[l];
-        }
+        $rootScope.selectedLang = $rootScope.lang[i];
+        $scope.openLang = false;
+        console.log("selected " + $rootScope.lang[i].code + " on purpose");
+        return false;
       }
+      // console.log($rootScope.lang);
     }
   };
 
-  $rootScope.selectedLang = $rootScope.lang[0];
+  // $rootScope.selectedLang = $rootScope.lang[0];
   console.log($rootScope.selectedLang);
   console.log("lang lang");
 
@@ -238,7 +309,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
       $rootScope.countries = response.data.countries;
       $rootScope.locales = response.data.locale;
       console.log(response.data);
-      $rootScope.selectLang();
+      // $rootScope.selectLang("IT");
     }, function errorCallback(response) {
 
       $scope.error = { value: true, text: 'countries or locale not available, this page will be reloaded' };
@@ -457,11 +528,16 @@ angular.module('myApp').controller('navCtrl', function ($scope, $location, $root
   };
 
   $rootScope.isLocation = function (location) {
-    if ($location.path() == location) {
-      return true;
-    } else {
-      return false;
-    }
+    $scope.$on('$routeChangeSuccess', function () {
+      console.log(location);
+
+      if ($location.path() == location) {
+        console.log(true);
+        return true;
+      } else {
+        console.log(location);return false;
+      }
+    });
   };
 
   $rootScope.isShopDetail = function () {
@@ -472,14 +548,15 @@ angular.module('myApp').controller('navCtrl', function ($scope, $location, $root
     }
   };
 
-  $scope.$on('$routeChangeStart', function () {
-    if ($location.path() == '/shop' || $location.path() == '/shop/' + $routeParams.detail) {
-      console.log("isShop");
-      $rootScope.pageLoading = false;
-    } else {
-      $rootScope.pageLoading = true;
-    }
-  });
+  // $scope.$on('$routeChangeStart', function(){
+  //   if(($location.path()=='/shop') || ($location.path()=='/shop/'+$routeParams.detail)){
+  //     console.log("isShop");
+  //     $rootScope.pageLoading = false;
+  //   }else{
+  //     $rootScope.pageLoading = true;
+  //   }
+  //
+  // })
 
   $scope.$on('$routeChangeSuccess', function () {
     if ($location.path() != '/') {
@@ -1151,9 +1228,10 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
   $rootScope.User = { "status": false };
   $rootScope.register;
   $scope.registerError;
-  $scope.loginError;
+  $rootScope.loginError;
 
   $rootScope.createUser = function (data) {
+    $rootScope.pageLoading = true;
 
     $http({
       url: '/createUser',
@@ -1169,15 +1247,18 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
       $rootScope.User.status = true;
       console.log(response);
       console.log("posted successfully");
+      $rootScope.pageLoading = false;
     }, function (response) {
       console.error("error in posting");
       console.log(response);
       $scope.registerError = response.data;
       $rootScope.User.status = false;
+      $rootScope.pageLoading = false;
     });
   };
 
   $rootScope.loginUser = function (data) {
+    $rootScope.pageLoading = true;
 
     $http({
       url: '/loginUser',
@@ -1193,11 +1274,13 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
       $location.path('/account');
       console.log(response);
       console.log("posted successfully");
+      $rootScope.pageLoading = false;
     }, function (response) {
       console.error("error in posting");
       console.log(response);
-      $scope.loginError = response.data;
+      $rootScope.loginError = response.data;
       $rootScope.User.status = false;
+      $rootScope.pageLoading = false;
     });
   };
 

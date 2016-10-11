@@ -8,7 +8,6 @@
   margin: auto;
   display: block;
   text-align: center;
-  @include paragraph();
-  color: $red;
-  @include hover-effect-glow($red);
+  @include p();
+  @include hover-effect-color($light_grey, $white);
 }

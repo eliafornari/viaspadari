@@ -14,9 +14,14 @@ angular.module('myApp')
   }
 
   $rootScope.isLocation= (location)=>{
+  $scope.$on('$routeChangeSuccess', function(){
+    console.log(location);
+
     if ($location.path()==location){
+      console.log(true);
       return true;
-    }else{return false;}
+    }else{console.log(location); return false; }
+      })
   }
 
   $rootScope.isShopDetail = ()=>{
@@ -26,15 +31,15 @@ angular.module('myApp')
 
   }
 
-  $scope.$on('$routeChangeStart', function(){
-    if(($location.path()=='/shop') || ($location.path()=='/shop/'+$routeParams.detail)){
-      console.log("isShop");
-      $rootScope.pageLoading = false;
-    }else{
-      $rootScope.pageLoading = true;
-    }
-
-  })
+  // $scope.$on('$routeChangeStart', function(){
+  //   if(($location.path()=='/shop') || ($location.path()=='/shop/'+$routeParams.detail)){
+  //     console.log("isShop");
+  //     $rootScope.pageLoading = false;
+  //   }else{
+  //     $rootScope.pageLoading = true;
+  //   }
+  //
+  // })
 
   $scope.$on('$routeChangeSuccess', function(){
     if($location.path() != '/'){

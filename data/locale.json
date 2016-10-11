@@ -22,7 +22,12 @@
       "weight":"peso",
       "certification":"certificazione",
       "price": "prezzo",
-      "quantity": "quantità"
+      "quantity": "quantità",
+      "philosophy":"philosophy",
+      "terms": "termini di servizio",
+      "register":"registrati",
+      "login": "login",
+      "logout": "logout"
     }
   },
 
@@ -49,7 +54,12 @@
       "weight": "weight",
       "certification":"certification",
       "price": "price",
-      "quantity": "quantity"
+      "quantity": "quantity",
+      "philosophy":"philosophy",
+      "terms": "terms and services",
+      "register":"register",
+      "login": "login",
+      "logout": "logout"
     }
   }
 }

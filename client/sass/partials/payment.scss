@@ -38,11 +38,11 @@
       width:50%;
     }
     p{
-      @include paragraph();
+      @include p();
       width:80%;
       span{
         float:right;
-        @include paragraph();
+        @include p();
       }
     }
   }

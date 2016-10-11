@@ -10,13 +10,14 @@ $z-nav: 4;
 $font-size-h1:45px;
 $font-size-h2:35px;
 $font-size-h3:15px;
-$font-size-paragraph: 11px;
-
+$font-size-p: 11px;
+$font-size-p2: 9px;
 
 $font-size-h1-mobile:35px;
 $font-size-h2-mobile:25px;
 $font-size-h3:11px;
-$font-size-paragraph-mobile: 12px;
+$font-size-p-mobile: 12px;
+$font-size-p2-mobile: 12px;
 
 
 $letter-spacing: 2px;
@@ -27,21 +28,22 @@ $font-family-nav: 'gillsans_light';
 $font-family-h1: 'didot';
 $font-family-h2: 'didot';
 $font-family-h3: 'gillsans_light';
-$font-family-paragraph: 'gillsans_light';
-
+$font-family-p: 'gillsans_light';
+$font-family-p2: 'gillsans_light';
 
 
 // ........................................................FONT LINEHEIGHTS
 $line-height-h1: 60px;
 $line-height-h2: 50px;
 $line-height-h3: 20px;
-$line-height-paragraph: 20px;
-
+$line-height-p: 20px;
+$line-height-p2: 15px;
 
 $line-height-h1-mobile: 40px;
 $line-height-h2-mobile: 24px;
 $line-height-h3:20px;
-$line-height-paragraph-mobile: 18px;
+$line-height-p-mobile: 18px;
+$line-height-p2-mobile: 15px;
 
 $button-height:50px;
 
@@ -69,11 +71,11 @@ $light-light-grey: rgba(0,0,0, 0.1);
 // ........................................................MARGINS
 $margin-sides: 20px;
 $margin-bottom: 35px;
-$margin-bottom-paragraph:35px;
+$margin-bottom-p:35px;
 $margin-top: 200px;
 $margin-sides-mobile:10px;
-$margin-left-paragraph:10px;
-$margin-top-paragraph:10px;
+$margin-left-p:10px;
+$margin-top-p:10px;
 $margin-top-li:25px;
 $margin-top-form: 10px;
 $margin-right-p:40px;
