@@ -6,7 +6,7 @@
   left:0;
   top:0;
   z-index:$z-nav;
-  border-right: 2px solid $deep_grey;
+  border-right: 2px solid $background_grey;
 }
 
 
@@ -104,42 +104,24 @@ $line-height-nav-small: 23px;
   left:0;
   width:100%;
   height:auto;
-  .nav-bottom-left{
-    width:0%;
-    position: relative;
+  .nav-bottom-one{
     display: table;
-    margin-left:$margin-sides;
-    margin-bottom:$margin-sides;
-    text-align: left;
-    .nav-bottom-left-li{
-      display: block;
-      height:$line-height-nav-small;
-      width:130px;
-      a{
+    width:100%;
+    position: relative;
+    left:0;
+    margin:0;
+    top:0;
+    .nav-bottom-left{
+      width:auto;
+      position: relative;
+      display: table;
+      margin-left:$margin-sides;
+      margin-bottom:40px;
+
+      .nav-bottom-left-li{
         display: block;
-        @include p2();
-        @include hover-effect-color($dark_grey, $white);
-        text-transform: uppercase;
-        line-height: $line-height-nav-small;
         height:$line-height-nav-small;
-      }
-    }
-    .nav-bottom-left-philosophy{
-
-    }
-    .nav-bottom-left-terms{
-
-    }
-    .nav-bottom-left-user{
-      height:auto;
-      .nav-bottom-left-user-register{
-        @include p2();
-        height:$line-height-nav-small;
-        line-height: $line-height-nav-small;
-      }
-
-      .nav-bottom-left-user-login{
-        height:auto;
+        width:130px;
         a{
           display: block;
           @include p2();
@@ -148,34 +130,103 @@ $line-height-nav-small: 23px;
           line-height: $line-height-nav-small;
           height:$line-height-nav-small;
         }
-
+      }
+    }
+    //nav bottom right
+    .nav-bottom-right{
+      height:auto;
+      position: absolute;
+      top:0%;
+      right:$margin-sides;
+      .nav-bottom-right-li{
+        a{
+          @include p2();
+          @include hover-effect-color($dark_grey, $white);
+          height:$line-height-nav-small;
+          line-height: $line-height-nav-small;
+          text-transform: uppercase;
+          text-align: right;
+        }
       }
 
-    }
-
-  }
-  .nav-bottom-lang{
-    width:50%;
-    position: absolute;
-    top:0;
-    right:$margin-sides;
-    text-align: right;
-    .nav-bottom-lang-ul{
-      .nav-bottom-lang-li{
-        // @include hover-effect-color($dark_grey, $white);
-
-        p{
+      .nav-bottom-right-login{
+        height:auto;
+        a{
           display: block;
           @include p2();
+          @include hover-effect-color($dark_grey, $white);
           text-transform: uppercase;
           line-height: $line-height-nav-small;
           height:$line-height-nav-small;
           text-align: right;
-          @include hover-effect-color($dark_grey, $white);
         }
       }
     }
+  }
+}
 
+
+
+
+
+
+
+
+
+//nav-bottom-other
+.nav-bottom-two{
+  position: relative;
+  width:auto;
+  display: block;
+  margin-left: $margin-sides;
+  margin-bottom: $margin-sides;
+  .nav-bottom-two-li{
+    width:auto;
+    display: inline-block;
+    margin-left: 3px;
+    a{
+      display: block;
+      @include p3();
+      text-transform: uppercase;
+      line-height: $line-height-nav-small;
+      height:$line-height-nav-small;
+      text-align: left;
+      @include hover-effect-color($dark_grey, $white);
+    }
+  }
+  .nav-bottom-two-terms{
 
   }
+  .nav-bottom-two-support{
+
+  }
+}
+
+.nav-bottom-two-lang{
+  width:auto;
+  display: table !important;
+  position: absolute;
+  right:$margin-sides;
+  bottom:0;
+  .nav-bottom-two-lang-ul{
+    display: table;
+    .nav-bottom-two-lang-li{
+      text-align: right;
+      // @include hover-effect-color($dark_grey, $white);
+
+      p{
+        display: block;
+        @include p3();
+        text-transform: uppercase;
+        // line-height: $line-height-nav-small;
+        // height:$line-height-nav-small;
+        text-align: right;
+        line-height: $line-height-nav-small;
+        height:$line-height-nav-small;
+        @include hover-effect-color($dark_grey, $white);
+      }
+    }
+  }
+
+
 }

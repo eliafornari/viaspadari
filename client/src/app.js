@@ -134,12 +134,6 @@ $sceProvider.enabled(false);
     })
 
 
-
-
-
-
-
-
     .when('/privacy', {
       templateUrl: 'privacy/privacy.html',
       controller: 'privacyCtrl'

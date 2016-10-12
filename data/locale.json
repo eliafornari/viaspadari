@@ -24,10 +24,12 @@
       "price": "prezzo",
       "quantity": "quantità",
       "philosophy":"philosophy",
-      "terms": "termini di servizio",
+      "terms": "termini",
       "register":"registrati",
       "login": "login",
-      "logout": "logout"
+      "logout": "logout",
+      "support": "supporto",
+      "contact": "contattaci"
     }
   },
 
@@ -56,10 +58,12 @@
       "price": "price",
       "quantity": "quantity",
       "philosophy":"philosophy",
-      "terms": "terms and services",
+      "terms": "terms & services",
       "register":"register",
       "login": "login",
-      "logout": "logout"
+      "logout": "logout",
+      "support": "support",
+      "contact": "contact"
     }
   }
 }

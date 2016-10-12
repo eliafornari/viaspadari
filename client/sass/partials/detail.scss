@@ -72,7 +72,7 @@
   width: 270px;
   height: 100vh;
   z-index: $z-detail-functions;
-  border-left: 2px solid $deep_grey;
+  border-left: 2px solid $background_grey;
   @include respond-to(phone){
     top:auto;
     bottom:$margin-sides;
@@ -98,7 +98,7 @@
     height:auto;
     margin: auto;
     margin-top: $margin-top-li;
-    border: 2px solid $deep_grey;
+    border: 2px solid $background_grey;
     p{
       text-align: center;
       &:nth-child(1){
@@ -172,8 +172,8 @@
   width:100%;
   display: block;
   margin-top: $margin-top-li;
-  background-color: $deep-grey;
-  @include hover-effect-background-color($deep-grey, $light-grey);
+  background-color: $background-grey;
+  @include hover-effect-background-color($background-grey, $light-grey);
   p{
     display: block;
     width:100%;

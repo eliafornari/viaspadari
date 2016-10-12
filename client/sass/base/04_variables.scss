@@ -11,14 +11,16 @@ $font-size-h1:45px;
 $font-size-h2:35px;
 $font-size-h3:15px;
 $font-size-p: 11px;
-$font-size-p2: 9px;
+$font-size-p2: 10px;
+$font-size-p3: 8px;
+
 
 $font-size-h1-mobile:35px;
 $font-size-h2-mobile:25px;
 $font-size-h3:11px;
 $font-size-p-mobile: 12px;
-$font-size-p2-mobile: 12px;
-
+$font-size-p2-mobile: 11px;
+$font-size-p3-mobile: 9px;
 
 $letter-spacing: 2px;
 
@@ -30,7 +32,7 @@ $font-family-h2: 'didot';
 $font-family-h3: 'gillsans_light';
 $font-family-p: 'gillsans_light';
 $font-family-p2: 'gillsans_light';
-
+$font-family-p3: 'gillsans_light';
 
 // ........................................................FONT LINEHEIGHTS
 $line-height-h1: 60px;
@@ -38,12 +40,14 @@ $line-height-h2: 50px;
 $line-height-h3: 20px;
 $line-height-p: 20px;
 $line-height-p2: 15px;
+$line-height-p3: 12px;
 
 $line-height-h1-mobile: 40px;
 $line-height-h2-mobile: 24px;
 $line-height-h3:20px;
 $line-height-p-mobile: 18px;
 $line-height-p2-mobile: 15px;
+$line-height-p3-mobile: 13px;
 
 $button-height:50px;
 
@@ -58,9 +62,10 @@ $padding-headline-bottom: 20px;
 $black: #000000;
 $purple: #884f9e;
 $red: #ec2224;
-$deep_grey: #0a0a0a; //353841 3d3d3d 161616 090F0F
+$background_grey: #0a0a0a; //353841 3d3d3d 161616 090F0F
+$deep_grey: #161616;
 $dark_grey: #515151;
-$light_grey: #979797;
+$light_grey: #a7a8aa; //#c4c5c6 #979797
 $white: #FFFFFF;
 $yellow: #ede611;
 $green: #009900;

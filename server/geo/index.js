@@ -23,6 +23,7 @@ exports.locate = function (req, res) {
       latlng: coord,
     }, function(err, response) {
       if (!err) {
+        console.log(response.json);
         res.status(response.status).json(response.json);
         next();
       }

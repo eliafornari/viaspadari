@@ -399,6 +399,14 @@ $transition-slow: 1s;
   letter-spacing: 2px;
 }
 
+@mixin p3(){
+  font-size: $font-size-p3;
+  line-height: $line-height-p3;
+  font-family: $font-family-p3;
+  color: $deep-grey;
+  letter-spacing: 2px;
+}
+
 @mixin raised($opacity, $horizontal-initial: 2px, $vertical-initial:2px,$horizontal-final: 6px, $vertical-final:6px, $thickness-initial:10px, $thickness-final:10px){
 
   box-shadow: $horizontal-initial $vertical-initial $thickness-initial 0 rgba(0, 0, 0, $opacity);
@@ -503,8 +511,8 @@ $transition-slow: 1s;
   outline: 0;
   padding: 0;
   color: $white;
-  background-color: $deep-grey;
-  @include hover-effect-background-color($deep-grey, $light-grey);
+  background-color: $background-grey;
+  @include hover-effect-background-color($background-grey, $light-grey);
   // @include hover-effect-color($light-grey, $white);
 
 }
