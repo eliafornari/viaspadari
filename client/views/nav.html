@@ -47,7 +47,7 @@
 
 
             <li class="nav-bottom-right">
-              <div class="nav-bottom-right-li nav-bottom-right-register">
+              <div class="nav-bottom-right-li nav-bottom-right-register" ng-if="User.status==false">
                 <a href="/register">{{Locale.data.register}}</a>
               </div>
 
@@ -87,7 +87,7 @@
           <div class="nav-bottom-two-li nav-bottom-two-lang" ng-init="openLang=false">
             <ul class="nav-bottom-two-lang-ul" required>
               <li class="nav-bottom-two-lang-li" ng-show="openLang==false" ng-click="openLang=true"><p>{{selectedLang.language}}</p></li>
-              <li class="nav-bottom-two-lang-li" ng-repeat="l in lang" ng-click="selectLang(l.code);" ng-show="openLang==true"><p>{{l.language}}</p></li>
+              <li class="nav-bottom-two-lang-li" ng-repeat="l in lang" ng-click="selectLang_client(l.code);" ng-show="openLang==true"><p>{{l.language}}</p></li>
             </ul>
           </div>
         </div>

@@ -6,43 +6,7 @@ Checkout.controller('checkoutCtrl', function($scope, $location, $rootScope, $tim
 
   $rootScope.customer, $rootScope.shipment, $rootScope.billing, $rootScope.Totals;
 
-  $rootScope.payment = {
-                          id: '',
-                          number: '5555555555554444',
-                          expiry_month: '02',
-                          expiry_year:  '2018',
-                          cvv:  '756'
-                        };
 
-$rootScope.checkout={
-  customer:
-           { first_name: '',
-             last_name: '',
-              email:''
-           },
-          shipment_method: '1336838094099317449',
-          shipment:
-                   { first_name: '',
-                     last_name: '',
-                     address_1: '',
-                     city: '',
-                     county: '',
-                     country: '',
-                     postcode: '',
-                     phone: ''
-                   },
-          billing:
-                  {
-                     first_name: '',
-                     last_name: '',
-                     address_1: '',
-                     city: '',
-                     county: '',
-                     country: '',
-                     postcode: '',
-                     phone: ''
-                   }
-   };
 
 
   $rootScope.shipmentToPayment = function(){
@@ -185,12 +149,12 @@ $scope.$watch('checkout', function(value){
   }
 
   console.log('country: '+$rootScope.checkout.shipment.country);
-  if($rootScope.checkout.shipment.country=='US'){
-    $rootScope.checkout.shipment_method='1336838094099317449'
-    console.log('US');
+  if($rootScope.checkout.shipment.country=='IT'){
+    $rootScope.checkout.shipment_method='1359819101807051068';
+    console.log('IT');
   }else{
-    $rootScope.checkout.shipment_method='1336838640038314698'
-    console.log('INT');
+    $rootScope.checkout.shipment_method='1359820260936515903';
+    console.log('EU');
   }
 }, true)
 

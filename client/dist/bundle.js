@@ -23,6 +23,8 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   $rootScope.pageLoading = true;
 
+  $rootScope.Coordinates;
+
   //a change of path should not reload the page
   var original = $location.path;
   $location.path = function (path, reload) {
@@ -119,8 +121,9 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   // put your least specific route at the bottom
   .otherwise({ redirectTo: '/' });
-}]).controller('appCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $interval, $window, $http, transformRequestAsFormPost) {
+}]).controller('appCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $interval, $window, $http, transformRequestAsFormPost, $route) {
 
+  //setting variables and objects
   $rootScope.location = $location.path();
   $rootScope.firstLoading = true;
   $rootScope.pageClass = "page-home";
@@ -128,61 +131,93 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $rootScope.User = { "status": false };
   $rootScope.selectedLang = {};
 
-  // $scope.setCookie = (obj) => {
-  //   var cookie;
-  //   Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
-  //     // console.log(val + ' -> ' + obj[val]);
-  //    console.log(idx);
-  //     var thisPart = val + "=" + obj[val] + ";"
-  //     if(idx==0){
-  //       cookie = thisPart;
-  //     }else{
-  //       cookie = cookie + thisPart;
-  //     }
-  //
-  //     console.log(cookie);
-  //   });
-  // }
+  $rootScope.payment = {
+    id: '',
+    number: '5555555555554444',
+    expiry_month: '02',
+    expiry_year: '2018',
+    cvv: '756'
+  };
+
+  $rootScope.checkout = {
+    customer: { first_name: '',
+      last_name: '',
+      email: ''
+    },
+    shipment_method: '1336838094099317449',
+    shipment: { first_name: '',
+      last_name: '',
+      address_1: '',
+      city: '',
+      county: '',
+      country: '',
+      postcode: '',
+      phone: ''
+    },
+    billing: {
+      first_name: '',
+      last_name: '',
+      address_1: '',
+      city: '',
+      county: '',
+      country: '',
+      postcode: '',
+      phone: ''
+    }
+  };
 
   // getting user location
 
-  function showMap(position) {
-    console.log(position);
-    var obj = {};
-    obj.lat = position.coords.latitude;
-    obj.lng = position.coords.longitude;
-    $scope.getLocation(obj);
-    // Show a map centered at (position.coords.latitude, position.coords.longitude).
-  }
-
-  $scope.getCoordinates = function () {
-    navigator.geolocation.getCurrentPosition(showMap);
-  };
-
-  $scope.getCoordinates();
+  // $rootScope.getCoordinates=()=>{
+  //   navigator.geolocation.getCurrentPosition(function (position) {
+  //      console.log(position);
+  //      var obj = {};
+  //      obj.lat = position.coords.latitude;
+  //      obj.lng = position.coords.longitude;
+  //      $rootScope.Coordinates= obj;
+  //        $rootScope.getLocation($rootScope.Coordinates);
+  //
+  //    // Show a map centered at (position.coords.latitude, position.coords.longitude).
+  //    });
+  // }
 
   $rootScope.Location;
 
-  $scope.getLocation = function (coord) {
-    $http({
-      url: '/locate',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      transformRequest: transformRequestAsFormPost,
-      data: coord
-    }).then(function (response) {
-      console.log("updatestock");
-      console.log(response);
-      console.log(response.data.results);
-      var code = response.data.results[10].address_components[0].short_name;
-      console.log(response.data.results[10].address_components);
-      $rootScope.selectLang(code);
-    }, function (err) {
-      console.log(err);
-    });
-  };
+  // $rootScope.getLocation=(coord)=>{
+  //   console.log("coord runs");
+  //   console.log(coord);
+  //   $http({
+  //     url: '/locate',
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/x-www-form-urlencoded'
+  //     },
+  //     transformRequest: transformRequestAsFormPost,
+  //     data: coord
+  //   })
+  //    .then(function (response) {
+  //
+  //      console.log("updatestock");
+  //      console.log("getLocation response: ", response);
+  //     //  for (var i in response.data.results[0].address_components){
+  //     //    for (var t in response.data.results[0].address_components[i].types){
+  //     //      if(response.data.results[0].address_components[i].types[t]=="country"){
+  //           //  var code = response.data.results[0].address_components[i].short_name;
+  //           var code = response;
+  //            console.log(code);
+  //
+  //
+  //     //        return false;
+  //     //      }
+  //     //    }
+  //     //  }
+  //
+  //    }, function(err){
+  //      console.log(err);
+  //
+  //    });
+  //
+  // };
 
   $rootScope.Auth, $rootScope.Categories;
 
@@ -194,7 +229,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
       url: '/authenticate'
     }).then(function successCallback(response) {
 
-      if (response.data.access_token) {
+      if (response.data.access_token || response.data.token) {
         console.log("auth");
         console.log(response);
         // this callback will be called asynchronously
@@ -205,9 +240,11 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
         var expires_in = response.data.expires_in;
         var access_token = response.data.access_token;
         var type = response.data.token_type;
+
+        $rootScope.selectLang(response.data.lang);
+        $rootScope.getCategories();
+        $rootScope.getProductsFN();
       }
-      $rootScope.getCategories();
-      $rootScope.getProductsFN();
     }, function errorCallback(response) {
       // called asynchronously if an error occurs
       // or server returns response with an error status.
@@ -255,7 +292,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
 
   setTimeout(function () {
     $rootScope.authentication();
-  }, 600);
+  }, 700);
 
   $rootScope.showCart = false;
   $rootScope.template = {};
@@ -291,9 +328,51 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     }
   };
 
+  $rootScope.selectLang_client = function (code) {
+    for (var l in $rootScope.locales) {
+      if (code == $rootScope.locales[l].meta.code) {
+        $rootScope.Locale = $rootScope.locales[l];
+      }
+    }
+
+    for (var i in $rootScope.lang) {
+      $rootScope.lang[i].selected = false;
+      console.log("codesss", $rootScope.lang[i].code, code);
+      if ($rootScope.lang[i].code === code) {
+        $scope.setLocation(code);
+        $rootScope.lang[i].selected = true;
+        $rootScope.selectedLang = $rootScope.lang[i];
+        $scope.openLang = false;
+        console.log("selected " + $rootScope.lang[i].code + " on purpose");
+        return false;
+      }
+      // console.log($rootScope.lang);
+    }
+  };
+
   // $rootScope.selectedLang = $rootScope.lang[0];
   console.log($rootScope.selectedLang);
   console.log("lang lang");
+
+  $scope.setLocation = function (code) {
+    $rootScope.totalLoading = true;
+    console.log(code);
+    $http({
+      url: '/setLang/' + code,
+      method: 'POST'
+    }).then(function (response) {
+
+      //  $window.location.reload();
+
+      console.log(response);
+      $rootScope.getCategories();
+      $rootScope.getProductsFN();
+
+      $rootScope.totalLoading = false;
+    }, function (err) {
+      console.log(err);
+    });
+  };
 
   //getting json text meta data
 
@@ -456,6 +535,22 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   //             });
   //     };
   //
+
+  // $scope.setCookie = (obj) => {
+  //   var cookie;
+  //   Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
+  //     // console.log(val + ' -> ' + obj[val]);
+  //    console.log(idx);
+  //     var thisPart = val + "=" + obj[val] + ";"
+  //     if(idx==0){
+  //       cookie = thisPart;
+  //     }else{
+  //       cookie = cookie + thisPart;
+  //     }
+  //
+  //     console.log(cookie);
+  //   });
+  // }
 }) //......end of the route controller
 
 .directive('bagDirective', function ($rootScope, $location, $window, $routeParams, $timeout) {
@@ -786,6 +881,7 @@ Cart.controller('cartCtrl', function ($scope, $location, $rootScope, $timeout, $
 
   $scope.phoneRegex = '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$';
   $scope.postcodeRegex = '^\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d$';
+  $scope.passwordRegex = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$';
 
   $rootScope.updateCart = function () {
     $http({
@@ -842,10 +938,10 @@ Cart.controller('cartCtrl', function ($scope, $location, $rootScope, $timeout, $
     } else {
       $rootScope.noProductsError = true;
       setTimeout(function () {
-        $rootScope.showCart = false;
+        // $rootScope.showCart = false;
         $rootScope.noProductsError = false;
         $rootScope.$apply();
-      }, 2000);
+      }, 4000);
     }
   };
 
@@ -882,41 +978,6 @@ Checkout.controller('checkoutCtrl', function ($scope, $location, $rootScope, $ti
   $rootScope.isGradient = true;
 
   $rootScope.customer, $rootScope.shipment, $rootScope.billing, $rootScope.Totals;
-
-  $rootScope.payment = {
-    id: '',
-    number: '5555555555554444',
-    expiry_month: '02',
-    expiry_year: '2018',
-    cvv: '756'
-  };
-
-  $rootScope.checkout = {
-    customer: { first_name: '',
-      last_name: '',
-      email: ''
-    },
-    shipment_method: '1336838094099317449',
-    shipment: { first_name: '',
-      last_name: '',
-      address_1: '',
-      city: '',
-      county: '',
-      country: '',
-      postcode: '',
-      phone: ''
-    },
-    billing: {
-      first_name: '',
-      last_name: '',
-      address_1: '',
-      city: '',
-      county: '',
-      country: '',
-      postcode: '',
-      phone: ''
-    }
-  };
 
   $rootScope.shipmentToPayment = function () {
     console.log($rootScope.checkout);
@@ -1039,12 +1100,12 @@ Checkout.controller('checkoutCtrl', function ($scope, $location, $rootScope, $ti
     }
 
     console.log('country: ' + $rootScope.checkout.shipment.country);
-    if ($rootScope.checkout.shipment.country == 'US') {
-      $rootScope.checkout.shipment_method = '1336838094099317449';
-      console.log('US');
+    if ($rootScope.checkout.shipment.country == 'IT') {
+      $rootScope.checkout.shipment_method = '1359819101807051068';
+      console.log('IT');
     } else {
-      $rootScope.checkout.shipment_method = '1336838640038314698';
-      console.log('INT');
+      $rootScope.checkout.shipment_method = '1359820260936515903';
+      console.log('EU');
     }
   }, true);
 
@@ -1230,6 +1291,12 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
   $scope.registerError;
   $rootScope.loginError;
 
+  $rootScope.setUserEmailInForm = function () {
+    $rootScope.checkout.customer.email = $rootScope.User.data.email;
+    $rootScope.checkout.customer.first_name = $rootScope.User.data.first_name;
+    $rootScope.checkout.customer.last_name = $rootScope.User.data.last_name;
+  };
+
   $rootScope.createUser = function (data) {
     $rootScope.pageLoading = true;
 
@@ -1243,15 +1310,19 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
       data: data
     }).then(function (response) {
 
-      $rootScope.User.data = response.data;
+      $rootScope.User.data = response.data.result;
       $rootScope.User.status = true;
       console.log(response);
       console.log("posted successfully");
       $rootScope.pageLoading = false;
+      $rootScope.setUserEmailInForm();
+      if (!$rootScope.showCart) {
+        $location.path('/account');
+      }
     }, function (response) {
       console.error("error in posting");
       console.log(response);
-      $scope.registerError = response.data;
+      $scope.registerError = response.data.result;
       $rootScope.User.status = false;
       $rootScope.pageLoading = false;
     });
@@ -1259,6 +1330,8 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
 
   $rootScope.loginUser = function (data) {
     $rootScope.pageLoading = true;
+    console.log("loginUser");
+    console.log(data);
 
     $http({
       url: '/loginUser',
@@ -1271,10 +1344,13 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
     }).then(function (response) {
       $rootScope.User.data = response.data.result;
       $rootScope.User.status = true;
-      $location.path('/account');
+      if (!$rootScope.showCart) {
+        $location.path('/account');
+      }
       console.log(response);
       console.log("posted successfully");
       $rootScope.pageLoading = false;
+      $rootScope.setUserEmailInForm();
     }, function (response) {
       console.error("error in posting");
       console.log(response);

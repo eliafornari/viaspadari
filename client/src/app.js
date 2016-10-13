@@ -15,9 +15,27 @@ angular.module('myApp', [
 ])
 
 
+
+
+
+
+
 .run(['$anchorScroll', '$route', '$rootScope', '$location', '$routeParams','$templateCache', function($anchorScroll, $route, $rootScope, $location, $routeParams, $templateCache) {
 
 $rootScope.pageLoading = true;
+
+
+
+
+  $rootScope.Coordinates;
+
+
+
+
+
+
+
+
 
 //a change of path should not reload the page
     var original = $location.path;
@@ -169,8 +187,10 @@ $sceProvider.enabled(false);
 
 }])
 
-.controller('appCtrl', function($scope, $location, $rootScope, $routeParams, $timeout, $interval, $window, $http, transformRequestAsFormPost){
+.controller('appCtrl', function($scope, $location, $rootScope, $routeParams, $timeout, $interval, $window, $http, transformRequestAsFormPost, $route){
 
+
+//setting variables and objects
 $rootScope.location = $location.path();
 $rootScope.firstLoading = true;
 $rootScope.pageClass = "page-home";
@@ -178,24 +198,66 @@ $rootScope.Home;
 $rootScope.User={"status":false};
 $rootScope.selectedLang={};
 
+$rootScope.payment = {
+                        id: '',
+                        number: '5555555555554444',
+                        expiry_month: '02',
+                        expiry_year:  '2018',
+                        cvv:  '756'
+                      };
+
+$rootScope.checkout={
+customer:
+         { first_name: '',
+           last_name: '',
+            email:''
+         },
+        shipment_method: '1336838094099317449',
+        shipment:
+                 { first_name: '',
+                   last_name: '',
+                   address_1: '',
+                   city: '',
+                   county: '',
+                   country: '',
+                   postcode: '',
+                   phone: ''
+                 },
+        billing:
+                {
+                   first_name: '',
+                   last_name: '',
+                   address_1: '',
+                   city: '',
+                   county: '',
+                   country: '',
+                   postcode: '',
+                   phone: ''
+                 }
+ };
 
 
 
-// $scope.setCookie = (obj) => {
-//   var cookie;
-//   Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
-//     // console.log(val + ' -> ' + obj[val]);
-//    console.log(idx);
-//     var thisPart = val + "=" + obj[val] + ";"
-//     if(idx==0){
-//       cookie = thisPart;
-//     }else{
-//       cookie = cookie + thisPart;
-//     }
-//
-//     console.log(cookie);
-//   });
-// }
+
+
+
+
+ // getting user location
+
+
+
+ // $rootScope.getCoordinates=()=>{
+ //   navigator.geolocation.getCurrentPosition(function (position) {
+ //      console.log(position);
+ //      var obj = {};
+ //      obj.lat = position.coords.latitude;
+ //      obj.lng = position.coords.longitude;
+ //      $rootScope.Coordinates= obj;
+ //        $rootScope.getLocation($rootScope.Coordinates);
+ //
+ //    // Show a map centered at (position.coords.latitude, position.coords.longitude).
+ //    });
+ // }
 
 
 
@@ -205,52 +267,45 @@ $rootScope.selectedLang={};
 
 
 
-// getting user location
 
-function showMap(position) {
-  console.log(position);
-  var obj = {};
-  obj.lat = position.coords.latitude;
-  obj.lng = position.coords.longitude;
-  $scope.getLocation(obj);
-// Show a map centered at (position.coords.latitude, position.coords.longitude).
-}
-
-
-
-
-$scope.getCoordinates=()=>{
-  navigator.geolocation.getCurrentPosition(showMap);
-}
-
-$scope.getCoordinates();
 
 $rootScope.Location;
 
-$scope.getLocation=(coord)=>{
-  $http({
-    url: '/locate',
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    transformRequest: transformRequestAsFormPost,
-    data: coord
-  })
-   .then(function (response) {
-     console.log("updatestock");
-     console.log(response);
-     console.log(response.data.results);
-     var code = response.data.results[10].address_components[0].short_name;
-     console.log(response.data.results[10].address_components);
-     $rootScope.selectLang(code);
-
-   }, function(err){
-     console.log(err);
-
-   });
-
-}
+// $rootScope.getLocation=(coord)=>{
+//   console.log("coord runs");
+//   console.log(coord);
+//   $http({
+//     url: '/locate',
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/x-www-form-urlencoded'
+//     },
+//     transformRequest: transformRequestAsFormPost,
+//     data: coord
+//   })
+//    .then(function (response) {
+//
+//      console.log("updatestock");
+//      console.log("getLocation response: ", response);
+//     //  for (var i in response.data.results[0].address_components){
+//     //    for (var t in response.data.results[0].address_components[i].types){
+//     //      if(response.data.results[0].address_components[i].types[t]=="country"){
+//           //  var code = response.data.results[0].address_components[i].short_name;
+//           var code = response;
+//            console.log(code);
+//
+//
+//     //        return false;
+//     //      }
+//     //    }
+//     //  }
+//
+//    }, function(err){
+//      console.log(err);
+//
+//    });
+//
+// };
 
 
 
@@ -271,7 +326,7 @@ $scope.getLocation=(coord)=>{
             url: '/authenticate'
           }).then(function successCallback(response) {
 
-            if(response.data.access_token){
+            if(response.data.access_token || response.data.token){
                 console.log("auth");
                 console.log(response);
                 // this callback will be called asynchronously
@@ -283,9 +338,13 @@ $scope.getLocation=(coord)=>{
                 var access_token = response.data.access_token;
                 var type = response.data.token_type;
 
+                $rootScope.selectLang(response.data.lang);
+                $rootScope.getCategories();
+                $rootScope.getProductsFN();
+
+
             }
-            $rootScope.getCategories();
-            $rootScope.getProductsFN();
+
 
 
             }, function errorCallback(response) {
@@ -354,7 +413,7 @@ $scope.getLocation=(coord)=>{
 
   setTimeout(function(){
     $rootScope.authentication();
-  }, 600);
+  }, 700);
 
 
 
@@ -402,9 +461,30 @@ $rootScope.selectLang = (code) => {
     }
     // console.log($rootScope.lang);
   }
-
 }
 
+
+$rootScope.selectLang_client = (code) => {
+  for (var l in $rootScope.locales){
+    if(code == $rootScope.locales[l].meta.code){
+      $rootScope.Locale = $rootScope.locales[l];
+    }
+  }
+
+  for (var i in $rootScope.lang){
+    $rootScope.lang[i].selected = false;
+    console.log("codesss", $rootScope.lang[i].code, code);
+    if($rootScope.lang[i].code === code){
+      $scope.setLocation(code);
+      $rootScope.lang[i].selected = true;
+      $rootScope.selectedLang = $rootScope.lang[i];
+      $scope.openLang=false;
+      console.log("selected "+$rootScope.lang[i].code+" on purpose");
+      return false;
+    }
+    // console.log($rootScope.lang);
+  }
+}
 
 // $rootScope.selectedLang = $rootScope.lang[0];
 console.log($rootScope.selectedLang);
@@ -413,7 +493,31 @@ console.log("lang lang");
 
 
 
+$scope.setLocation=(code)=>{
+  $rootScope.totalLoading= true;
+  console.log(code);
+  $http({
+    url: '/setLang/'+code,
+    method: 'POST'
+  })
+   .then(function (response) {
 
+    //  $window.location.reload();
+
+     console.log(response);
+     $rootScope.getCategories();
+     $rootScope.getProductsFN();
+
+     $rootScope.totalLoading= false;
+
+
+
+   }, function(err){
+     console.log(err);
+
+   });
+
+};
 
 
 
@@ -623,6 +727,23 @@ console.log("lang lang");
 //             });
 //     };
 //
+
+
+// $scope.setCookie = (obj) => {
+//   var cookie;
+//   Object.getOwnPropertyNames(obj).forEach(function(val, idx, array) {
+//     // console.log(val + ' -> ' + obj[val]);
+//    console.log(idx);
+//     var thisPart = val + "=" + obj[val] + ";"
+//     if(idx==0){
+//       cookie = thisPart;
+//     }else{
+//       cookie = cookie + thisPart;
+//     }
+//
+//     console.log(cookie);
+//   });
+// }
 
 
 

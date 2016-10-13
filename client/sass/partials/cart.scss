@@ -113,22 +113,14 @@
 .cart-total{
   position: relative;
   left:$form-sides;
-  height: 70px;
+  height: auto;
   width: auto;
-  margin-top: $margin-top-li;
-  @include respond-to(phone){
-    left: $margin-sides;
-    width:90vw;
-  }
+  margin-top: $margin-top-div;
   .cart-total-tax{
     @include p();
-    height: 70px;
-    line-height: 70px;
   }
   .cart-total-amount{
     @include p();
-    height: 70px;
-    line-height: 70px;
     span{
       margin-left: $margin-right-p;
     }
@@ -146,25 +138,30 @@
 
 
 
-
-
 .form-title{
   @include h3();
-  color: $light-grey;
+  position: absolute;
+  width:100px;
+  top:$margin-sides;
+  left:50%;
+  margin-left: -50px;
+}
+
+.form-sub-title{
+  @include p();
+  text-transform: uppercase;
 }
 
 
 
 .checkout-button{
-
   width:400px;
   @include button();
-
   @include hover-effect-color($light-grey, $white);
   border: 0;
   outline: 0;
   padding: 0;
-
+  margin-top: $margin-top-div;
   @include respond-to(phone){
     box-sizing: border-box;
   }
@@ -215,7 +212,10 @@
 .form-error{
   position: absolute;
   right:5px;
-
+}
+.form-error-password{
+  position: absolute;
+  top:25px;
 }
 
 

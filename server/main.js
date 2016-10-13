@@ -14,17 +14,16 @@ var util = require('util');
 let ejs = require('ejs');
 let request = require('request');
 let sessions = require('client-sessions');
+let satelize = require('satelize');
 // var geoip = require('geoip-lite');
 let app = express();
 
 
 
 
-// { range: [ 3479299040, 3479299071 ],
-//   country: 'US',
-//   region: 'CA',
-//   city: 'San Francisco',
-//   ll: [37.7484, -122.4156] }
+
+
+
 
 
 let moltin = require('moltin')({
@@ -56,6 +55,7 @@ app.use(sessions({
 }));
 
 app.use(function(req, res, next) {
+
   if (req.mySession.access_token) {
     console.log(req.mySession);
     res.setHeader('X-Seen-You', 'true');
@@ -63,8 +63,13 @@ app.use(function(req, res, next) {
     console.log(req.mySession);
     // setting a property will automatically cause a Set-Cookie response
     // to be sent
-
     res.setHeader('X-Seen-You', 'false');
+  }
+
+  if(req.mySession.lang){
+    moltin.Language.Set(req.mySession.lang);
+  }else{
+    moltin.Language.Set("US");
   }
    next();
 });
@@ -82,29 +87,48 @@ app.get('/profile', function(req, res){
 
 app.get('/authenticate', function(req, res){
 
-  // var ip = req.ip;
-  // var ip = "207.97.227.239";
-  // var geo = geoip.lookup(ip);
+  // Example retrieve IP from request
+  // var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
+
+  // then satelize call
+
+  // Get client IP address from request object ----------------------
+   function getClientAddress(req) {
+          return (req.headers['x-forwarded-for'] || '').split(',')[0]
+          || req.connection.remoteAddress;
+  };
+
+console.log(getClientAddress(req));
+// ITA 217.29.167.157
+
+// US 50.1.152.117
+satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
+  console.log(payload);
+  req.mySession.lang = payload.country_code;
+
+});
+
+
 
   moltin.Authenticate(function(data) {
-    console.log("tried to auth");
-    console.log(data);
-    // data.geo = geo;
+
+    data.lang = req.mySession.lang
+    console.log("it runs");
     if(data){
-      console.log(data);
       if(req.mySession.access_token && (req.mySession.access_token==data.access_token)){
-        console.log("same token", data.access_token, req.mySession.access_token);
-        res.status(200);
-        res.json(data);
+        console.log("1 runs");
+        res.status(200).json(data);
+
       }else if(data.token){
-        console.log("same token", data.access_token, req.mySession.access_token);
-        res.status(200);
-        res.json(data);
+        console.log("2 runs");
+        console.log(data);
+        res.status(200).json(data);
+
       }else{
-        console.log("different token", data.access_token, req.mySession.access_token);
+        console.log("3 runs");
         req.mySession.access_token = data.access_token;
-        res.status(200);
-        res.json(data);
+        res.status(200).json(data);
+
       }
 
     }else{
@@ -117,49 +141,35 @@ app.get('/authenticate', function(req, res){
 
 
 
+
+
+
+
     function getUserCountry(req, res){
       var ip = req.ip;
       var ip = "207.97.227.239";
       var geo = geoip.lookup(ip);
-
-      console.log(geo);
     }
 
 
     app.post('/addProduct', function(req, res){
-
       var id = req.body.id.toString();
       var quantity = req.body.quantity;
-      console.log(id);
-      // var token = req.body.access_token;
-      // console.log();
-      // res.setHeader("Authorization", "Bearer "+token);
-
       moltin.Cart.Insert(id, quantity, null, function(items){
-          console.log(items);
         res.json(items);
-
       },function(err, doc){
-        console.log(err, doc);
         res.json(err);
       });
-
     });
 
 
     app.post('/addVariation', function(req, res){
-
-      console.log('request =' + JSON.stringify(req.body))
 
       var variationArray = req.body
       for (var i in variationArray){
         var id = variationArray[i].id;
         var modifier = variationArray[i].modifier_id
         var variation = variationArray[i].variation_id
-        // console.log('variationArray[i]: '+variationArray[i]);
-        // console.log('id: '+id);
-        // console.log('modifier: '+variationArray[i].modifier_id);
-        // console.log('variation: '+variationArray[i].variation_id);
         var obj={};
         var objArray = [];
         obj[modifier] = variation
@@ -174,13 +184,12 @@ app.get('/authenticate', function(req, res){
       moltin.Cart.Insert(id, 1, obj, function(cart) {
         console.log(cart);
         res.json(cart);
-
       }, function(error, response, c) {
+        // Something went wrong...
         console.log(error);
         console.log(response);
         console.log(c);
         res.json(error);
-          // Something went wrong...
       });
 
     });
@@ -189,10 +198,7 @@ app.get('/authenticate', function(req, res){
 
 
     app.post('/removeProduct', function(req, res){
-      console.log(req);
-
       var id = req.body.id;
-      console.log(id);
       moltin.Cart.Remove(id, function(items) {
           // Everything is awesome...
           console.log("all good");
@@ -239,9 +245,13 @@ app.get('/authenticate', function(req, res){
       user.login(req, res);
     });
 
-    app.post('/locate', function(req, res){
-      geo.locate(req, res);
+    app.post('/setLang/:code', function(req, res){
+      geo.set(req, res);
     });
+
+    // app.post('/locate', function(req, res){
+    //   geo.locate(req, res);
+    // });
 
 
 
@@ -301,18 +311,11 @@ app.get('/authenticate', function(req, res){
 
 
     function getCategories(req, res){
-      // moltin.Category.List(null, function(category) {
-      //     console.log(category);
-      //     res.status(200).json(category);
-      // }, function(error) {
-      //   console.log(error);
-      //   res.status(400).json(error);
-      //     // Something went wrong...
-      // });
+
+      // moltin.Language.Set(req.mySession.lang);
 
 
       moltin.Category.Tree({}, function(tree) {
-        console.log(tree);
         res.status(200).json(tree);
       }, function(error) {
         console.log(error);
@@ -324,11 +327,8 @@ app.get('/authenticate', function(req, res){
 
 
     function cartToOrder(req, res, data){
-      console.log("wait for the order");
-      console.log(data);
 
       var customer = data.customer;
-      console.log('customer:',customer);
       var ship_to = data.shipment;
       var bill_to = data.billing;
       var shipment_method = data.shipment_method;
@@ -365,9 +365,6 @@ app.get('/authenticate', function(req, res){
           }
         }, function(order) {
 
-          console.log("wait for the order");
-          console.log(order);
-
           res.json(order);
             // Handle the order
 
@@ -384,9 +381,7 @@ app.get('/authenticate', function(req, res){
 
 
     function orderToPayment(req, res, order){
-      console.log(order);
       var card_number = order.number.toString();
-      console.log(card_number);
       var expiry_month = order.expiry_month;
       var expiry_year = order.expiry_year;
       var cvv = order.cvv;
@@ -485,15 +480,9 @@ app.get('/authenticate', function(req, res){
       moltin.Order.List(null, function(order) {
           // console.log(order);
           for (var i in order){
-
             var id = order[i].id;
             id = id.toString();
-
-            console.log(id);
-
             moltin.Order.Delete(id, function(data) {
-
-              console.log(data);
                 // Success
             }, function(error) {
                 // Something went wrong...

@@ -35,7 +35,8 @@ Cart.controller('cartCtrl', function($scope, $location, $rootScope, $timeout,	$h
 
 
   $scope.phoneRegex = '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$';
-  $scope.postcodeRegex = '^\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d$'
+  $scope.postcodeRegex = '^\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d$';
+  $scope.passwordRegex = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$'
 
 
   $rootScope.updateCart = function(){
@@ -103,10 +104,10 @@ $rootScope.removeItem = function(id){
     }else{
       $rootScope.noProductsError=true;
       setTimeout(function(){
-        $rootScope.showCart = false;
+        // $rootScope.showCart = false;
         $rootScope.noProductsError=false;
         $rootScope.$apply();
-      },2000);
+      },4000);
 
     }
   }

@@ -1,87 +1,60 @@
-
+let moltin = require('moltin')({
+  publicId: 'kmskXqQcPQCenV66qvxUXEFnrdxjHuKSMHFjHcLHcA',
+  secretKey: '9thD7b3jm7pjiqj0cARkBpMXgeR0FdIPSx7qCjTyig'
+});
 let request = require('request');
 
-exports.locate = function (req, res) {
 
-  var googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyC78_wz7i2ukhZryo0ya380QDkKZcylAP0'
-  });
-
-
-
-  var body = req.body;
-  reverseGeocoding(body);
-
-
-
-
-
-  function reverseGeocoding(data){
-    var coord = [ data.lat, data.lng];
-
-    googleMapsClient.reverseGeocode({
-      latlng: coord,
-    }, function(err, response) {
-      if (!err) {
-        console.log(response.json);
-        res.status(response.status).json(response.json);
-        next();
-      }
-      res.status(response.status).json(err);
-
-    })
-
-
-
-
-
-    // // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
-
-    // request({
-    //     url: 'https://maps.googleapis.com/maps/api/geocode/json', //URL to hit
-    //     method: 'POST',
-    //     json: {
-    //       "latlng": latlng,
-    //       "key":"AIzaSyC78_wz7i2ukhZryo0ya380QDkKZcylAP0"
-    //            } //Query string data
-    //     }, function(error, response, body){
-    //         if(error) {
-    //             console.log("PUT entry error");
-    //             console.log(error);
-    //             // res.status(response.statusCode).json(body);
-    //         } else {
-    //             console.log("ok");
-    //             console.log(body);
-    //             // res.status(response.statusCode).json(body);
-    //         }
-    // });
+//getting user location via GoogleMaps API
+// exports.locate = function (req, res) {
+//
+//   var googleMapsClient = require('@google/maps').createClient({
+//     key: 'AIzaSyC78_wz7i2ukhZryo0ya380QDkKZcylAP0'
+//   });
+//
+//   var body = req.body;
+//   reverseGeocoding(body);
+//
+//
+// function loop(response){
+//   for (var i in response.results[0].address_components){
+//     for (var t in response.results[0].address_components[i].types){
+//       if(response.results[0].address_components[i].types[t]=="country"){
+//         var code = response.results[0].address_components[i].short_name;
+//         moltin.Language.Set(code);
+//         req.mySession.lang = code;
+//         return code;
+//       }
+//     }
+//   }
+// }
+//
+//   function reverseGeocoding(data){
+//     var coord = [ data.lat, data.lng];
+//     googleMapsClient.reverseGeocode({
+//       latlng: coord,
+//     }, function(err, response) {
+//       if (!err) {
+//
+//         res.status(response.status).json(loop(response.json));
+//
+//         next();
+//       }
+//       res.status(response.status).json(err);
+//     })
+//
+//   }
+// };
 
 
 
-      // const geolocation = require ('google-geolocation') ({
-      //   key: 'AIzaSyC78_wz7i2ukhZryo0ya380QDkKZcylAP0'
-      // });
-      //
-      // // Configure API parameters
-      // const params = {
-      //   wifiAccessPoints: [
-      //     {
-      //       macAddress: '01:23:45:67:89:AB',
-      //       signalStrength: -65,
-      //       signalToNoiseRatio: 40
-      //     }
-      //   ]
-      // };
-      //
-      // // Get data
-      // geolocation (params, (err, data) => {
-      //   if (err) {
-      //     console.log (err);
-      //     return;
-      //   }
-      //
-      //   console.log (data);
-      //   reverseGeocoding(data)
-      // });
-  }
-};
+
+
+
+exports.set = function(req, res){
+  var code = req.params.code;
+  console.log(code);
+  req.mySession.lang = code;
+  res.status(200).json(code);
+
+}

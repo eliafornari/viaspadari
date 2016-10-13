@@ -10,15 +10,16 @@
       </li>
     </ul>
 
+    <div class="cart-error" ng-show="noProductsError">
+      <p>no products in your cart <a ng-click="closeCart()">back</a></p>
+
+    </div>
 
     <div class="cart-total">
       <p class="cart-total-amount">TOTAL<span>{{Cart.totals.pre_discount.formatted.without_tax}}</span> </p>
     </div>
 
-    <div class="cart-error" ng-show="noProductsError">
-      <p>no products in your cart</p>
-      <a ng-click="closeCart()">back</a>
-    </div>
+
 
     <button type="submit" class="checkout-button hvr-sweep-to-right" ng-click="cartToShipment()">CHECKOUT</button>
 

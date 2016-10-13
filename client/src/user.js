@@ -12,7 +12,11 @@ $rootScope.register;
 $scope.registerError;
 $rootScope.loginError;
 
-
+$rootScope.setUserEmailInForm = ()=>{
+  $rootScope.checkout.customer.email = $rootScope.User.data.email;
+  $rootScope.checkout.customer.first_name = $rootScope.User.data.first_name;
+  $rootScope.checkout.customer.last_name = $rootScope.User.data.last_name;
+}
 
 $rootScope.createUser = (data)=>{
   $rootScope.pageLoading = true;
@@ -27,23 +31,32 @@ $rootScope.createUser = (data)=>{
     data: data
   }).then( function(response){
 
-    $rootScope.User.data=response.data;
+    $rootScope.User.data=response.data.result;
     $rootScope.User.status=true;
     console.log(response);
     console.log("posted successfully");
     $rootScope.pageLoading = false;
+    $rootScope.setUserEmailInForm();
+    if(!$rootScope.showCart){
+      $location.path('/account');
+    }
+
     }, function(response) {
         console.error("error in posting");
         console.log(response);
-        $scope.registerError = response.data;
+        $scope.registerError = response.data.result;
         $rootScope.User.status=false;
         $rootScope.pageLoading = false;
     })
 }
 
 
+
+
 $rootScope.loginUser = (data)=>{
   $rootScope.pageLoading = true;
+  console.log("loginUser");
+  console.log(data);
 
   $http({
     url: '/loginUser',
@@ -56,10 +69,13 @@ $rootScope.loginUser = (data)=>{
   }).then( function(response){
       $rootScope.User.data=response.data.result;
       $rootScope.User.status=true;
-      $location.path('/account');
+      if(!$rootScope.showCart){
+        $location.path('/account');
+      }
       console.log(response);
       console.log("posted successfully");
       $rootScope.pageLoading = false;
+      $rootScope.setUserEmailInForm();
     }, function(response) {
       console.error("error in posting");
       console.log(response);

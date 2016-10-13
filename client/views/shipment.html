@@ -1,38 +1,37 @@
 <div class="shipment" ng-controller="checkoutCtrl">
 
 <!-- 2 -->
-
-
     <div class="shipment-content">
 
-
+        <h3 class="form-title">SHIPMENT</h3>
     <!-- 2 -->
-    <form name="shipmentForm" novalidate class="shipment-form" method="post" ng-submit="shipmentToPayment()">
-
-        <h2 class="shipment-h1">SHIPMENT</h2>
+    <form name="checkoutForm" novalidate class="shipment-form" method="post" ng-submit="shipmentToPayment()">
 
 
 
+        <div class="customer-logged" ng-if="User.status==true">
 
+          <div class="form-entry">
+            <input type="text" name="name" ng-model="checkout.customer.first_name" readonly></input>
+          </div>
+          <div class="form-entry">
+            <input type="text" name="lastname" ng-model="checkout.customer.last_name" readonly></input>
+          </div>
+          <div class="form-entry">
+            <input type="email" name="email_customer" ng-model="checkout.customer.email" readonly></input>
+          </div>
 
-
-
-
-        <div class="customer" ng-if="User.status==false" >
-
-          logged in
-
+          <!-- <p>{{User.data.first_name}} {{User.last_name}}</p>
+          <p>{{User.data.email}}</p>
+          <p>{{User.data.country}}</p> -->
         </div>
-
-
-
 
 
 
       <div class="customer" ng-init="showLogin=false" ng-if="User.status==false">
 
         <div class="customer-choice">
-          <h3 class="form-title">
+          <h3 class="form-sub-title">
             <span ng-click="showLogin=false" ng-class="{'active': !showLogin}">REGISTER</span> | <span ng-click="showLogin=true" ng-class="{'active': showLogin}">LOGIN</span>
           </h3>
         </div>
@@ -42,43 +41,56 @@
         <div class="customer-register" ng-show="showLogin==false">
 
           <div class="form-entry">
-            <input type="text" name="name_customer" value="name" ng-model="checkout.customer.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
+            <input type="text" name="name_customer" value="name" ng-model="checkout.customer.first_name" placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'" required>
               <span class="form-error" ng-show="checkoutForm.name_customer.$error.required && checkoutForm.name_customer.$touched">required</span>
             </input>
           </div>
 
           <div class="form-entry">
-            <input type="text" name="lastname_customer" value="lastname" ng-model="checkout.customer.last_name" required placeholder="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'lastname'">
+            <input type="text" name="lastname_customer" value="lastname" ng-model="checkout.customer.last_name" placeholder="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'lastname'" required>
               <span class="form-error" ng-show="checkoutForm.lastname_customer.$error.required && checkoutForm.lastname_customer.$touched">required</span>
             </input>
           </div>
 
           <div class="form-entry">
-            <input type="email" name="email_customer" value="email" ng-model="checkout.customer.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+            <input type="email" name="email_customer" value="email" ng-model="checkout.customer.email" placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'" required>
               <span class="form-error" ng-show="checkoutForm.email_customer.$error.required && checkoutForm.email_customer.$touched">required</span>
               <span class="form-error" ng-show="checkoutForm.email_customer.$error.email && checkoutForm.email_customer.$touched">invalid email</span>
+            </input>
+          </div>
+
+          <div class="form-entry">
+            <input type="password" name="password_customer" value="password" ng-model="checkout.customer.password" ng-pattern="passwordRegex" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'" min="6">
+              <span class="form-error" ng-show="checkoutForm.password_customer.$error.required && checkoutForm.password_customer.$touched">required</span>
+              <!-- checkoutForm.password_customer.$error.minlength -->
+              <span class="form-error form-error-password" ng-show="checkoutForm.password_customer.$error.pattern && checkoutForm.password_customer.$touched">Password should contain 1 Uppercase letter 1 lowercase letter and a number</span>
+
             </input>
           </div>
 
         </div>
 
 
-        <div class="customer-login" ng-show="showLogin==true">
+        <div class="customer-login" ng-show="showLogin==true" ng-controller="userCtrl">
 
           <div class="form-entry">
-            <input type="email" name="email" value="email" ng-model="login.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
-              <span class="form-error" ng-show="loginForm.email.$error.required && loginForm.email.$touched">required</span>
-              <span class="form-error" ng-show="loginForm.email.$error.email && loginForm.email.$touched">invalid email</span>
+            <input type="email" name="login_email" value="email" ng-model="shipmentLogin.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+              <span class="form-error" ng-show="checkoutForm.login_email.$error.required && checkoutForm.login_email.$touched">required</span>
+              <span class="form-error" ng-show="checkoutForm.login_email.$error.email && checkoutForm.login_email.$touched">invalid email</span>
             </input>
           </div>
 
           <div class="form-entry">
-            <input type="password" name="password" value="password" ng-model="login.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
-              <span class="form-error" ng-show="loginForm.password.$error.required && loginForm.password.$touched">required</span>
+            <input type="password" name="login_password" value="password" ng-model="shipmentLogin.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+              <span class="form-error" ng-show="checkoutForm.login_password.$error.required && checkoutForm.login_password.$touched">required</span>
             </input>
           </div>
 
-          <button type="button" name="button" ng-submit="loginUser(login)">login</button>
+          <p>
+            {{shipmentLogin}}
+          </p>
+
+          <button type="button" name="button" ng-click="loginUser(shipmentLogin)">login</button>
 
         </div>
 
@@ -109,7 +121,17 @@
 
       <div class="address">
 
-        <h2 class="form-title">ship to</h2>
+        <p class="form-sub-title">ship to</p>
+
+
+        <div class="isBillingDifferent">
+          <p class="checkbox-text" ng-class="{'checked': isBillingDifferent}">different billing</p>
+          <div class="checkbox-box" ng-class="{'checked': isBillingDifferent}" ng-click="isBillingDifferent=!isBillingDifferent"></div>
+
+
+        </div>
+
+
 
             <div class="form-entry">
               <input type="text" name="name_shipment" value="name" ng-model="checkout.shipment.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
@@ -170,18 +192,19 @@
               </input>
             </div>
 
+
+
+
+
         </div>
 
-        <div class="isBillingDifferent">
-          <label for="isBillingDifferent-label">different billing</label>
-          <input class="isBillingDifferent-input" type="checkbox" name="isBillingDifferent" value="false" ng-model="isBillingDifferent">
-        </div>
+
 
 
 
 
           <div class="billing" ng-show="isBillingDifferent">
-            <h2 class="form-title">bill to</h2>
+            <h2 class="form-sub-title">bill to</h2>
             <div class="form-entry">
               <input type="text" name="name_billing" value="name" ng-model="checkout.billing.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
               <span class="form-error" ng-show="checkoutForm.name_billing.$error.required && checkoutForm.name_billing.$touched">required</span>
@@ -244,7 +267,7 @@
 
           </div>
 
-          
+
     </div><!-- shipment to -->
 
 
