@@ -197,8 +197,10 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
 
 
 
-    app.post('/removeProduct', function(req, res){
-      var id = req.body.id;
+    app.post('/removeProduct/:id', function(req, res){
+      var id = req.params.id;
+      console.log(id);
+
       moltin.Cart.Remove(id, function(items) {
           // Everything is awesome...
           console.log("all good");

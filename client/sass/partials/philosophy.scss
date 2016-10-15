@@ -1,0 +1,15 @@
+.philosophy{
+  width:100%;
+  height: auto;
+  .philosophy-content{
+    display: block;
+    width:50vw;
+    height: auto;
+    margin: auto;
+    margin-top: $margin-top;
+    p{
+      width:100%;
+      margin-top: $margin-top-p;
+    }
+  }
+}

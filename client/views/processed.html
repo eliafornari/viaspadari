@@ -5,7 +5,8 @@
   </div>
 
   <div class="processed-thankyou" ng-show="Processed.status==200">
-    <p>
+    <p class="processed-thankyou-info">
+      Thank you {{Processed.data.order.customer.data.first_name}}.</br>
       your order will be shipped to
       {{Processed.data.order.ship_to.data.address_1}}
       {{Processed.data.order.ship_to.data.city}}
@@ -13,11 +14,17 @@
       {{Processed.data.order.ship_to.data.country.value}}
     </p>
 
-    <a class="" href="">INSTAGRAM</a>
-    <a class="" href="">FACEBOOK</a>
-    <a class="" href="">TWITTER</a>
+    <p class="processed-thankyou-email">
+      <a href="mailto:info@viaspadari.com">info@viaspadari.com</a>
+    </p>
 
-    <a href="/">home</a>
+    <p class="processed-thankyou-social">
+      <a class="" href="">INSTAGRAM</a>
+      <a class="" href="">FACEBOOK</a>
+      <a class="" href="">TWITTER</a>
+    </p>
+
+
 
   </div>
 

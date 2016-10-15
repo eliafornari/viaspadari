@@ -913,20 +913,17 @@ Cart.controller('cartCtrl', function ($scope, $location, $rootScope, $timeout, $
   // }
 
   $rootScope.removeItem = function (id) {
-
+    console.log(id);
     $http({
-      url: '/removeProduct',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      transformRequest: transformRequestAsFormPost,
-      data: {
-        id: id
-      }
+      url: '/removeProduct/' + id,
+      method: 'POST'
     }).then(function (response) {
       console.log("object removed");
       $rootScope.Cart = response;
+      $rootScope.updateCart();
+      console.log(response);
+    }, function (response) {
+      console.log("object not removed. error");
       $rootScope.updateCart();
       console.log(response);
     });
@@ -1232,6 +1229,19 @@ Product.controller('detailCtrl', function ($scope, $location, $rootScope, $route
         console.log("detail");
         console.log($rootScope.Detail);
       }
+    }
+  };
+
+  $scope.addValue = 1;
+  $scope.plusOne = function () {
+    console.log($rootScope.Detail.stock_level);
+    if ($scope.addValue < $rootScope.Detail.stock_level) {
+      $scope.addValue = $scope.addValue + 1;
+    }
+  };
+  $scope.minusOne = function () {
+    if ($scope.addValue > 0) {
+      $scope.addValue = $scope.addValue - 1;
     }
   };
 

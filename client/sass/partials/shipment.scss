@@ -40,6 +40,15 @@
   }
 }
 
+.customer-choice.logged{
+  h3{
+    span{
+      color: $light_grey;
+      display: inline-block;
+    }
+  }
+}
+
 .customer-register{
   position: absolute;
   left:0%;
@@ -62,11 +71,19 @@
   height:200px;
   left:0%;
   width:35%;
-
+  h3{
+    span{
+      @include hover-effect-color($dark_grey, $white);
+    }
+  }
 }
 
 
-
+.customer-logout{
+  position: absolute;
+  right:0;
+  top:0;
+}
 
 
 

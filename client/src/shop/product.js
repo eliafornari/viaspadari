@@ -127,6 +127,20 @@ $rootScope.Detail;
     }
   }
 
+$scope.addValue=1;
+  $scope.plusOne = ()=>{
+    console.log($rootScope.Detail.stock_level);
+    if($scope.addValue<$rootScope.Detail.stock_level){
+      $scope.addValue = $scope.addValue+1;
+    }
+
+  }
+  $scope.minusOne = ()=>{
+    if($scope.addValue>0){
+      $scope.addValue = $scope.addValue-1;
+    }
+  }
+
 
 
 

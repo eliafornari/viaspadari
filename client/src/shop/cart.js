@@ -78,20 +78,17 @@ Cart.controller('cartCtrl', function($scope, $location, $rootScope, $timeout,	$h
 
 
 $rootScope.removeItem = function(id){
-
+  console.log(id);
       $http({
-        url: '/removeProduct',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        transformRequest: transformRequestAsFormPost,
-        data: {
-                id: id
-              }
+        url: '/removeProduct/'+id,
+        method: 'POST'
       }).then(function(response){
         console.log("object removed");
         $rootScope.Cart = response;
+        $rootScope.updateCart();
+        console.log(response);
+      },function(response){
+        console.log("object not removed. error");
         $rootScope.updateCart();
         console.log(response);
       });

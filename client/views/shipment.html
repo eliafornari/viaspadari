@@ -11,6 +11,18 @@
 
         <div class="customer-logged" ng-if="User.status==true">
 
+          <div class="customer-choice logged">
+            <h3 class="form-sub-title">
+              <span>Logged in</span>
+            </h3>
+          </div>
+
+          <div class="customer-logout">
+            <h3 class="form-sub-title">
+              <span ng-click="logOut();">Log out</span>
+            </h3>
+          </div>
+
           <div class="form-entry">
             <input type="text" name="name" ng-model="checkout.customer.first_name" readonly></input>
           </div>
@@ -86,9 +98,6 @@
             </input>
           </div>
 
-          <p>
-            {{shipmentLogin}}
-          </p>
 
           <button type="button" name="button" ng-click="loginUser(shipmentLogin)">login</button>
 

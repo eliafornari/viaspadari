@@ -9,7 +9,7 @@
     <form class="payment-form" name="paymentForm" novalidate method="post" ng-hide="paymentProcessed" ng-submit="paymentToProcess()">
 
       <div class="payment-form-div">
-
+        <h2 class="form-sub-title">credit/debit card</h2>
 
         <div class="form-entry">
           <input type="text" name="number" value="card number" ng-model="payment.number" required="required" placeholder="card number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'card number'" min="0" max="10">

@@ -23,13 +23,22 @@
       "certification":"certificazione",
       "price": "prezzo",
       "quantity": "quantità",
-      "philosophy":"philosophy",
       "terms": "termini",
       "register":"registrati",
       "login": "login",
       "logout": "logout",
       "support": "supporto",
-      "contact": "contattaci"
+      "contact": "contatti",
+      "philosophy":{
+        "title":"philosophy",
+        "text":[
+          "Eros, il nostro simbolo, identifica il piacere più puro, quello sessuale e più estremo, quella forza capace di unire elementi diversi e talvolta contrastanti senza mai però annullarli elevandone ulteriormente ogni singola differenza; così il cibo diventa una prelibatezza che si propone di raggiungere l'estasi più profonda del piacere.",
+          "Per giungere al piacere è necessario un eccellente lavoro di ricerca e un’attenta selezione dei prodotti che, una volta a contatto con il palato, possano donare una vera emozione sensoriale.",
+          "Questa ricerca inizia con un viaggio attraverso l’Italia, patria di eccellenze enogastronomiche e sapori tradizionali, dal contatto con i luoghi e la terra attraverso la sua storia e le sue tradizioni.",
+          "Abbiamo conosciuto dei visionari, una piccola cerchia di artigiani che nel rispetto del territorio e della biodiversità, sono disposti ad osare al fine di dare luce a prodotti speciali provenienti da una terra ricca e sana.",
+          "Perché il cibo non è solo nutrimento ma è anche la conoscenza che fa vivere l’esperienza del più grande rito della cultura italiana."
+        ]
+      }
     }
   },
 
@@ -57,13 +66,22 @@
       "certification":"certification",
       "price": "price",
       "quantity": "quantity",
-      "philosophy":"philosophy",
       "terms": "terms & services",
       "register":"register",
       "login": "login",
       "logout": "logout",
       "support": "support",
-      "contact": "contact"
+      "contact": "contact",
+      "philosophy":{
+        "title":"philosophy",
+        "text":[
+          "Eros, our symbol, identifies the purest pleasure: the sexual one, the extreme one, and the one force capable of uniting different and sometimes conflicting elements. The symbol captivates without canceling the pleasures, but instead places an emphasis on them, so food becomes a delicacy that aims to achieve the ecstasy of pleasure.",
+          "In order to truly discover what this pleasure is, extensive research was performed along with a  careful selection of products. Once these products come in contact with the palate, they will trigger a real sensory emotion.",
+          "The Research began with a trip across the Italian country, the traditional home of gastronomic excellence, and came in contact with places and the earth spanning from its history to traditions.",
+          "We found visionaries, a small circle of artisans who value the territory, sustainability, and biodiversity of Italy, who were willing to take a risk and venture out to share products whose substances come from a rich and healthy earth, but also provide a strong sensory emotion.",
+          "Because eating is not only for the nutrition, but it’s also an experience to truly understand the greatest rite of the Italian culture: the food."
+        ]
+      }
     }
   }
 }

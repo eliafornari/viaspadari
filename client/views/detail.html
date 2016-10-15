@@ -37,10 +37,10 @@
       </p>
     </div>
 
-    <div class="detail-functions-quantity" ng-init="addValue=1">
+    <div class="detail-functions-quantity">
       <p class="detail-functions-quantity-p">
         <span class="detail-functions-quantity-p-text">{{Locale.data.quantity}}:</span>
-        <span class="detail-functions-quantity-p-value"><b ng-click="addValue =addValue-1">-</b><input type="integer" name="addValue" value="1" ng-model="addValue" min="1" max="{{Detail.stock_level}}"><b ng-click="addValue=addValue+ 1">+</b></span>
+        <span class="detail-functions-quantity-p-value"><b ng-click="minusOne()">-</b><input type="number" name="addValue" value="1" ng-model="addValue" min="1" max="{{Detail.stock_level}}"><b ng-click="plusOne()">+</b></span>
       </p>
     </div>
 
