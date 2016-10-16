@@ -7,7 +7,7 @@ let fs = require('fs');
 let express = require("express");
 let bodyParser = require('body-parser');
 let routes  = require('./routes');
-let geo  = require('./geo');
+// let geo  = require('./geo');
 let user  = require('./user/user.js');
 let path = require('path');
 var util = require('util');
@@ -17,10 +17,6 @@ let sessions = require('client-sessions');
 // let satelize = require('satelize');
 // var geoip = require('geoip-lite');
 let app = express();
-
-
-
-
 
 
 
@@ -222,9 +218,9 @@ app.get('/authenticate', function(req, res){
       user.login(req, res);
     });
 
-    app.post('/setLang/:code', function(req, res){
-      geo.set(req, res);
-    });
+    // app.post('/setLang/:code', function(req, res){
+    //   geo.set(req, res);
+    // });
 
     app.get('/user/:id/order', function(req, res){
       user.order(req, res);
