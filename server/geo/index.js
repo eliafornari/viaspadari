@@ -1,7 +1,5 @@
-// let moltin = require('moltin')({
-//   publicId: 'kmskXqQcPQCenV66qvxUXEFnrdxjHuKSMHFjHcLHcA',
-//   secretKey: '9thD7b3jm7pjiqj0cARkBpMXgeR0FdIPSx7qCjTyig'
-// });
+"use strict"
+
 let request = require('request');
 
 
