@@ -7,16 +7,20 @@ let fs = require('fs');
 let express = require("express");
 let bodyParser = require('body-parser');
 let routes  = require('./routes');
-// let geo  = require('./geo');
+let geo  = require('./geo');
 let user  = require('./user/user.js');
 let path = require('path');
-var util = require('util');
+let util = require('util');
 let ejs = require('ejs');
 let request = require('request');
 let sessions = require('client-sessions');
-// let satelize = require('satelize');
+let satelize = require('satelize');
 // var geoip = require('geoip-lite');
 let app = express();
+
+
+
+
 
 
 
@@ -43,32 +47,32 @@ app.set('views', __dirname + '/../client');
 app.use( express.static(__dirname + "/../client") );
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-// app.use(sessions({
-//   cookieName: 'mySession', // cookie name dictates the key name added to the request object
-//   secret: 'blargadeeblargblarg', // should be a large unguessable string
-//   duration: 3600 * 1000, // how long the session will stay valid in ms
-//   activeDuration: 3600 * 1000 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
-// }));
+app.use(sessions({
+  cookieName: 'mySession', // cookie name dictates the key name added to the request object
+  secret: 'blargadeeblargblarg', // should be a large unguessable string
+  duration: 3600 * 1000, // how long the session will stay valid in ms
+  activeDuration: 3600 * 1000 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+}));
 
-// app.use(function(req, res, next) {
-//
-//   if (req.mySession.access_token) {
-//     console.log(req.mySession);
-//     res.setHeader('X-Seen-You', 'true');
-//   } else {
-//     console.log(req.mySession);
-//     // setting a property will automatically cause a Set-Cookie response
-//     // to be sent
-//     res.setHeader('X-Seen-You', 'false');
-//   }
-//
-//   if(req.mySession.lang){
-//     moltin.Language.Set(req.mySession.lang);
-//   }else{
-//     moltin.Language.Set("US");
-//   }
-//    next();
-// });
+app.use(function(req, res, next) {
+
+  if (req.mySession.access_token) {
+    console.log(req.mySession);
+    res.setHeader('X-Seen-You', 'true');
+  } else {
+    console.log(req.mySession);
+    // setting a property will automatically cause a Set-Cookie response
+    // to be sent
+    res.setHeader('X-Seen-You', 'false');
+  }
+
+  if(req.mySession.lang){
+    moltin.Language.Set(req.mySession.lang);
+  }else{
+    moltin.Language.Set("US");
+  }
+   next();
+});
 
 
 
@@ -87,31 +91,45 @@ app.get('/authenticate', function(req, res){
   // var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
 
   // then satelize call
-  //
-  // // Get client IP address from request object ----------------------
-  //  function getClientAddress(req) {
-  //         return (req.headers['x-forwarded-for'] || '').split(',')[0]
-  //         || req.connection.remoteAddress;
-  // };
 
+  // Get client IP address from request object ----------------------
+   function getClientAddress(req) {
+          return (req.headers['x-forwarded-for'] || '').split(',')[0]
+          || req.connection.remoteAddress;
+  };
 
+console.log(getClientAddress(req));
 // ITA 217.29.167.157
-
 // US 50.1.152.117
-// satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
-//   console.log(payload);
-//   req.mySession.lang = payload.country_code;
-//
-// });
+satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
+  console.log(payload);
+  req.mySession.lang = payload.country_code;
+
+});
 
 
 
   moltin.Authenticate(function(data) {
 
-    data.lang = "IT";
+    data.lang = req.mySession.lang
     console.log("it runs");
     if(data){
+      if(req.mySession.access_token && (req.mySession.access_token==data.access_token)){
+        console.log("1 runs");
         res.status(200).json(data);
+
+      }else if(data.token){
+        console.log("2 runs");
+        console.log(data);
+        res.status(200).json(data);
+
+      }else{
+        console.log("3 runs");
+        req.mySession.access_token = data.access_token;
+        res.status(200).json(data);
+
+      }
+
     }else{
       res.status(500);
     }
@@ -121,6 +139,16 @@ app.get('/authenticate', function(req, res){
 
 
 
+
+
+
+
+
+    function getUserCountry(req, res){
+      var ip = req.ip;
+      var ip = "207.97.227.239";
+      var geo = geoip.lookup(ip);
+    }
 
 
     app.post('/addProduct', function(req, res){
@@ -218,9 +246,9 @@ app.get('/authenticate', function(req, res){
       user.login(req, res);
     });
 
-    // app.post('/setLang/:code', function(req, res){
-    //   geo.set(req, res);
-    // });
+    app.post('/setLang/:code', function(req, res){
+      geo.set(req, res);
+    });
 
     app.get('/user/:id/order', function(req, res){
       user.order(req, res);
@@ -287,6 +315,9 @@ app.get('/authenticate', function(req, res){
 
 
     function getCategories(req, res){
+
+      // moltin.Language.Set(req.mySession.lang);
+
 
       moltin.Category.Tree({}, function(tree) {
         res.status(200).json(tree);
@@ -368,6 +399,7 @@ app.get('/authenticate', function(req, res){
               }
             }
       moltin.Checkout.Payment('purchase', order.id, obj, function(payment, error, status) {
+
           console.log("payment successful");
           console.log(payment);
           res.status(200).json(payment);
@@ -464,37 +496,44 @@ app.get('/authenticate', function(req, res){
       }, function(error) {
           // Something went wrong...
       });
-    };
-
-
-
-
-
-//
-// app.get('/data', function(req, res){
-//   // Get content from file
-//  var countries = fs.readFileSync("data/countries.json");
-//  var locale = fs.readFileSync("data/locale.json");
-//
-//  var countries = JSON.parse(countries);
-//  var locale = JSON.parse(locale);
-//
-//
-//  var data= {};
-//  data.countries = countries;
-//  data.locale = locale;
-//
-//  res.json(data);
-// });
+    }
 
 
 
 
 
 
+app.get('/data', function(req, res){
+  // Get content from file
+ var countries = fs.readFileSync("data/countries.json");
+ var locale = fs.readFileSync("data/locale.json");
+
+ var countries = JSON.parse(countries);
+ var locale = JSON.parse(locale);
+
+
+ var data= {};
+ data.countries = countries;
+ data.locale = locale;
+
+ res.json(data);
+});
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+    app.get('/robots.txt', routes.robots);
 
     app.get('*', routes.index);
 
