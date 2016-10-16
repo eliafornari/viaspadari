@@ -21,10 +21,6 @@ let app = express();
 
 
 
-
-
-
-
 let moltin = require('moltin')({
   publicId: 'kmskXqQcPQCenV66qvxUXEFnrdxjHuKSMHFjHcLHcA',
   secretKey: '9thD7b3jm7pjiqj0cARkBpMXgeR0FdIPSx7qCjTyig'
@@ -534,14 +530,14 @@ app.get('/data', function(req, res){
 
 
 
-    app.get('/robots.txt', routes.robots);
+  app.get('/robots.txt', routes.robots);
 
-    app.get('*', routes.index);
+  app.get('*', routes.index);
 
-    app.listen(8081, () => console.log("listening on 8081"));
+  app.listen(80, () => console.log("listening on 8081"));
 
-    // https.createServer(options, app).listen(80);
-    // http.createServer(app).listen(9000);
+  // https.createServer(options, app).listen(80);
+  // http.createServer(app).listen(9000);
 
 
 
