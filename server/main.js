@@ -474,24 +474,22 @@ app.get('/authenticate', function(req, res){
 
 
 
-
-app.get('/data', function(req, res){
-  // Get content from file
- var countries = fs.readFileSync("data/countries.json");
- var locale = fs.readFileSync("data/locale.json");
-
- var countries = JSON.parse(countries);
- var locale = JSON.parse(locale);
-
-
- var data= {};
- data.countries = countries;
- data.locale = locale;
-
- res.json(data);
-});
-
-
+// 
+// app.get('/data', function(req, res){
+//   // Get content from file
+//  var countries = fs.readFileSync("data/countries.json");
+//  var locale = fs.readFileSync("data/locale.json");
+//
+//  var countries = JSON.parse(countries);
+//  var locale = JSON.parse(locale);
+//
+//
+//  var data= {};
+//  data.countries = countries;
+//  data.locale = locale;
+//
+//  res.json(data);
+// });
 
 
 
@@ -501,11 +499,6 @@ app.get('/data', function(req, res){
 
 
 
-
-
-
-
-    app.get('/robots.txt', routes.robots);
 
     app.get('*', routes.index);
 

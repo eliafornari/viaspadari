@@ -33,30 +33,7 @@ exports.login = function (req, res) {
 
 
 
-exports.create = function (req, res){
-
-  // var body = req.body;
-  // console.log(body);
-
-  // //create customer
-  // moltin.Customer.Create({
-  //     first_name:  body.first_name,
-  //     last_name:  body.last_name,
-  //     email: body.email,
-  //     password: body.password,
-  //     country: body.country
-  // }, function(customer) {
-  //   console.log("customer");
-  //     console.log(customer);
-  //     res.json(c);
-  // }, function(error, response, c) {
-  //   console.log(error);
-  //   console.log(response);
-  //   console.log(c);
-  //   res.status(c).json(response);
-  //     // Something went wrong...
-  // });
-
+exports.create = function(req, res){
 
 
   var body = req.body;
