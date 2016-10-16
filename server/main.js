@@ -251,10 +251,13 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
       geo.set(req, res);
     });
 
+    app.get('/user/:id/order', function(req, res){
+      user.order(req, res);
+    });
+
     // app.post('/locate', function(req, res){
     //   geo.locate(req, res);
     // });
-
 
 
 

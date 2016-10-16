@@ -1,7 +1,3 @@
-let moltin = require('moltin')({
-  publicId: 'kmskXqQcPQCenV66qvxUXEFnrdxjHuKSMHFjHcLHcA',
-  secretKey: '9thD7b3jm7pjiqj0cARkBpMXgeR0FdIPSx7qCjTyig'
-});
 
 let request = require('request');
 
@@ -91,4 +87,57 @@ exports.create = function (req, res){
           }
   });
 
-}
+};
+
+
+
+
+
+
+
+
+
+exports.order = function(req, res){
+
+  var id = req.params.id.toString();
+  console.log(req.params.id);
+
+
+
+  // moltin.Order.Find({"customer": id}, function(order) {
+  //   console.log(order);
+  //   res.status(200).json(order);
+  // }, function(error, response, c) {
+  //   console.log(error,c, response);
+  //   res.status(400).json(error);
+  //     // Something went wrong...
+  // });
+  //
+  // curl -X GET https://api.molt.in/v1/orders/search \
+  //   -H "Authorization: Bearer XXXX" \
+  //   -d "customer=1055961503028478872"
+
+  request({
+      url: 'https://api.molt.in/v1/orders/search?customer=1357820567859757087', //URL to hit
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer '+req.mySession.access_token
+      }
+      }, function(error, response, body){
+
+          if(error) {
+              console.log("PUT entry error");
+              console.log(error);
+              res.status(response.statusCode).json(body);
+          } else {
+              console.log("ok");
+              console.log(body);
+              res.status(response.statusCode).json(body);
+          }
+  });
+
+};
+
+// curl -X GET https://api.molt.in/v1/orders/search \
+//   -H "Authorization: Bearer 61f3e683ad89ef40fd481c153372f56bc42a28cf" \
+//   -d "customer=1357820567859757087"

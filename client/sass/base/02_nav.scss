@@ -28,13 +28,15 @@
 
 .nav-table{
   position: absolute;
-  top:100px;
+  top:150px;
   left:0;
   width:100%;
   height:600px;
   .nav-list{
     width:100%;
     height:auto;
+    position: absolute;
+    top:0;
     .nav-main{
       width:auto;
       height:auto;

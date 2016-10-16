@@ -75,6 +75,7 @@ $rootScope.loginUser = (data)=>{
       console.log(response);
       console.log("posted successfully");
       $rootScope.pageLoading = false;
+      $rootScope.getUserOrders($rootScope.User.data.id);
       $rootScope.setUserEmailInForm();
     }, function(response) {
       console.error("error in posting");
@@ -89,6 +90,22 @@ $rootScope.loginUser = (data)=>{
 
 $rootScope.logOut =()=>{
   $rootScope.User={"status":false};
+}
+
+
+$rootScope.getUserOrders = (id)=>{
+  console.log(id);
+  $http({
+    url: '/user/'+id+'/order',
+    method: 'GET',
+  }).then( function(response){
+      console.log(response);
+
+    }, function(response) {
+
+      console.log(response);
+
+    })
 }
 
 
