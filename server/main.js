@@ -288,9 +288,6 @@ app.get('/authenticate', function(req, res){
 
     function getCategories(req, res){
 
-      // moltin.Language.Set(req.mySession.lang);
-
-
       moltin.Category.Tree({}, function(tree) {
         res.status(200).json(tree);
       }, function(error) {
@@ -371,7 +368,6 @@ app.get('/authenticate', function(req, res){
               }
             }
       moltin.Checkout.Payment('purchase', order.id, obj, function(payment, error, status) {
-
           console.log("payment successful");
           console.log(payment);
           res.status(200).json(payment);
@@ -468,13 +464,13 @@ app.get('/authenticate', function(req, res){
       }, function(error) {
           // Something went wrong...
       });
-    }
+    };
 
 
 
 
 
-// 
+//
 // app.get('/data', function(req, res){
 //   // Get content from file
 //  var countries = fs.readFileSync("data/countries.json");
