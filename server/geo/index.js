@@ -57,4 +57,4 @@ exports.set = function(req, res){
   req.mySession.lang = code;
   res.status(200).json(code);
 
-}
+};

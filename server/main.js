@@ -15,7 +15,6 @@ let ejs = require('ejs');
 let request = require('request');
 let sessions = require('client-sessions');
 // let satelize = require('satelize');
-// var geoip = require('geoip-lite');
 let app = express();
 
 
@@ -98,7 +97,7 @@ app.get('/authenticate', function(req, res){
   //         || req.connection.remoteAddress;
   // };
 
-  console.log(getClientAddress(req));
+  // console.log(getClientAddress(req));
   // ITA 217.29.167.157
 
   // US 50.1.152.117
