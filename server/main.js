@@ -19,8 +19,6 @@ let app = express();
 
 
 
-
-
 let moltin = require('moltin')({
   publicId: 'kmskXqQcPQCenV66qvxUXEFnrdxjHuKSMHFjHcLHcA',
   secretKey: '9thD7b3jm7pjiqj0cARkBpMXgeR0FdIPSx7qCjTyig'
@@ -42,32 +40,32 @@ app.set('views', __dirname + '/../client');
 app.use( express.static(__dirname + "/../client") );
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-app.use(sessions({
-  cookieName: 'mySession', // cookie name dictates the key name added to the request object
-  secret: 'blargadeeblargblarg', // should be a large unguessable string
-  duration: 3600 * 1000, // how long the session will stay valid in ms
-  activeDuration: 3600 * 1000 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
-}));
+// app.use(sessions({
+//   cookieName: 'mySession', // cookie name dictates the key name added to the request object
+//   secret: 'blargadeeblargblarg', // should be a large unguessable string
+//   duration: 3600 * 1000, // how long the session will stay valid in ms
+//   activeDuration: 3600 * 1000 // if expiresIn < activeDuration, the session will be extended by activeDuration milliseconds
+// }));
 
-app.use(function(req, res, next) {
-
-  if (req.mySession.access_token) {
-    console.log(req.mySession);
-    res.setHeader('X-Seen-You', 'true');
-  } else {
-    console.log(req.mySession);
-    // setting a property will automatically cause a Set-Cookie response
-    // to be sent
-    res.setHeader('X-Seen-You', 'false');
-  }
-
-  if(req.mySession.lang){
-    moltin.Language.Set(req.mySession.lang);
-  }else{
-    moltin.Language.Set("US");
-  }
-   next();
-});
+// app.use(function(req, res, next) {
+//
+//   if (req.mySession.access_token) {
+//     console.log(req.mySession);
+//     res.setHeader('X-Seen-You', 'true');
+//   } else {
+//     console.log(req.mySession);
+//     // setting a property will automatically cause a Set-Cookie response
+//     // to be sent
+//     res.setHeader('X-Seen-You', 'false');
+//   }
+//
+//   if(req.mySession.lang){
+//     moltin.Language.Set(req.mySession.lang);
+//   }else{
+//     moltin.Language.Set("US");
+//   }
+//    next();
+// });
 
 
 
@@ -534,7 +532,7 @@ app.get('/data', function(req, res){
 
   app.get('*', routes.index);
 
-  app.listen(80, () => console.log("listening on 8081"));
+  app.listen(8081, () => console.log("listening on 8081"));
 
   // https.createServer(options, app).listen(80);
   // http.createServer(app).listen(9000);
