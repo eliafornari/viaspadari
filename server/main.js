@@ -131,7 +131,7 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
       }
 
     }else{
-      res.status(500);
+      res.status(200).json(data);
     }
 
   });
@@ -203,8 +203,7 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
       moltin.Cart.Remove(id, function(items) {
           // Everything is awesome...
           console.log("all good");
-          res.status(200);
-          res.json(items);
+          res.status(200).json(items);
       }, function(error, response, c) {
           // Something went wrong...
           console.log(response);
@@ -369,12 +368,12 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
           }
         }, function(order) {
 
-          res.json(order);
+          res.status(200).json(order);
             // Handle the order
 
         }, function(error, response, c) {
           console.log(response);
-          res.json(error);
+          res.status(c).json(error);
           // Something went wrong...
         });
 
