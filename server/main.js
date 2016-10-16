@@ -14,7 +14,7 @@ var util = require('util');
 let ejs = require('ejs');
 let request = require('request');
 let sessions = require('client-sessions');
-let satelize = require('satelize');
+// let satelize = require('satelize');
 // var geoip = require('geoip-lite');
 let app = express();
 
@@ -93,20 +93,22 @@ app.get('/authenticate', function(req, res){
   // then satelize call
 
   // Get client IP address from request object ----------------------
-   function getClientAddress(req) {
-          return (req.headers['x-forwarded-for'] || '').split(',')[0]
-          || req.connection.remoteAddress;
-  };
+  //  function getClientAddress(req) {
+  //         return (req.headers['x-forwarded-for'] || '').split(',')[0]
+  //         || req.connection.remoteAddress;
+  // };
 
-console.log(getClientAddress(req));
-// ITA 217.29.167.157
+  console.log(getClientAddress(req));
+  // ITA 217.29.167.157
 
-// US 50.1.152.117
-satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
-  console.log(payload);
-  req.mySession.lang = payload.country_code;
+  // US 50.1.152.117
+  // satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
+  //   console.log(payload);
+  //   req.mySession.lang = payload.country_code;
+  //
+  // });
 
-});
+  req.mySession.lang = "IT";
 
 
 
@@ -128,7 +130,6 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
         console.log("3 runs");
         req.mySession.access_token = data.access_token;
         res.status(200).json(data);
-
       }
 
     }else{
