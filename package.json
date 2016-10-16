@@ -1,12 +1,17 @@
 {
-  "name": "NodeApp",
-  "version": "0.1.1",
-  "description": "A Node.js App using express",
+  "name": "VIASPADARI",
+  "version": "0.0.1",
+  "private": true,
+  "description": "VIASPADARI",
   "main": "server/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "gulp watch --gulpfile client/gulpfile.babel.js",
-    "start": "server/main.js"
+    "start": "node server/main.js"
+  },
+    "repository": {
+    "type": "git",
+    "url": "git@github.com:eliafornari/viaspadari.git"
   },
   "dependencies": {
     "angular": "^1.5.7",
