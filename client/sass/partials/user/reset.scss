@@ -1,4 +1,4 @@
-.login{
+.reset{
   width: 100%;
   height:100vh;
   position: relative;
@@ -6,8 +6,7 @@
   position: absolute;
 }
 
-.login-form{
-  position: relative;
+.reset-form{
   width:80%;
   display: block;
   margin: auto;
@@ -16,7 +15,7 @@
 
 
 
-.login-error{
+.reset-error{
   width: 80%;
   display: block;
   margin: auto;
@@ -24,13 +23,13 @@
 }
 
 
-.login-resetpassword{
-  width:auto;
+.form-error-password-user{
   position: relative;
-  right:0;
-  display: block;
+  right:auto;
+  top:auto;
   margin-top: $margin-top-li;
-  @include p2();
-  text-align: right;
-  text-transform: capitalize;
+  margin-bottom: $margin-top-li;
+  p{
+
+  }
 }

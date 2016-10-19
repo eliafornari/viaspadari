@@ -15,10 +15,10 @@
                <div class="nav-main-category">
                  <a class="nav-main-category-a" href="/{{p.slug}}" >{{p.title}} </a>
                  <!-- ng-class="{'active': isLocation(p.slug)}" -->
-                 <span class="nav-main-category-span" ng-init="categoryOpen=true"ng-click="categoryOpen = ! categoryOpen">{{ !categoryOpen ? '+' : '-' }}</span>
+                 <span class="nav-main-category-span" ng-click="thisCategory(p.slug)" ng-show="p.children">{{ !categoryOpen ? '+' : '-' }}</span>
                </div>
 
-               <div class="nav-sub" ng-class="{'closeCategory': !categoryOpen}">
+               <div class="nav-sub" ng-class="{'closeCategory': categoryOpen!=p.slug}">
                  <a class="nav-sub-a" href="/{{c.slug}}"  ng-repeat="c in p.children" ng-if="c.status.data.key==1">{{c.title}}</a>
                </div>
                <!-- ng-class="{'active': isLocation(c.slug)}" -->

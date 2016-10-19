@@ -11,6 +11,8 @@ $rootScope.User={"status":false};
 $rootScope.register;
 $scope.registerError;
 $rootScope.loginError;
+$rootScope.editError;
+$rootScope.userEdit = false;
 
 $rootScope.setUserEmailInForm = ()=>{
   $rootScope.checkout.customer.email = $rootScope.User.data.email;
@@ -100,6 +102,7 @@ $rootScope.getUserOrders = (id)=>{
     method: 'GET',
   }).then( function(response){
       console.log(response);
+      $rootScope.User.order = response.data;
 
     }, function(response) {
 
@@ -111,4 +114,130 @@ $rootScope.getUserOrders = (id)=>{
 
 
 
+
+//....EDIT USER
+
+$rootScope.editUser=(value)=>{
+  console.log(value);
+  $rootScope.userEdit = value;
+  console.log($rootScope.userEdit);
+}
+
+$rootScope.saveUser=(data)=>{
+  $rootScope.pageLoading = true;
+
+  console.log(data);
+
+  $http({
+    url: '/editUser',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    transformRequest: transformRequestAsFormPost,
+    data: data
+  }).then( function(response){
+
+    $rootScope.User.data=response.data.result;
+    $rootScope.User.status=true;
+    console.log(response);
+    console.log("posted successfully");
+    $rootScope.pageLoading = false;
+    $rootScope.setUserEmailInForm();
+    $rootScope.userEdit = false;
+    if(!$rootScope.showCart){
+      $location.path('/account');
+    }
+
+    }, function(response) {
+        console.error("error in posting");
+        console.log(response);
+        $rootScope.userEdit = true;
+        $scope.editError = response.data.result;
+        $rootScope.User.status=false;
+        $rootScope.pageLoading = false;
+    })
+
+};
+
+
+console.log($routeParams.token);
+
+
+$rootScope.resetPassword = (data)=>{
+
+  console.log(data);
+
+  $http({
+    url: '/user/resetPassword',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    transformRequest: transformRequestAsFormPost,
+    data: data
+  }).then( function(response){
+      console.log(response);
+
+    }, function(response) {
+        console.error("error in posting");
+        console.log(response);
+
+        $scope.resetError = response.data.result;
+
+    })
+};
+
+
+$rootScope.newpasswordSave = (data)=>{
+
+  console.log(data);
+
+  $http({
+    url: '/user/newPassword',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    transformRequest: transformRequestAsFormPost,
+    data: data
+  }).then( function(response){
+      console.log(response);
+
+      $scope.outcome = response.data;
+
+    }, function(response) {
+        console.error("error in posting");
+        console.log(response);
+
+        $scope.newPasswordError = response.data.result;
+
+    })
+};
+
+
+
+
+
 });//controller
+
+
+
+User.directive("compareTo", function() {
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=compareTo"
+        },
+        link: function(scope, element, attributes, ngModel) {
+
+            ngModel.$validators.compareTo = function(modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function() {
+                ngModel.$validate();
+            });
+        }
+    };
+});

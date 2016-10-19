@@ -478,7 +478,7 @@ main {
 /*........................A.................................*/
 a {
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-family: "gillsans_light";
   letter-spacing: 2px;
@@ -545,7 +545,7 @@ h2 {
   color: #FFFFFF; }
 
 h3 {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-family: "gillsans_light";
   letter-spacing: 2px;
@@ -563,7 +563,7 @@ p, span {
   color: #d3d3d3; }
 
 button {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-family: "gillsans_light";
   letter-spacing: 2px;
@@ -1282,7 +1282,7 @@ input::-webkit-inner-spin-button {
       margin-left: 40px; }
 
 .form-title {
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-family: "gillsans_light";
   letter-spacing: 2px;
@@ -1302,7 +1302,7 @@ input::-webkit-inner-spin-button {
 
 .checkout-button {
   width: 400px;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   font-family: "gillsans_light";
   letter-spacing: 2px;
@@ -1391,7 +1391,7 @@ input::-webkit-inner-spin-button {
   width: auto; }
   .cart-back h3 {
     height: 100%;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 20px;
     font-family: "gillsans_light";
     letter-spacing: 2px;
@@ -1839,6 +1839,7 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
   position: absolute; }
 
 .login-form {
+  position: relative;
   width: 80%;
   display: block;
   margin: auto;
@@ -1849,6 +1850,172 @@ input.ng-dirty.ng-invalid, select.ng-dirty.ng-invalid {
   display: block;
   margin: auto;
   margin-top: 25px; }
+
+.login-resetpassword {
+  width: auto;
+  position: relative;
+  right: 0;
+  display: block;
+  margin-top: 25px;
+  font-size: 10px;
+  line-height: 15px;
+  font-family: "gillsans_light";
+  color: #515151;
+  letter-spacing: 2px;
+  text-align: right;
+  text-transform: capitalize; }
+
+.account {
+  width: 100%;
+  height: 100vh; }
+  .account .account-container {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    overflow-y: scroll;
+    position: relative; }
+
+.account-nav {
+  width: 270px;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border-left: 2px solid #0a0a0a;
+  background-color: #000000;
+  z-index: 13; }
+  .account-nav .account-nav-a {
+    display: block;
+    font-size: 13px;
+    line-height: 20px;
+    font-family: "gillsans_light";
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    height: 70px;
+    line-height: 70px;
+    border-top: 2px solid #0a0a0a;
+    background-color: #000000;
+    background-color: #000000;
+    transition: background-color 0.4s ease;
+    -webkit-transition: background-color 0.4s ease;
+    -moz-transition: background-color 0.4s ease;
+    -ms-transition: background-color 0.4s ease;
+    -o-transition: background-color 0.4s ease;
+    text-align: center;
+    vertical-align: center; }
+    .account-nav .account-nav-a:hover {
+      background-color: #0a0a0a;
+      /*  @if $media == large-desktop {
+          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+        }*/
+      /*  @if $media == large-desktop {
+          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+        }*/
+      /*  @if $media == large-desktop {
+          @media only screen and (min-width: $break-large-desktop + 1) and (max-width: $break-infinite) { @content; }
+        }*/ }
+      @media only screen and (min-width: 0px) and (max-device-width: 767px) {
+        .account-nav .account-nav-a:hover {
+          background-color: #000000 !important; } }
+      @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: portrait) {
+        .account-nav .account-nav-a:hover {
+          background-color: #000000 !important; } }
+      @media only screen and (min-device-width: 768px) and (max-device-width: 1022px) and (orientation: landscape) {
+        .account-nav .account-nav-a:hover {
+          background-color: #000000 !important; } }
+    .account-nav .account-nav-a:nth-child(1) {
+      margin-top: 200px; }
+    .account-nav .account-nav-a:nth-last-child(1) {
+      border-bottom: 2px solid #0a0a0a; }
+
+.account-nav-a.selected-section {
+  background-color: #0a0a0a; }
+
+.account-content {
+  position: relative;
+  width: calc(100% - 270px); }
+  .account-content .account-info {
+    width: 50%;
+    display: block;
+    margin: auto;
+    margin-top: 200px; }
+    .account-content .account-info h3 {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 25px; }
+    .account-content .account-info p {
+      width: 100%;
+      text-align: left;
+      position: relative; }
+    .account-content .account-info a {
+      margin-top: 25px;
+      font-size: 11px;
+      line-height: 20px;
+      font-family: "gillsans_light";
+      letter-spacing: 2px; }
+    .account-content .account-info .account-info-edit {
+      width: 100%;
+      display: block;
+      margin: auto; }
+  .account-content .account-order {
+    width: 50%;
+    display: block;
+    margin: auto;
+    margin-top: 200px; }
+    .account-content .account-order .account-order-ul {
+      margin-bottom: 200px; }
+      .account-content .account-order .account-order-ul .account-order-li {
+        margin-top: 25px; }
+        .account-content .account-order .account-order-ul .account-order-li p {
+          width: 100%;
+          text-align: left;
+          position: relative; }
+          .account-content .account-order .account-order-ul .account-order-li p span {
+            position: absolute;
+            right: 0;
+            text-align: right; }
+
+.account-title {
+  font-size: 13px;
+  line-height: 20px;
+  font-family: "gillsans_light";
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-transform: uppercase; }
+
+.account-sub-title {
+  font-size: 11px;
+  line-height: 20px;
+  font-family: "gillsans_light";
+  letter-spacing: 2px;
+  text-transform: uppercase; }
+
+.reset {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  display: block;
+  position: absolute; }
+
+.reset-form {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 200px; }
+
+.reset-error {
+  width: 80%;
+  display: block;
+  margin: auto;
+  margin-top: 25px; }
+
+.form-error-password-user {
+  position: relative;
+  right: auto;
+  top: auto;
+  margin-top: 25px;
+  margin-bottom: 25px; }
 
 .philosophy {
   width: 100%;

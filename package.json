@@ -28,11 +28,13 @@
     "method-override": "~2.1.2",
     "moltin": "^1.0.3",
     "morgan": "~1.2.2",
+    "nodemailer": "^2.6.4",
     "path": "^0.12.7",
     "prerender-node": "^2.1.0",
     "prismic.io": "^2.1.3",
     "request": "^2.75.0",
-    "satelize": "^0.2.0"
+    "satelize": "^0.2.0",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.2.1",

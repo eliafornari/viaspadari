@@ -24,14 +24,7 @@ angular.module('myApp', [
 
 $rootScope.pageLoading = true;
 
-
-
-
-  $rootScope.Coordinates;
-
-
-
-
+$rootScope.Coordinates;
 
 
 
@@ -126,6 +119,14 @@ $sceProvider.enabled(false);
       templateUrl: 'views/user/login.html'
     })
 
+    .when('/user/:useremail/reset/', {
+      templateUrl: 'views/user/new-password.html'
+    })
+
+    .when('/user/reset', {
+      templateUrl: 'views/user/reset-password.html'
+    })
+
     .when('/account', {
       templateUrl: 'views/user/account.html'
     })
@@ -197,6 +198,8 @@ $rootScope.pageClass = "page-home";
 $rootScope.Home;
 $rootScope.User={"status":false};
 $rootScope.selectedLang={};
+$rootScope.passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");;
+
 
 $rootScope.payment = {
                         id: '',

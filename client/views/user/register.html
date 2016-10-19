@@ -38,10 +38,13 @@
       <div class="form-entry">
         <input type="password" name="password" value="password" ng-model="register.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
           <span class="form-error" ng-show="registerForm.password.$error.required && registerForm.password.$touched">required</span>
+
         </input>
       </div>
 
-
+      <div class="form-error form-error-password form-error-password-user" ng-show="newpasswordForm.password.$error.pattern && newpasswordForm.password.$touched && !newpasswordForm.password.$error.min">
+        <p>Password be at least 6 characters and contain 1 Uppercase letter 1 lowercase letter and a number</p>
+      </div>
 
       <button class="register-button button" type="submit" ng-class="{'invalid': registerForm.$invalid}" ng-disabled="registerForm.$invalid">register</button>
 

@@ -1,17 +1,100 @@
 <div class="account">
 
 
-  <div class="account-user">
+  <div class="account-nav">
+    <a class="account-nav-a" ng-class="{'selected-section': userSection=='info'}" ng-click="userSection='info'">info</a>
+    <a class="account-nav-a" ng-class="{'selected-section': userSection=='order'}" ng-click="userSection='order'">orders</a>
+  </div>
 
-    <h3>{{User.data.first_name}} {{User.last_name}}</h3>
+  <div class="account-container" ng-init="userSection='info'">
 
-    <p>{{User.data.email}}</p>
 
-    <p>{{User.data.country}}</p>
 
-    <p>
-      {{User.data}}
-    </p>
+
+<div class="account-content">
+
+
+
+  <div class="account-info" ng-if="userSection=='info'">
+    <div class="account-info-data" ng-if="userEdit == false">
+      <h3>{{User.data.first_name}} {{User.data.last_name}}</h3>
+      <p>{{User.data.email}}</p>
+      <p>{{User.data.country}}</p>
+      <div class="button" ng-click="editUser(true)">edit</div>
+    </div>
+
+
+    <div class="account-info-edit" ng-if="userEdit == true">
+
+      <h3>edit</h3>
+
+      <form class="edituser-form" name="edituserForm" novalidate ng-submit="saveUser(User.data)" >
+
+
+          <div class="form-entry">
+            <input type="text" name="name" ng-model="User.data.first_name" required placeholder="name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'name'">
+              <span class="form-error" ng-show="edituserForm.name.$error.required && edituserForm.name.$touched">required</span>
+            </input>
+          </div>
+
+          <div class="form-entry">
+            <input type="text" name="lastname" ng-model="User.data.last_name" required placeholder="lastname" onfocus="this.placeholder = ''" onblur="this.placeholder = 'lastname'">
+              <span class="form-error" ng-show="edituserForm.lastname.$error.required && edituserForm.lastname.$touched">required</span>
+            </input>
+          </div>
+
+
+          <div class="form-entry">
+
+              <select name="country" ng-model="User.data.country" required>
+                <option value="" disabled selected>country</option>
+                <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}</option>
+                <span class="form-error" ng-show="edituserForm.country.$error.required && edituserForm.country.$touched">required</span>
+              </select>
+              <!-- <input type="text" name="country_shipment" value="country" ng-model="checkout.shipment.country" required placeholder="country" onfocus="this.placeholder = ''" onblur="this.placeholder = 'country'"> -->
+          </div>
+
+          <div class="form-entry">
+            <input type="email" name="email" ng-model="User.data.email" required placeholder="email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'email'">
+              <span class="form-error" ng-show="edituserForm.email.$error.required && edituserForm.email.$touched">required</span>
+              <span class="form-error" ng-show="edituserForm.email.$error.email && edituserForm.email.$touched">invalid email</span>
+            </input>
+          </div>
+
+          <div class="form-entry">
+            <input type="text" name="password" ng-model="User.data.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
+              <span class="form-error" ng-show="edituserForm.password.$error.required && edituserForm.password.$touched">required</span>
+            </input>
+          </div>
+
+
+
+          <button class="edituser-button button" type="submit" ng-class="{'invalid': edituserForm.$invalid}" ng-disabled="edituserForm.$invalid">save</button>
+
+{{User.data.first_name}}
+
+      </form>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="account-order" ng-if="userSection=='order'">
+    <ul class="account-order-ul">
+      <li class="account-order-li" ng-repeat="u in User.order.result">
+        <p>date: <span>{{u.created_at}}</p>
+        <p>total <span>{{u.totals.formatted.total}}</span></p>
+
+      </li>
+
+    </ul>
+  </div>
+</div>
+
+
+
 
   </div>
 

@@ -4,6 +4,15 @@ angular.module('myApp')
 .controller('navCtrl', function($scope, $location, $rootScope, $routeParams, $timeout,	$http){
 
   $rootScope.isNavOpen = false;
+  $scope.categoryOpen = 'food';
+
+  $scope.thisCategory =(cat)=>{
+    if($scope.categoryOpen == cat){
+      $scope.categoryOpen ='';
+    }else{
+      $scope.categoryOpen = cat;
+    }
+  }
 
   $scope.openNav = function(){
     $rootScope.isNavOpen = !$rootScope.isNavOpen;

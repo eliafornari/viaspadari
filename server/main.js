@@ -15,9 +15,7 @@ let ejs = require('ejs');
 let request = require('request');
 let sessions = require('client-sessions');
 let satelize = require('satelize');
-// var geoip = require('geoip-lite');
 let app = express();
-
 
 
 
@@ -111,6 +109,19 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
 
   moltin.Authenticate(function(data) {
 
+
+    moltin.Customer.Find({id: '1357820567859757087'}, function(customer) {
+      console.log("customer");
+        console.log(customer);
+    }, function(error) {
+      console.log(error);
+        // Something went wrong...
+    });
+
+
+
+
+
     data.lang = req.mySession.lang
     console.log("it runs");
     if(data){
@@ -136,7 +147,6 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
 
   });
 });
-
 
 
 
@@ -241,8 +251,20 @@ satelize.satelize({ip:"50.1.152.117"}, function(err, payload) {
       user.create(req, res);
     });
 
+    app.post('/editUser', function(req, res){
+      user.edit(req, res);
+    });
+
     app.post('/loginUser', function(req, res){
       user.login(req, res);
+    });
+
+    app.post('/user/resetPassword', function(req, res){
+      user.resetPassword(req, res);
+    });
+
+    app.post('/user/newPassword', function(req, res){
+      user.newPassword(req, res);
     });
 
     app.post('/setLang/:code', function(req, res){

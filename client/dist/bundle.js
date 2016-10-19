@@ -91,6 +91,10 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     templateUrl: 'views/user/register.html'
   }).when('/login', {
     templateUrl: 'views/user/login.html'
+  }).when('/user/:useremail/reset/', {
+    templateUrl: 'views/user/new-password.html'
+  }).when('/user/reset', {
+    templateUrl: 'views/user/reset-password.html'
   }).when('/account', {
     templateUrl: 'views/user/account.html'
   }).when('/about', {
@@ -130,6 +134,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $rootScope.Home;
   $rootScope.User = { "status": false };
   $rootScope.selectedLang = {};
+  $rootScope.passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");;
 
   $rootScope.payment = {
     id: '',
@@ -620,6 +625,15 @@ Home.controller('homeCtrl', function ($scope, $location, $rootScope, $routeParam
 angular.module('myApp').controller('navCtrl', function ($scope, $location, $rootScope, $routeParams, $timeout, $http) {
 
   $rootScope.isNavOpen = false;
+  $scope.categoryOpen = 'food';
+
+  $scope.thisCategory = function (cat) {
+    if ($scope.categoryOpen == cat) {
+      $scope.categoryOpen = '';
+    } else {
+      $scope.categoryOpen = cat;
+    }
+  };
 
   $scope.openNav = function () {
     $rootScope.isNavOpen = !$rootScope.isNavOpen;
@@ -889,7 +903,6 @@ Cart.controller('cartCtrl', function ($scope, $location, $rootScope, $timeout, $
 
   $scope.phoneRegex = '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$';
   $scope.postcodeRegex = '^\\d{5}-\\d{4}|\\d{5}|[A-Z]\\d[A-Z] \\d[A-Z]\\d$';
-  $scope.passwordRegex = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$';
 
   $rootScope.updateCart = function () {
     $http({
@@ -1317,6 +1330,8 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
   $rootScope.register;
   $scope.registerError;
   $rootScope.loginError;
+  $rootScope.editError;
+  $rootScope.userEdit = false;
 
   $rootScope.setUserEmailInForm = function () {
     $rootScope.checkout.customer.email = $rootScope.User.data.email;
@@ -1399,12 +1414,124 @@ User.controller('userCtrl', function ($scope, $location, $rootScope, $routeParam
       method: 'GET'
     }).then(function (response) {
       console.log(response);
+      $rootScope.User.order = response.data;
     }, function (response) {
 
       console.log(response);
     });
   };
+
+  //....EDIT USER
+
+  $rootScope.editUser = function (value) {
+    console.log(value);
+    $rootScope.userEdit = value;
+    console.log($rootScope.userEdit);
+  };
+
+  $rootScope.saveUser = function (data) {
+    $rootScope.pageLoading = true;
+
+    console.log(data);
+
+    $http({
+      url: '/editUser',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: transformRequestAsFormPost,
+      data: data
+    }).then(function (response) {
+
+      $rootScope.User.data = response.data.result;
+      $rootScope.User.status = true;
+      console.log(response);
+      console.log("posted successfully");
+      $rootScope.pageLoading = false;
+      $rootScope.setUserEmailInForm();
+      $rootScope.userEdit = false;
+      if (!$rootScope.showCart) {
+        $location.path('/account');
+      }
+    }, function (response) {
+      console.error("error in posting");
+      console.log(response);
+      $rootScope.userEdit = true;
+      $scope.editError = response.data.result;
+      $rootScope.User.status = false;
+      $rootScope.pageLoading = false;
+    });
+  };
+
+  console.log($routeParams.token);
+
+  $rootScope.resetPassword = function (data) {
+
+    console.log(data);
+
+    $http({
+      url: '/user/resetPassword',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: transformRequestAsFormPost,
+      data: data
+    }).then(function (response) {
+      console.log(response);
+    }, function (response) {
+      console.error("error in posting");
+      console.log(response);
+
+      $scope.resetError = response.data.result;
+    });
+  };
+
+  $rootScope.newpasswordSave = function (data) {
+
+    console.log(data);
+
+    $http({
+      url: '/user/newPassword',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: transformRequestAsFormPost,
+      data: data
+    }).then(function (response) {
+      console.log(response);
+
+      $scope.outcome = response.data;
+    }, function (response) {
+      console.error("error in posting");
+      console.log(response);
+
+      $scope.newPasswordError = response.data.result;
+    });
+  };
 }); //controller
+
+
+User.directive("compareTo", function () {
+  return {
+    require: "ngModel",
+    scope: {
+      otherModelValue: "=compareTo"
+    },
+    link: function link(scope, element, attributes, ngModel) {
+
+      ngModel.$validators.compareTo = function (modelValue) {
+        return modelValue == scope.otherModelValue;
+      };
+
+      scope.$watch("otherModelValue", function () {
+        ngModel.$validate();
+      });
+    }
+  };
+});
 
 },{}],9:[function(require,module,exports){
 'use strict';
