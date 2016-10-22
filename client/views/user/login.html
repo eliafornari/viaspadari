@@ -1,6 +1,7 @@
 <div class="login" ng-controller="userCtrl">
 
 
+  <h3 class="form-title">login</h3>
 
   <form class="login-form" name="loginForm" novalidate ng-submit="loginUser(login)" >
 
@@ -32,7 +33,7 @@
 
 
   <div class="login-error">
-    <p ng-repeat="e in loginError track by $index">{{e}}</p>
+    <p ng-repeat="e in loginError.errors track by $index">{{e}}</p>
   </div>
 
 

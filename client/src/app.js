@@ -71,22 +71,65 @@ $rootScope.Coordinates;
 
   .filter('productFilter', function ($sce, $routeParams, $rootScope) {
       return function(data) {
-        var category = $routeParams.category;
-        var filtered = [];
-        // console.log('category: '+category);
-        for (var i in $rootScope.Product){
-          for (var c in $rootScope.Product[i].category.data){
-            if($rootScope.Product[i].category.data[c].slug == category){
-              filtered = filtered.concat($rootScope.Product[i]);
-              // console.log(filtered);
-            }
 
-            if($rootScope.Product[i].category.data[c].parent != null){
-              $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
+          var filtered = [];
+
+
+
+
+
+
+        //search input
+        if($rootScope.Search){
+
+
+
+          //category
+          var search = $routeParams.Search;
+
+          // console.log('category: '+category);
+          for (var i in $rootScope.Product){
+            for (var c in $rootScope.Product[i].category.data){
+              if($rootScope.Product[i].category.data[c].slug  == search){
+                filtered = filtered.concat($rootScope.Product[i]);
+                // console.log(filtered);
+              }else if($rootScope.Product[i].title  == search){
+                filtered = filtered.concat($rootScope.Product[i]);
+              }
+
+              if($rootScope.Product[i].category.data[c].parent != null){
+                $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
+              }
+
+            }
+          }
+
+
+
+
+
+        }else{
+          //category
+          var category = $routeParams.category;
+          // console.log('category: '+category);
+          for (var i in $rootScope.Product){
+            for (var c in $rootScope.Product[i].category.data){
+              if($rootScope.Product[i].category.data[c].slug  == category){
+                filtered = filtered.concat($rootScope.Product[i]);
+                // console.log(filtered);
+              }
+              if($rootScope.Product[i].category.data[c].parent != null){
+                $rootScope.Product[i].category.child =$rootScope.Product[i].category.data[c].slug
+              }
             }
           }
 
         }
+
+
+
+
+
         return filtered;
       };
     })
@@ -196,6 +239,7 @@ $rootScope.location = $location.path();
 $rootScope.firstLoading = true;
 $rootScope.pageClass = "page-home";
 $rootScope.Home;
+$rootScope.Search;
 $rootScope.User={"status":false};
 $rootScope.selectedLang={};
 $rootScope.passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");;
@@ -243,6 +287,14 @@ customer:
 
 
 
+ console.log($rootScope.Search);
+
+
+  $rootScope.$watch('Search', function(newValue, oldValue) {
+    console.log("search");
+     console.log('search', $rootScope.Search);
+     console.log(newValue);
+  });
 
 
  // getting user location
@@ -261,8 +313,6 @@ customer:
  //    // Show a map centered at (position.coords.latitude, position.coords.longitude).
  //    });
  // }
-
-
 
 
 

@@ -142,10 +142,11 @@
 .form-title{
   @include h3();
   position: absolute;
-  width:100px;
+  width: 200px;
   top:$margin-sides;
   left:50%;
-  margin-left: -50px;
+  margin-left: -100px;
+  text-align: center;
 }
 
 .form-sub-title{

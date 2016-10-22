@@ -137,11 +137,12 @@ $rootScope.saveUser=(data)=>{
     transformRequest: transformRequestAsFormPost,
     data: data
   }).then( function(response){
-
-    $rootScope.User.data=response.data.result;
-    $rootScope.User.status=true;
     console.log(response);
     console.log("posted successfully");
+    $rootScope.User.data=response.data.result;
+    $rootScope.User.data.country = $rootScope.User.data.country.data.code;
+    $rootScope.User.status=true;
+  console.log('user',$rootScope.User);
     $rootScope.pageLoading = false;
     $rootScope.setUserEmailInForm();
     $rootScope.userEdit = false;

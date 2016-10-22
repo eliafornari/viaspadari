@@ -1,9 +1,11 @@
 <div class="product" ng-controller="productCtrl">
 
 
+
+
       <div class="product-content" ng-class="{'openDetail': isDetailOpen}" >
         <ul class="product-ul">
-          <li class="product-li" ng-repeat="p in Product | productFilter | orderBy: '-date' track by p.date" ng-init="productHovered=false" ng-mouseenter="productHovered=true" ng-mouseleave="productHovered=false"  ng-if="p.status.data.key==1">
+          <li class="product-li" ng-repeat="p in productFiltered = (Product | filter: productFilter) | orderBy: '-date' track by p.date" ng-init="productHovered=false" ng-mouseenter="productHovered=true" ng-mouseleave="productHovered=false"  ng-if="p.status.data.key==1">
             <a href="/{{p.category.child}}/{{p.slug}}">
 
             <table>

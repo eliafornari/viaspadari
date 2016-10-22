@@ -24,8 +24,6 @@
                <!-- ng-class="{'active': isLocation(c.slug)}" -->
              </div>
 
-
-
            </div>
          </td>
        </tr>
@@ -36,6 +34,11 @@
 
        <div class="nav-bottom-one">
          <ul class="nav-bottom-left">
+           <li class="nav-bottom-left-li nav-bottom-left-search form-entry">
+              <input type="text" name="search" ng-model="productFilter" ng-init="showClear=true" placeholder="search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'search'" >
+                <span class="nav-bottom-left-search-clear" ng-click="productFilter=''" ng-show="productFilter">clear</span>
+              </input>
+           </li>
            <li class="nav-bottom-left-li nav-bottom-left-philosophy">
              <a href="/philosophy">{{Locale.data.philosophy.title}}</a>
            </li>

@@ -6,29 +6,31 @@
 /*.....................TEXT MARK STYLES......................*/
 
 ::-moz-selection {
-      color: $white;
+      background-color: $light_grey;
+      color:$white;
       text-shadow: none;
 }
 
 
 ::selection {
-    color: $white;
-    text-shadow: none;
+  background-color: $light_grey;
+  color:$white;
+  text-shadow: none;
 }
 
 
 
 span::-moz-selection {
-    background: transparent;
-    color: $white;
-    text-shadow: none;
+  background-color: $light_grey;
+  color:$white;
+  text-shadow: none;
 }
 
 
 span::selection {
-    background: transparent;
-    color: $white;
-    text-shadow: none;
+  background-color: $light_grey;
+  color:$white;
+  text-shadow: none;
 }
 
 a::-moz-selection {

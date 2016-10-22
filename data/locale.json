@@ -29,6 +29,7 @@
       "logout": "logout",
       "support": "supporto",
       "contact": "contatti",
+      "search":"ricerca",
       "philosophy":{
         "title":"philosophy",
         "text":[
@@ -72,6 +73,7 @@
       "logout": "logout",
       "support": "support",
       "contact": "contact",
+      "search":"search",
       "philosophy":{
         "title":"philosophy",
         "text":[

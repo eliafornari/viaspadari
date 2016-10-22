@@ -1,6 +1,6 @@
 <div class="account">
 
-
+<h3 class="form-title">account</h3>
   <div class="account-nav">
     <a class="account-nav-a" ng-class="{'selected-section': userSection=='info'}" ng-click="userSection='info'">info</a>
     <a class="account-nav-a" ng-class="{'selected-section': userSection=='order'}" ng-click="userSection='order'">orders</a>
@@ -17,10 +17,10 @@
 
   <div class="account-info" ng-if="userSection=='info'">
     <div class="account-info-data" ng-if="userEdit == false">
-      <h3>{{User.data.first_name}} {{User.data.last_name}}</h3>
+      <h3>{{User.data.first_name}} {{User.data.last_name}} </h3>
       <p>{{User.data.email}}</p>
       <p>{{User.data.country}}</p>
-      <div class="button" ng-click="editUser(true)">edit</div>
+      <a class="account-info-data-edit-button" ng-click="editUser(true)">edit</a>
     </div>
 
 
@@ -46,9 +46,15 @@
 
           <div class="form-entry">
 
-              <select name="country" ng-model="User.data.country" required>
+              <select name="country" ng-model="User.data.country" required ng-if="!User.data.country.data.code">
                 <option value="" disabled selected>country</option>
                 <option ng-repeat="country in countries" value="{{country.code}}">{{country.name}}</option>
+                <span class="form-error" ng-show="edituserForm.country.$error.required && edituserForm.country.$touched">required</span>
+              </select>
+
+              <select name="country" ng-model="User.data.country.data.code" required ng-if="User.data.country.data.code">
+                <option value="" disabled selected>country</option>
+                <option ng-repeat="c in countries" value="{{c.code}}">{{c.name}}</option>
                 <span class="form-error" ng-show="edituserForm.country.$error.required && edituserForm.country.$touched">required</span>
               </select>
               <!-- <input type="text" name="country_shipment" value="country" ng-model="checkout.shipment.country" required placeholder="country" onfocus="this.placeholder = ''" onblur="this.placeholder = 'country'"> -->
@@ -61,17 +67,10 @@
             </input>
           </div>
 
-          <div class="form-entry">
-            <input type="text" name="password" ng-model="User.data.password" required placeholder="password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'password'">
-              <span class="form-error" ng-show="edituserForm.password.$error.required && edituserForm.password.$touched">required</span>
-            </input>
-          </div>
-
-
-
           <button class="edituser-button button" type="submit" ng-class="{'invalid': edituserForm.$invalid}" ng-disabled="edituserForm.$invalid">save</button>
 
-{{User.data.first_name}}
+          <a class="login-resetpassword" href="/user/reset">reset password</a>
+
 
       </form>
 
