@@ -54,45 +54,23 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     return trusted;
     // }
   };
-}).filter('productFilter', function ($sce, $routeParams, $rootScope) {
+}).filter('categoryFilter', function ($sce, $routeParams, $rootScope) {
   return function (data) {
 
     var filtered = [];
 
-    //search input
-    if ($rootScope.Search) {
-
-      //category
-      var search = $routeParams.Search;
-
-      // console.log('category: '+category);
-      for (var i in $rootScope.Product) {
-        for (var c in $rootScope.Product[i].category.data) {
-          if ($rootScope.Product[i].category.data[c].slug == search) {
-            filtered = filtered.concat($rootScope.Product[i]);
-            // console.log(filtered);
-          } else if ($rootScope.Product[i].title == search) {
-            filtered = filtered.concat($rootScope.Product[i]);
-          }
-
-          if ($rootScope.Product[i].category.data[c].parent != null) {
-            $rootScope.Product[i].category.child = $rootScope.Product[i].category.data[c].slug;
-          }
+    console.log('category');
+    //category
+    var category = $routeParams.category;
+    console.log('category: ' + category);
+    for (var i in $rootScope.Product) {
+      for (var c in $rootScope.Product[i].category.data) {
+        if ($rootScope.Product[i].category.data[c].slug == category) {
+          filtered = filtered.concat($rootScope.Product[i]);
+          // console.log(filtered);
         }
-      }
-    } else {
-      //category
-      var category = $routeParams.category;
-      // console.log('category: '+category);
-      for (var i in $rootScope.Product) {
-        for (var c in $rootScope.Product[i].category.data) {
-          if ($rootScope.Product[i].category.data[c].slug == category) {
-            filtered = filtered.concat($rootScope.Product[i]);
-            // console.log(filtered);
-          }
-          if ($rootScope.Product[i].category.data[c].parent != null) {
-            $rootScope.Product[i].category.child = $rootScope.Product[i].category.data[c].slug;
-          }
+        if ($rootScope.Product[i].category.data[c].parent != null) {
+          $rootScope.Product[i].category.child = $rootScope.Product[i].category.data[c].slug;
         }
       }
     }
@@ -158,7 +136,7 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
   $rootScope.firstLoading = true;
   $rootScope.pageClass = "page-home";
   $rootScope.Home;
-  $rootScope.Search;
+  $rootScope.searchFilter;
   $rootScope.User = { "status": false };
   $rootScope.selectedLang = {};
   $rootScope.passwordRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");;
@@ -198,13 +176,24 @@ angular.module('myApp', ['ngRoute', 'ngResource', 'ngAnimate', 'infinite-scroll'
     }
   };
 
-  console.log($rootScope.Search);
+  //
+  //
+  // console.log($rootScope.Search);
+  //
+  //
+  //  $rootScope.$watch('Search', function(newValue, oldValue) {
+  //    console.log("search");
+  //     console.log('search', $rootScope.Search);
+  //     console.log(newValue);
+  //     $routeParams.category;
+  //  });
+  //
+  //  $rootScope.$on('$routeChangeSuccess', function(newValue, oldValue) {
+  //    console.log("filter");
+  //    console.log($routeParams.category);
+  //
+  //  });
 
-  $rootScope.$watch('Search', function (newValue, oldValue) {
-    console.log("search");
-    console.log('search', $rootScope.Search);
-    console.log(newValue);
-  });
 
   // getting user location
 

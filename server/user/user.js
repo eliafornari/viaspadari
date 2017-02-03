@@ -282,7 +282,7 @@ var generateCrypto=()=>{
 
 
 
-//STEP 2     SEND EMAIL
+//STEP 3     SEND EMAIL
 
   var sendEmail = ()=>{
 
